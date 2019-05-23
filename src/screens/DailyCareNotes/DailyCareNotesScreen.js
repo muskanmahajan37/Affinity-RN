@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 
 
 import DCNTimeTable from './Components/DCNTimeTable';
 import DCNWorkTable from './Components/DCNWorkTable'
+import DCNTypeRadioForm from './Components/DCNTypeRadioForm';
 
 class DailyCareNotesScreen extends Component {
     constructor(props) {
@@ -36,6 +37,7 @@ class DailyCareNotesScreen extends Component {
                                 labelStyle={{fontSize: 15, paddingLeft: 5, paddingRight: 5}}
                                 onPress={(value) => {this.setState({DCNflag: value})}}
                             /> */}
+                            <DCNTypeRadioForm></DCNTypeRadioForm>
                         </View>
                     </View>
                     <View style={styles.container}>
