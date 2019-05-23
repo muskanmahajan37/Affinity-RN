@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Dimensions } from 'react-native';
 
 import DCNTimeTable from './Components/DCNTimeTable';
 import DCNWorkTable from './Components/DCNWorkTable'
@@ -104,7 +104,9 @@ class DailyCareNotesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    contentContainer: {paddingVertical: 20, backgroundColor: '#fff'},
+    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', 
+        width: Dimensions.get('window').width > Dimensions.get('window').height ? Dimensions.get('window').width : Dimensions.get('window').height 
+    },
     container: { width: '100%', padding: 16, paddingTop: 30, backgroundColor: '#fff' },
     head: { height: 40, backgroundColor: '#f1f8ff' },
     text: { margin: 6 },

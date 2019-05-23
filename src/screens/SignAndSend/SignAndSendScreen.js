@@ -222,7 +222,9 @@ class SignAndSendScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', height: '100%', minWidth: 568, width: Dimensions.get('window').width},
+    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', height: '100%', minWidth: 568, 
+        width: Dimensions.get('window').width > Dimensions.get('window').height ? Dimensions.get('window').width : Dimensions.get('window').height 
+    },
     btn: { alignContent: 'center', justifyContent: 'center', textAlign: 'center', width: 120, height: 35, borderRadius: 12 },
     btnBlue: { backgroundColor: '#b8d5ff' },
     btnRed: { backgroundColor: '#fc8d82' },
