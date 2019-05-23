@@ -12,6 +12,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import LoginScreen from './src/screens/Login/LoginScreen';
 import ControlPanelScreen from './src/screens/ControlPanel/ControlPanelScreen';
+import DailyCareNotesScreen from './src/screens/DailyCareNotes/DailyCareNotesScreen';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -30,6 +31,13 @@ const MainNavigator = createStackNavigator({
   },
   ControlPanel: {
     screen: ControlPanelScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' },
+      headerLeft: null
+    }
+  },
+  DailyCareNotes: {
+    screen: DailyCareNotesScreen,
     navigationOptions: {
       headerStyle: { display: 'none' },
       headerLeft: null
