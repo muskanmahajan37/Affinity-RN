@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TouchableHighlight } from 'react-native';
-// import Picker from 'react-native-wheel-picker';
+import Picker from 'react-native-wheel-picker';
 
-// var PickerItem = Picker.Item;
+var PickerItem = Picker.Item;
 
 class AFWheelPickerModal extends Component {
     constructor(props) {
@@ -43,14 +43,14 @@ class AFWheelPickerModal extends Component {
                                 <Text style={styles.welcome}>
                                     Please, Pick the Time.
                                 </Text>
-                                {/* <Picker style={{width: 150, height: 180}}
+                                <Picker style={{width: 150, height: 180}}
                                     selectedValue={this.state.selectedItem}
                                     itemStyle={{color:"#fff", fontSize:26}}
                                     onValueChange={(index) => this.onPickerSelect(index)}>
                                         {this.state.itemList.map((value, i) => (
                                             <PickerItem label={value} value={i} key={"time"+value}/>
                                         ))}
-                                </Picker> */}
+                                </Picker>
                                 <Text style={{margin: 20, color: '#fff', fontSize: 18}}>
                                     TimeIn：{this.state.itemList[this.state.selectedItem]}
                                 </Text>
