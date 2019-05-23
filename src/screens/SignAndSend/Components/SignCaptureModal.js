@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Image, TouchableHighlight, StyleSheet, AppRegistry } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Image, TouchableHighlight, AppRegistry } from 'react-native';
 import SignatureCapture from 'react-native-signature-capture';
 
 class SignCaptureModal extends Component {
@@ -21,7 +21,7 @@ class SignCaptureModal extends Component {
     render() {
 
         return (
-            <View style={{marginTop: 22}}>
+            <View style={{}}>
                 <Modal
                 animationType="slide"
                 transparent={true}
@@ -59,7 +59,7 @@ class SignCaptureModal extends Component {
                             onPress={() => {
                                 this.setModalVisible(!this.state.modalVisible);
                             }}>
-                            <Image style={{width: 40, height: 40}} source={require('../../../../assets/img/icon-cancel-o.png')} />
+                            <Image style={{width: 40, height: 40}} source={require('../../../assets/img/icon-cancel-o.png')} />
                         </TouchableOpacity>
                     </View>
                 
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
     }
 });
 
-AppRegistry.registerComponent('SignatureModal', () => SignatureModal);
+AppRegistry.registerComponent('SignCaptureModal', () => SignCaptureModal);
 
 export default SignCaptureModal;

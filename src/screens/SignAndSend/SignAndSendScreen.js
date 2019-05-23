@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, Dimensions } from 'react-native';
 import moment from 'moment';
 import CONSTS from '../../helpers/Consts';
-// import SignCaptureModal from './Components/SignCaptureModal';
+import SignCaptureModal from './Components/SignCaptureModal';
 
 class SignAndSendScreen extends Component {
     constructor(props) {
@@ -55,10 +55,10 @@ class SignAndSendScreen extends Component {
                             </View>
                             <View style={{flex: 5, flexDirection: 'row'}}>
                                 <View style={{}}>
-                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic', marginTop: 'auto'}}>Signature</Text>
+                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic', marginTop: 'auto', left: -10, marginBottom: 5}}>Signature</Text>
                                 </View>
                                 <View style={{width: '60%'}}>
-                                    {/* <SignCaptureModal signer={'caregiver'} signResult={this.state.caregiverSign} onSaveSign={this.onSaveSign}></SignCaptureModal> */}
+                                    <SignCaptureModal signer={'caregiver'} signResult={this.state.caregiverSign} onSaveSign={this.onSaveSign}></SignCaptureModal>
                                 </View>
                             </View>
                             <View style={{flex: 3, flexDirection: 'column', alignItems: 'center'}}>
@@ -95,10 +95,10 @@ class SignAndSendScreen extends Component {
                             </View>
                             <View style={{flex: 5, flexDirection: 'row'}}>
                                 <View style={{}}>
-                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic', marginTop: 'auto'}}>Signature</Text>
+                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic', marginTop: 'auto', left: -10, marginBottom: 5}}>Signature</Text>
                                 </View>
                                 <View style={{width: '60%'}}>
-                                    {/* <SignCaptureModal signer={'client'} signResult={this.state.clientSign} onSaveSign={this.onSaveSign}></SignCaptureModal> */}
+                                    <SignCaptureModal signer={'client'} signResult={this.state.clientSign} onSaveSign={this.onSaveSign}></SignCaptureModal>
                                 </View>
                             </View>
                             <View style={{flex: 3, flexDirection: 'column', alignItems: 'center'}}>
@@ -123,11 +123,9 @@ class SignAndSendScreen extends Component {
                         </View>
                     </View>
                     <View style={{alignItems: 'flex-end', paddingRight: 20}}>
-                        {/* <Icon 
-                            name='add'
-                            type='ion-icon'
-                            onPress={() => this.openPAFForm()}
-                        /> */}
+                        <TouchableOpacity onPress={() => this.openPAFForm()}>
+                            <Text style={{fontSize: 20, color: '#000'}}>+</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={{marginTop: 20}}>
                         <View>
@@ -224,7 +222,7 @@ class SignAndSendScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', height: '100%', minWidth: 500, maxWidth: 600},
+    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', height: '100%', minWidth: 500, width: Dimensions.get('window').width},
     btn: { alignContent: 'center', justifyContent: 'center', textAlign: 'center', width: 120, height: 35, borderRadius: 12 },
     btnBlue: { backgroundColor: '#b8d5ff' },
     btnRed: { backgroundColor: '#fc8d82' },
