@@ -132,7 +132,7 @@ class SignAndSendScreen extends Component {
                             <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>PHONE NUMBERS TO SEND A COPY OF DAILY CARE NOTES</Text>
                         </View>
                         <View style={{flexDirection: 'row', paddingTop: 15}}>
-                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={() => this.setState({phoneToSendDCNFlag: !this.state.phoneToSendDCNFlag})}>
+                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={() => this.setState({phoneToSendDCNFlag: !this.state.phoneToSendDCNFlag})}>
                                 { (this.state.phoneToSendDCNFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                             <View style={{width: '100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
@@ -150,7 +150,7 @@ class SignAndSendScreen extends Component {
                             <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>EMAILS TO SEND A COPY OF DAILY CARE NOTES</Text>
                         </View>
                         <View style={{flexDirection: 'row', paddingTop: 15}}>
-                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={() => this.setState({emailToSendDCNFlag: !this.state.emailToSendDCNFlag})}>
+                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={() => this.setState({emailToSendDCNFlag: !this.state.emailToSendDCNFlag})}>
                                 { (this.state.emailToSendDCNFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                             <View style={{width:'100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
@@ -222,7 +222,7 @@ class SignAndSendScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', height: '100%', minWidth: 500, width: Dimensions.get('window').width},
+    contentContainer: {paddingVertical: 20, backgroundColor: '#fff', height: '100%', minWidth: 568, width: Dimensions.get('window').width},
     btn: { alignContent: 'center', justifyContent: 'center', textAlign: 'center', width: 120, height: 35, borderRadius: 12 },
     btnBlue: { backgroundColor: '#b8d5ff' },
     btnRed: { backgroundColor: '#fc8d82' },
