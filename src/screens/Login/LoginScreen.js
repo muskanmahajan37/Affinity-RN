@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, KeyboardAvoidingView, View, Image, Text, TextInput, 
+import { ScrollView, View, Image, Text, TextInput, 
     TouchableOpacity, StyleSheet } from 'react-native';
 
 class LoginScreen extends React.Component {

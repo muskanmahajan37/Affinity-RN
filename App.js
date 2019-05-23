@@ -11,6 +11,7 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import LoginScreen from './src/screens/Login/LoginScreen';
+import ControlPanelScreen from './src/screens/ControlPanel/ControlPanelScreen';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -22,6 +23,13 @@ const instructions = Platform.select({
 const MainNavigator = createStackNavigator({
   Login: {
     screen: LoginScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' },
+      headerLeft: null
+    }
+  },
+  ControlPanel: {
+    screen: ControlPanelScreen,
     navigationOptions: {
       headerStyle: { display: 'none' },
       headerLeft: null
