@@ -7,8 +7,8 @@ class DCNTimePicker extends Component {
 
         this.state = {
             modalVisible: false, 
-            time : '11',
-            itemList: ['01am', '02am', '03am', '04am', '05am', '06am', '07am', '08am', '09am', '10am', '11am', '12pm', '01pm', '02pm', '03pm', '04pm', '05pm', '06pm', '07pm', '08pm', '09pm', '10pm', '11pm', '00am']
+            time : '',
+            itemList: ['--', '01am', '02am', '03am', '04am', '05am', '06am', '07am', '08am', '09am', '10am', '11am', '12pm', '01pm', '02pm', '03pm', '04pm', '05pm', '06pm', '07pm', '08pm', '09pm', '10pm', '11pm', '00am']
         }
     }
     
@@ -26,9 +26,6 @@ class DCNTimePicker extends Component {
                     selectedValue={this.state.time}
                     style={{height: 35, width: 120, backgroundColor: 'transparent'}}
                     onValueChange={(itemValue, itemIndex) => this.setState({time: itemValue})}
-                    itemStyle={{height: 150}}
-                    mode='dialog'
-                    prompt={'hello'}
                 >
                     { timeArr }
                 </Picker>
