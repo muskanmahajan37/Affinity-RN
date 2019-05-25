@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import moment from 'moment';
-import AFWheelPickerModal from '../../../AFModules/AFWheelPickerModal/AFWheelPickerModal';
+import DCNTimePicker from './DCNTimePicker';
 
 class DCNTimeTable extends Component {
     constructor(props) {
@@ -61,25 +61,25 @@ class DCNTimeTable extends Component {
                         <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
                             <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In</Text></View>
                             <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
                             </View>
                         </View>
                         <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
                             <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time out</Text></View>
                             <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
-                                <View style={styles.DCNTimeCellContainer}><AFWheelPickerModal></AFWheelPickerModal></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
                             </View>
                         </View>
                     </View>

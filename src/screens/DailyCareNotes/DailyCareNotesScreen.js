@@ -25,18 +25,6 @@ class DailyCareNotesScreen extends Component {
                             <Text style={{color: '#000', fontSize: 19, padding: 10, fontWeight: '700'}}>Daily Care Notes</Text>
                         </View>
                         <View style={{right: 10, top:18, position: 'absolute'}}>
-                            {/* <RadioForm
-                                radio_props={radio_props}
-                                initial={0}
-                                buttonColor={'#000'}
-                                buttonInnerColor={'#000'}
-                                buttonOuterColor={'#000'}
-                                formHorizontal={true}
-                                buttonSize={10}
-                                buttonOuterSize={18}
-                                labelStyle={{fontSize: 15, paddingLeft: 5, paddingRight: 5}}
-                                onPress={(value) => {this.setState({DCNflag: value})}}
-                            /> */}
                             <DCNTypeRadioForm></DCNTypeRadioForm>
                         </View>
                     </View>
