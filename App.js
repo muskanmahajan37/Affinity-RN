@@ -59,7 +59,7 @@ const MainNavigator = createStackNavigator({
       headerLeft: null
     }
   }
-}, { initialRouteName: "DailyCareNotes"});
+}, { initialRouteName: "Login"});
 
 const AppContainer = createAppContainer(MainNavigator);
 
