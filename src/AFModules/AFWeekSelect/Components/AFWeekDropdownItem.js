@@ -5,6 +5,7 @@ class AFWeekDropdownItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            weekIndex: this.props.weekIndex, 
             week: this.props.week,
             isSubItem: this.props.isSubItem ? this.props.isSubItem : 'false'
         }; 
@@ -20,14 +21,14 @@ class AFWeekDropdownItem extends Component {
         }
 
         return (
-            <TouchableOpacity 
-                style={{flex: 1, flexDirection: 'row', zIndex: 100000}}
-                onPress={ this.props.onPressDropdownItem }
-            >
+            // <TouchableOpacity 
+            //     style={{flex: 1, flexDirection: 'row', zIndex: 100000, borderColor: 'red', borderWidth: 1}}
+            //     onPress={ this.props.onPressDropdownItem(this.state.weekIndex) }
+            // >
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 40, paddingRight: 40}}>
                     {textArr}
                 </View>
-            </TouchableOpacity>
+            // </TouchableOpacity>
         );
     };
 }

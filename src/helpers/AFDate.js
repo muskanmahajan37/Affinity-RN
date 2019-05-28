@@ -61,17 +61,18 @@ export function getFullMonWeeksArr(YYYYMM) {
     
     var sYear = YYYYMM.split('-')[0];
     var sMonthNum = Number(YYYYMM.split('-')[1]);
+    
 
-    var firstDate = moment(new Date(sYear, sMonthNum - 1, 1)).format("YYYY-MM-DD");
-    var firstDD = Number(moment(new Date(sYear, sMonthNum - 1, 1)).format("DD"));
-    var mfirst = moment(firstDate);
-    var firstDay = mfirst.day();
-    var lastDate = moment(new Date(sYear, sMonthNum, 0)).format("YYYY-MM-DD");
-    var lastDD = Number(moment(new Date(sYear, sMonthNum, 0)).format("DD"));
-    var mlast = moment(lastDate);
-    var lastDay = mlast.day();
-
-    var max_week = Math.ceil(mlast.date() / 7);
+    var firstDate = moment(new Date(sYear, sMonthNum - 1, 1)).format("YYYY-MM-DD"); // first Date of Selected Month @YYYY-MM-DD
+    var firstDD = Number(moment(new Date(sYear, sMonthNum - 1, 1)).format("DD")); // first Date of Selected Month @DD
+    var mfirst = moment(firstDate); // Moment Object of first Date
+    var firstDay = mfirst.day(); // Day of first Date of selected Month @DD(0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat)
+    var lastDate = moment(new Date(sYear, sMonthNum, 0)).format("YYYY-MM-DD"); // last Date of selected Month @YYYY-MM-DD
+    var lastDD = Number(moment(new Date(sYear, sMonthNum, 0)).format("DD")); // last Date of selected Month @DD
+    var mlast = moment(lastDate); // Moment Obj of last Date
+    var lastDay = mlast.day(); // Day of last Date of selected Month @DD(0: Sun, 5: Sat)
+    
+    var max_week = Math.ceil((lastDD + firstDay) / 7); // week length of selected Month
     
     // get all weeks of current month
     var arr_weeks = new Array(max_week);
@@ -79,11 +80,10 @@ export function getFullMonWeeksArr(YYYYMM) {
         arr_weeks[k] = new Array();
     }
     for (var i = 1; i <= lastDD; i++) {
-        var nthOfMon = Math.ceil((moment(moment(new Date(sYear, sMonthNum - 1, i)).format("YYYY-MM-DD")).date() + firstDay) / 7);
-        // this.state.weeks.push(i);
+        var nthOfMon = Math.ceil((i + firstDay) / 7);
         for (var j = 0; j < max_week; j++) {
             if (nthOfMon == j + 1) {
-                arr_weeks[j].push(i);
+                arr_weeks[j].push((i < 10) ? ('0'+i) : i);
             }
         }
     }
@@ -91,19 +91,19 @@ export function getFullMonWeeksArr(YYYYMM) {
     // get last week of last month
     var last_mon_week = new Array();
     var lmfirst = moment(moment(new Date(sYear, sMonthNum - 2, 1)).format("YYYY-MM-DD"));
+    var lmfirstDay = moment(new Date(sYear, sMonthNum - 2, 1)).day();
 
     var llastDate = moment(new Date(sYear, sMonthNum - 1, 0)).format("YYYY-MM-DD");
     var llastDD = Number(moment(new Date(sYear, sMonthNum - 1, 0)).format("DD"));
     var mllast = moment(llastDate);
-    var max_mlweek=  Math.ceil(mllast.date() / 7);
+    var max_mlweek=  Math.ceil((mllast.date() + lmfirstDay) / 7);
 
     var arr_mlweek = new Array();
     for (var l = 1; l <= llastDD; l++) {
         var nthOfMon = Math.ceil((moment(moment(new Date(sYear, sMonthNum - 2, l)).format("YYYY-MM-DD")).date() + lmfirst.day()) / 7);
         if (nthOfMon == max_mlweek) {
-            arr_mlweek.push(l);
+            arr_mlweek.push((l < 10) ? ('0'+l) : l);
         }
-        
     }
 
     // full current month weeks
@@ -113,9 +113,10 @@ export function getFullMonWeeksArr(YYYYMM) {
     }
     // --- last week fully
     var nextMonWeek = new Array();
-    for (var n = 1; n <= 7 - arr_weeks[max_week - 1].length; n++) {
-        nextMonWeek.push(n);
-        arr_weeks[max_week - 1].push(n);
+    for (var n = 1; n <= 7; n++) {
+        if(arr_weeks[max_week - 1].length >= 7) break;
+        nextMonWeek.push((n < 10) ? ('0'+n) : n);
+        arr_weeks[max_week - 1].push((n < 10) ? ('0'+n) : n);
     }
 
     return arr_weeks;

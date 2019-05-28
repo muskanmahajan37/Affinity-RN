@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 import DCNItem from '../Components/DCNItem';
-import AFMonthSelect from '../../../AFModules/AFMonthSelect/AFMonthSelect';
 import AFWeekSelect from '../../../AFModules/AFWeekSelect/AFWeekSelect';
+import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr } from '../../../helpers/AFDate';
 
 class DailyCareNotesTab extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            filter: 'Active',
+            filter: 'Active', 
+            options: this.generateOptions(),
+            defaultValue: this.props.defaultMonth ? this.props.defaultMonth : (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
             selectedMonth: this.props.defaultMonth ? this.props.defaultMonth : this.getCurrentYYYYDD(),
+            selectedWeek: [],
             month: '',
             week: '',
             dataSource: [{title: 'first', key: 'item1'}, {title: 'second', key: 'item2'}, {title: 'third', key: 'item3'}],
@@ -20,6 +23,22 @@ class DailyCareNotesTab extends Component {
     getCurrentYYYYDD() {
         var today = new Date();
         return today.getFullYear() + '-' + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1))
+    }
+
+    generateOptions() {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var cyear = new Date().getFullYear();
+        var options = [];
+        for (var i = 0; i < months.length; i++) {
+            options.push(months[i] + ' ' + cyear);
+        }
+        return options;
+    }
+
+    selectedMonth = (value) => {
+        var YYYYMM = convert2mYStr2YYYYMM(value);
+        this.setState({selectedMonth: YYYYMM});
+        this.setState({selectedWeek: getFullMonWeeksArr(YYYYMM)[0]});
     }
 
     render() {
@@ -45,13 +64,16 @@ class DailyCareNotesTab extends Component {
                 <View style={{flex: 1, flexDirection: 'row'}}>
                     <Text style={{flex: 1, color: '#000', fontSize: 18, margin: 7, flexDirection: 'row', textAlign: 'right'}}>Select a Week of Service</Text>
                     <View style={{width: 150, height: 35, backgroundColor: '#ddd', color: '#000', flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
-                        <AFMonthSelect
+                        <ModalDropdown
+                            options={this.state.options}
+                            defaultValue={this.state.defaultValue}
                             style={{height: 35, color: '#000', flex: 1, padding: 5}}
                             textStyle={{fontSize: 18, color: '#000', textAlign: 'center'}}
                             dropdownStyle={{width: 150, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
                             dropdownTextStyle={{fontSize: 18, color: '#000'}} 
-                            onSelectMonth={(value) => { this.setState({selectedMonth: value}) } }
-                        ></AFMonthSelect>
+                            onSelect={(value) => this.selectedMonth(this.state.options[value])}
+                        >
+                        </ModalDropdown>
                     </View>
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', zIndex: 2}}>
@@ -63,6 +85,7 @@ class DailyCareNotesTab extends Component {
                             dropdownTextStyle={{fontSize: 18, color: '#000'}}
                             hasDropdownIcon='true'
                             selectedMonth={this.state.selectedMonth}
+                            selectedWeek={this.state.selectedWeek}
                         ></AFWeekSelect>
                     </View>
                 </View>
