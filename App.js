@@ -59,7 +59,7 @@ const MainNavigator = createStackNavigator({
       headerLeft: null
     }
   }
-}, { initialRouteName: "Login"});
+}, { initialRouteName: "ControlPanel"});
 
 const AppContainer = createAppContainer(MainNavigator);
 
