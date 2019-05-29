@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 import DCNItem from '../Components/DCNItem';
-import AFWeekSelect from '../../../AFModules/AFWeekSelect/AFWeekSelect';
+import DCNWeekPickerModal from '../Components/DCNWeekPickerModal/DCNWeekPickerModal';
+// import AFWeekSelect from '../../../AFModules/AFWeekSelect/AFWeekSelect';
 import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr } from '../../../helpers/AFDate';
+
 
 class DailyCareNotesTab extends Component {
     constructor(props) {
@@ -78,7 +80,7 @@ class DailyCareNotesTab extends Component {
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', zIndex: 2}}>
                     <View style={styles.weekPickerWrapper}>
-                        <AFWeekSelect
+                        {/* <AFWeekSelect
                             style={{height: 35, color: '#000', flex: 1, padding: 5, zIndex: 3}}
                             textStyle={{fontSize: 18, color: '#000', textAlign: 'center'}}
                             dropdownStyle={{width: Dimensions.get('window').width - 40, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
@@ -86,7 +88,8 @@ class DailyCareNotesTab extends Component {
                             hasDropdownIcon='true'
                             selectedMonth={this.state.selectedMonth}
                             selectedWeek={this.state.selectedWeek}
-                        ></AFWeekSelect>
+                        ></AFWeekSelect> */}
+                        <DCNWeekPickerModal selectedWeek={this.state.selectedWeek} selectedMonth={this.state.selectedMonth}></DCNWeekPickerModal>
                     </View>
                 </View>
                 <View style={{flex: 7, flexDirection: 'row'}}>
