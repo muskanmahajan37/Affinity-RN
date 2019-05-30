@@ -176,6 +176,7 @@ class LoginScreen extends React.Component {
                 .catch((err) => {
                     console.log('err=', err);
                     this.setState({spinner: false});
+                    Alert.alert('', 'Can not find server.');
                     // AsyncStorage.setItem('passcodeLimit', passcodeLimit + 1).then(x => {
                     //     this.setState({spinner: false});
                     // })
