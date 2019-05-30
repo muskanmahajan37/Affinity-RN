@@ -1,31 +1,76 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
-    TouchableOpacity, StyleSheet } from 'react-native';
+    TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import CONSTS from '../../helpers/Consts';
+import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            spinner: false,
             firstname: '',
             lastname: '',
             ssn: '',
-            randomPassCode: this.getRandomPassCode(),
+            randomPassCode: '',
             passCodeConf: '',
         }
     }
 
-    getRandomPassCode() {
-        return Math.floor(100000 + Math.random() * 900000);
-    }
-
     generatePassCode() {
-        this.setState({randomPassCode: this.getRandomPassCode(), passCodeConf: ''});
+        AsyncStorage.getItem('loginLimit').then((value) => {
+            var loginLimit = value ? value : 0;
+            console.log('-0=-0=', value, loginLimit);
+            if (loginLimit >= 3) {
+                Alert.alert('Please call our office for help at 954-782-3741');
+            } else {
+                this.setState({spinner: true});
+                fetch(CONSTS.BASE_API + 'login/get_passcode', {
+                    method: 'POST', 
+                    headers:{
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                    body: JSON.stringify({
+                        firstname: this.state.firstname,
+                        lastname: this.state.lastname,
+                        ssn: this.state.ssn
+                    })
+                })
+                .then((res) => res.json())
+                .then((resJson) => {
+                    console.log('resjson=', resJson);
+                    if(resJson.status == 0) {
+                        this.setState({randomPassCode: resJson.msg});
+                    } else {
+                        Alert.alert('', resJson.msg);
+                    }
+                    console.log('0000===', loginLimit + 1);
+                    this.setState({spinner: false});
+                    // AsyncStorage.setItem('loginLimit', loginLimit + 1).then(x => {
+                    //     this.setState({spinner: false});
+                    // })
+                })
+                .catch((err) => {
+                    console.log('err=', err);
+                    this.setState({spinner: false});
+                    // AsyncStorage.setItem('loginLimit', loginLimit + 1).then(x => {
+                    //     this.setState({spinner: false});
+                    // })
+                });
+            }
+        }).done();       
     }
 
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
+                <Spinner 
+                    visible={this.state.spinner} 
+                    textContent={'Loading...'}
+                    textStyle={styles.spinnerTextStyle}
+                />
                 <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                         style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
@@ -89,7 +134,54 @@ class LoginScreen extends React.Component {
     }
 
     submitLoginForm() {
-        this.props.navigation.navigate('ControlPanel');
+        AsyncStorage.getItem('passcodeLimit').then((value) => {
+            var passcodeLimit = value ? value : 0;
+            console.log('-0=-0=', value, passcodeLimit);
+            if (passcodeLimit >= 3) {
+                Alert.alert('Please call our office for help at 954-782-3741');
+            } else {
+                this.setState({spinner: true});
+                fetch(CONSTS.BASE_API + 'login', {
+                    method: 'POST', 
+                    headers:{
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                    body: JSON.stringify({
+                        firstname: this.state.firstname,
+                        lastname: this.state.lastname,
+                        ssn: this.state.ssn,
+                        passcode: this.state.randomPassCode,
+                        passcodeconf: this.state.passCodeConf
+                    })
+                })
+                .then((res) => res.json())
+                .then((resJson) => {
+                    console.log('resjson=', resJson);
+                    if(resJson.status == 0) {
+                        var user = JSON.stringify({
+                            firstname: this.state.firstname,
+                            lastname: this.state.lastname
+                        });
+                        AsyncStorage.setItem('affinity_user', user);
+                        this.props.navigation.navigate('ControlPanel');
+                    } else {
+                        Alert.alert('', resJson.msg);
+                    }
+                    console.log('0000===', passcodeLimit + 1);
+                    this.setState({spinner: false});
+                    // AsyncStorage.setItem('passcodeLimit', passcodeLimit + 1).then(x => {
+                    //     this.setState({spinner: false});
+                    // })
+                })
+                .catch((err) => {
+                    console.log('err=', err);
+                    this.setState({spinner: false});
+                    // AsyncStorage.setItem('passcodeLimit', passcodeLimit + 1).then(x => {
+                    //     this.setState({spinner: false});
+                    // })
+                });
+            }
+        }).done();  
     }
 }
 
@@ -107,7 +199,8 @@ const styles = StyleSheet.create({
     submit: {width: '40%', height: 35, borderRadius: 15, backgroundColor: '#000', marginLeft: '30%',
         marginRight: '30%', textAlign: 'center', padding: 5, marginBottom: 10
     },
-    submitText: {color: '#fff', fontSize: 18, textAlign: 'center'}
+    submitText: {color: '#fff', fontSize: 18, textAlign: 'center'},
+    spinnerTextStyle: { color: '#FFF' }
 })
 
 export default LoginScreen;
