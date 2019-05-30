@@ -4,6 +4,7 @@ import { ScrollView, View, Image, Text, TextInput,
 import CONSTS from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
+import { USER_KEY, USER_DATA } from '../../helpers/Consts';
 
 class LoginScreen extends React.Component {
     constructor(props) {
@@ -17,6 +18,16 @@ class LoginScreen extends React.Component {
             randomPassCode: '',
             passCodeConf: '',
         }
+    }
+
+    componentDidMount() {
+        var user = AsyncStorage.getItem(USER_KEY).then(res => {
+            var userinfo = JSON.parse(res);
+            this.setState({
+                firstname: userinfo.firstname,
+                lastname: userinfo.lastname
+            });    
+        });
     }
 
     generatePassCode() {
@@ -42,7 +53,9 @@ class LoginScreen extends React.Component {
                 .then((resJson) => {
                     console.log('resjson=', resJson);
                     if(resJson.status == 0) {
-                        this.setState({randomPassCode: resJson.msg});
+                        var data = JSON.parse(resJson.data);
+                        this.setState({ randomPassCode: data.passcode });
+                        AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
                     } else {
                         Alert.alert('', resJson.msg);
                     }
@@ -124,7 +137,7 @@ class LoginScreen extends React.Component {
                     />
                     <TouchableOpacity 
                         style={styles.submit}
-                        onPress={() => this.submitLoginForm()}
+                        onPress={() => this.fetchClients()}
                         >
                         <Text style={styles.submitText}>Submit</Text>
                     </TouchableOpacity>
@@ -157,18 +170,16 @@ class LoginScreen extends React.Component {
                 .then((res) => res.json())
                 .then((resJson) => {
                     console.log('resjson=', resJson);
+                    var data = JSON.parse(resJson.data);
                     if(resJson.status == 0) {
-                        var user = JSON.stringify({
-                            firstname: this.state.firstname,
-                            lastname: this.state.lastname
-                        });
-                        AsyncStorage.setItem('affinity_user', user);
-                        this.props.navigation.navigate('ControlPanel');
+                        AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
+                        this.fetchClients();
                     } else {
+                        if (data.passcode) { this.setState({ randomPassCode: data.passcode }); }
                         Alert.alert('', resJson.msg);
+                        this.setState({spinner: false});
                     }
                     console.log('0000===', passcodeLimit + 1);
-                    this.setState({spinner: false});
                     // AsyncStorage.setItem('passcodeLimit', passcodeLimit + 1).then(x => {
                     //     this.setState({spinner: false});
                     // })
@@ -183,6 +194,37 @@ class LoginScreen extends React.Component {
                 });
             }
         }).done();  
+    }
+
+    fetchClients() {
+        this.setState({spinner: true});
+        fetch(CONSTS.BASE_API + 'cpanel/client')
+        .then((res) => res.json())
+        .then((resJson) => {
+            console.log('resjson=', resJson);
+            if(resJson.status == 0) {
+                var clientObjArr = JSON.parse(resJson.data);
+                var clientArr = [];
+                for(var i = 0; i < clientObjArr.length; i++) {
+                    var item = {
+                        label: clientObjArr[i].FirstName + ' ' + clientObjArr[i].LastName,
+                        value: clientObjArr[i].ClientId.toString()
+                    }
+                    clientArr.push(item);
+                }
+                global.clientArr = clientArr;
+                this.setState({spinner: false});
+                this.props.navigation.navigate('ControlPanel');
+            } else {
+                Alert.alert('', resJson.msg);
+                this.setState({spinner: false});
+            }
+        })
+        .catch((err) => {
+            console.log('err=', err);
+            Alert.alert('', 'Can not find server.');
+            this.setState({spinner: false});
+        });
     }
 }
 

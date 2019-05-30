@@ -1,25 +1,45 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
-    TouchableOpacity, StyleSheet } from 'react-native';
+    TouchableOpacity, StyleSheet, Picker } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 
 import DailyCareNotesTab from './TabScreens/DailyCareNotesTab';
 import AssignmentSheetTab from './TabScreens/AssignmentSheetTab';
 import PlanOfCareTab from './TabScreens/PlanOfCareTab';
+import CONSTS from '../../helpers/Consts';
+import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class ControlPanelScreen extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = { 
-            client: '',
-            choosenTab: 0
+            spinner: false,
+            client: 'first',
+            clientId: null,
+            choosenTab: 0,
+            clientArr: global.clientArr, 
+            arr: [{label: 'First', value: '123'}, {label: 'Second', value: '456'}]
         }; 
     }
 
     render() {
+        var clients = this.state.clientArr;
+        var clientPickerItems = [];
+        for (var i=0; i<clients.length; i++) {
+            clientPickerItems.push(
+                <Picker.Item key={i} label={clients[i].label} value={clients[i].value} />
+            );
+        }
+
         return (
             <View style={styles.background}>
+                <Spinner 
+                    visible={this.state.spinner} 
+                    textContent={'Loading...'}
+                    textStyle={styles.spinnerTextStyle}
+                />
                 <View style={{flex: 3}}>
                     <View style={{flex: 2}}>
                         <View style={{flexDirection: 'row-reverse'}}>
@@ -32,16 +52,16 @@ class ControlPanelScreen extends React.Component {
                     <View style={{flex: 1, flexDirection: 'row'}}>
                         <Text style={styles.label}>Choose a Client</Text>
                         <View style={styles.pickerWrapper}>
-                            <ModalDropdown 
-                                options={['Mary Smith', 'Jamse Ganzil', 'Alex Krol', 'Roy Smir']}
-                                style={{flex: 7, padding: 5}}
-                                textStyle={{fontSize: 18, color: '#000'}}
-                                dropdownStyle={{width: '60%', shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
-                                dropdownTextStyle={{fontSize: 18, color: '#000'}}
-                            >
-                            </ModalDropdown>
-                            <View style={{flex: 1, top: 7}}>
-                                <Image style={{width: 20, height: 20}} source={require('../../assets/img/icon-arrow-down.png')} />
+                            <Picker
+                                selectedValue={this.state.client}
+                                style={{height: '100%', width: '100%'}}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({client: itemValue})
+                                }>
+                                { clientPickerItems }
+                            </Picker>
+                            <View style={{top: 7}}>
+                                <Image style={{width: 20, height: 20, left: -35}} source={require('../../assets/img/icon-arrow-down.png')} />
                             </View>
                         </View>
                     </View>
@@ -142,7 +162,8 @@ const styles = StyleSheet.create({
     tabButtonText: {
         fontSize: 13, alignItems: 'center', justifyContent: 'center', color: '#000', 
         textAlign: 'center', marginTop: 'auto', marginBottom: 'auto'
-    }
+    }, 
+    spinnerTextStyle: { color: '#FFF' }
 })
 
 export default ControlPanelScreen;
