@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
     TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import CONSTS from '../../helpers/Consts';
-import Spinner from 'react-native-loading-spinner-overlay';
+// import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
 import { USER_KEY, USER_DATA } from '../../helpers/Consts';
 
@@ -55,6 +55,9 @@ class LoginScreen extends React.Component {
                     if(resJson.status == 0) {
                         var data = JSON.parse(resJson.data);
                         this.setState({ randomPassCode: data.passcode });
+                        global.FirstName = data.userinfo.firstname; // DB - Caregiver First Name
+                        global.LastName = data.userinfo.lastname; // DB - Caregiver Last Name
+                        global.SocialSecurityNum = data.userinfo.ssn; // DB - Caregiver SSN
                         AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
                     } else {
                         Alert.alert('', resJson.msg);
@@ -79,11 +82,11 @@ class LoginScreen extends React.Component {
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
-                <Spinner 
+                {/* <Spinner 
                     visible={this.state.spinner} 
                     textContent={'Loading...'}
                     textStyle={styles.spinnerTextStyle}
-                />
+                /> */}
                 <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                         style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
@@ -172,6 +175,9 @@ class LoginScreen extends React.Component {
                     console.log('resjson=', resJson);
                     var data = JSON.parse(resJson.data);
                     if(resJson.status == 0) {
+                        global.FirstName = data.userinfo.firstname; // Caregiver First Name
+                        global.LastName = data.userinfo.lastname; // Caregiver Last Name
+                        global.SocialSecurityNum = data.userinfo.ssn; // Caregiver SSN
                         AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
                         this.fetchClients();
                     } else {

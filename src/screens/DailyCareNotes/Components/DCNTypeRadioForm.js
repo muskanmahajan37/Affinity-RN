@@ -17,6 +17,28 @@ class DCNTypeRadioForm extends Component {
 
     onPress = (index) => {
         this.setState({selectedOption: index});
+        switch(index) {
+            case 0: 
+                global.HourlyFlag = true; // DB - HourlyFlag
+                global.LiveInFlag = false; // DB - LiveInFlag
+                global.OvernightFlag = false; // DB - OvernightFlag
+                break;
+            case 1: 
+                global.HourlyFlag = false; 
+                global.LiveInFlag = true; 
+                global.OvernightFlag = false; 
+                break;
+            case 2: 
+                global.HourlyFlag = false; 
+                global.LiveInFlag = false; 
+                global.OvernightFlag = true; 
+                break;
+            default: 
+                global.HourlyFlag = false; 
+                global.LiveInFlag = false; 
+                global.OvernightFlag = false; 
+                break;
+        }
     }
 
     render () {

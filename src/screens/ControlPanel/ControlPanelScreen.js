@@ -24,6 +24,11 @@ class ControlPanelScreen extends React.Component {
         }; 
     }
 
+    selectClient = (value, index) => {
+        this.setState({client: value}); 
+        global.ClientId = value; // DB - ClientId
+    }
+
     render() {
         var clients = this.state.clientArr;
         var clientPickerItems = [];
@@ -55,9 +60,7 @@ class ControlPanelScreen extends React.Component {
                             <Picker
                                 selectedValue={this.state.client}
                                 style={{height: '100%', width: '100%'}}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({client: itemValue})
-                                }>
+                                onValueChange={(itemValue, itemIndex) => this.selectClient(itemValue, itemIndex)}>
                                 { clientPickerItems }
                             </Picker>
                             <View style={{top: 7}}>
@@ -102,11 +105,12 @@ class ControlPanelScreen extends React.Component {
 
     createDCN=() => {
         console.log('---|||---', global);
-        this.setState({spinner: true});
-        this.generateDCNWeek().then(
-            res => { this.setState({spinner: false}); this.props.navigation.navigate('DailyCareNotes'); }
-        );
-        
+        // this.setState({spinner: true});
+        this.generateDCNWeek();
+        // this.generateDCNWeek().then(
+        //     res => { this.setState({spinner: false}); this.props.navigation.navigate('DailyCareNotes'); }
+        // );
+        this.props.navigation.navigate('DailyCareNotes');
     }
 
     generateDCNWeek = async () => {
@@ -150,6 +154,7 @@ class ControlPanelScreen extends React.Component {
             }
         }
         global.DCNWeek = DCNWeek;
+        global.LastSaturdayDate = DCNWeek[DCNWeek.length - 1]; // DB - LastSaturdayDate
         return true;
     }
 
