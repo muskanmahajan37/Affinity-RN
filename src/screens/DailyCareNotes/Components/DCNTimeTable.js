@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import moment from 'moment';
 import DCNTimePicker from './DCNTimePicker';
+import { dateFomateMD } from '../../../helpers/AFDate';
 
 class DCNTimeTable extends Component {
     constructor(props) {
@@ -11,10 +12,6 @@ class DCNTimeTable extends Component {
             week: this.props.week,
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         }
-    }
-
-    dateFomateMD = (date) => {
-        return moment(new Date(date)).format("M/DD");
     }
 
     createTableHeader = () => {
@@ -33,7 +30,7 @@ class DCNTimeTable extends Component {
         var weekHeader = [];
         for (var i = 0; i < weekDays.length; i++) {
             weekHeader.push(
-                <View key={i} style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> {this.dateFomateMD(this.state.week[i])} </Text></View>
+                <View key={i} style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> {dateFomateMD(global.DCNWeek[i])} </Text></View>
             )
         }
         return weekHeader;
@@ -116,7 +113,7 @@ class DCNTimeTable extends Component {
 
 const styles = StyleSheet.create({
     DCNTimeCellContainer: {flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000', height: 35, width: 70}, 
-    DCNTimeCellText: {fontSize: 20, textAlign: 'center', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}, 
+    DCNTimeCellText: {fontSize: 17, textAlign: 'center', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}, 
     container: {
         flex: 1,
         justifyContent: 'center',
