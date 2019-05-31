@@ -14,6 +14,13 @@ class DailyCareNotesScreen extends Component {
             week: global.selectedWeek,
             totalHour: '0'
         }
+        this.initDCNType();
+    }
+
+    initDCNType = () => {
+        global.HourlyFlag = global.HourlyFlag ? global.HourlyFlag : true; // DB - HourlyFlag
+        global.LiveInFlag = global.LiveInFlag ? global.LiveInFlag : false; // DB - LiveInFlag
+        global.OvernightFlag = global.OvernightFlag ? global.OvernightFlag : false; // DB - OvernightFlag
     }
 
     render() {
