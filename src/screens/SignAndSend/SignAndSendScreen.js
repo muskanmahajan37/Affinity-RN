@@ -9,19 +9,34 @@ class SignAndSendScreen extends Component {
         super(props);
 
         this.state = {
-            toBePaidFlag: true,
+            ComplianceFlag: true,
             caregiverSign: '',
             caregiverSignDate: '',
             clientSign: '',
             clientSignDate: '',
-            phoneToSendDCNFlag: true,
-            phoneClient: '',
-            phoneCaregiver: '',
-            emailToSendDCNFlag: true,
-            emailClient: '',
-            emailCaregiver: '',
+            SendToPhoneFlag: true,
+            Phone1: '',
+            Phone2: '',
+            SendToEmailFlag: true,
+            Email1: '',
+            Email2: '',
             PAFreminder: false,
         }
+    }
+
+    setComplianceFlag = () => {
+        global.ComplianceFlag = !this.state.ComplianceFlag;
+        this.setState({ComplianceFlag: !this.state.ComplianceFlag});
+    }
+
+    setSendToPhoneFlag = () => {
+        global.SendToPhoneFlag = !this.state.SendToPhoneFlag;
+        this.setState({SendToPhoneFlag: !this.state.SendToPhoneFlag});
+    }
+
+    setSendToEmailFlag = () => {
+        global.SendToEmailFlag = !this.state.SendToEmailFlag;
+        this.setState({SendToEmailFlag: !this.state.SendToEmailFlag});
     }
 
     render() {
@@ -32,8 +47,8 @@ class SignAndSendScreen extends Component {
                 <ScrollView horizontal={false}>
                     <View style={{flex: 1, flexDirection: 'row', height:'auto'}}>
                         <View>
-                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={() => this.setState({toBePaidFlag: !this.state.toBePaidFlag})}>
-                                { (this.state.toBePaidFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
+                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={this.setComplianceFlag}>
+                                { (this.state.ComplianceFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                         </View>
                         <View style={{width: '100%', flexDirection: 'row', paddingRight: 50}}>
@@ -132,15 +147,15 @@ class SignAndSendScreen extends Component {
                             <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>PHONE NUMBERS TO SEND A COPY OF DAILY CARE NOTES</Text>
                         </View>
                         <View style={{flexDirection: 'row', paddingTop: 15}}>
-                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={() => this.setState({phoneToSendDCNFlag: !this.state.phoneToSendDCNFlag})}>
-                                { (this.state.phoneToSendDCNFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
+                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={this.setSendToPhoneFlag}>
+                                { (this.state.SendToPhoneFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                             <View style={{width: '100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.phoneClient} onChangeText={(phone) => this.setState({phoneClient: phone})} placeholder='Client Phone Number' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.Phone1} onChangeText={(phone) => this.setState({Phone1: phone})} placeholder='Client Phone Number' />
                                 </View>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.phoneCaregiver} onChangeText={(phone) => this.setState({phoneCaregiver: phone})} placeholder='Caregiver Phone Number' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.Phone2} onChangeText={(phone) => this.setState({Phone2: phone})} placeholder='Caregiver Phone Number' />
                                 </View>
                             </View>
                         </View>
@@ -150,15 +165,15 @@ class SignAndSendScreen extends Component {
                             <Text style={{textAlign: 'center', fontSize: 18, color: '#000'}}>EMAILS TO SEND A COPY OF DAILY CARE NOTES</Text>
                         </View>
                         <View style={{flexDirection: 'row', paddingTop: 15}}>
-                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={() => this.setState({emailToSendDCNFlag: !this.state.emailToSendDCNFlag})}>
-                                { (this.state.emailToSendDCNFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
+                            <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={this.setSendToEmailFlag}>
+                                { (this.state.SendToEmailFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                             <View style={{width:'100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.emailClient} onChangeText={(email) => this.setState({emailClient: email})} placeholder='Client Email' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.Email1} onChangeText={(email) => this.setState({Email1: email})} placeholder='Client Email' />
                                 </View>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.emailCaregiver} onChangeText={(email) => this.setState({emailCaregiver: email})} placeholder='Caregiver Email' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.Email2} onChangeText={(email) => this.setState({Email2: email})} placeholder='Caregiver Email' />
                                 </View>
                             </View>
                         </View>
@@ -197,10 +212,14 @@ class SignAndSendScreen extends Component {
     onSaveSign = (signObj) => {
         switch (signObj.signer) {
             case 'caregiver':
-                this.setState({ caregiverSign: CONSTS.BASE64_HEADER + signObj.result.encoded, caregiverSignDate: moment(new Date()).format("M/DD/YYYY") });
+                global.CaregiverSignature = CONSTS.BASE64_HEADER + signObj.result.encoded;
+                global.CaregiverSignatureDate = moment(new Date()).format("M/DD/YYYY");
+                this.setState({ caregiverSign: global.CaregiverSignature, caregiverSignDate: global.CaregiverSignatureDate });
                 break;
             case 'client':
-                this.setState({ clientSign: CONSTS.BASE64_HEADER + signObj.result.encoded, clientSignDate: moment(new Date()).format("M/DD/YYYY") });
+                global.ClientSignature = CONSTS.BASE64_HEADER + signObj.result.encoded;
+                global.ClientSignatureDate = moment(new Date()).format("M/DD/YYYY")
+                this.setState({ clientSign: global.ClientSignature, clientSignDate: global.ClientSignatureDate });
                 break;
         }
     }
