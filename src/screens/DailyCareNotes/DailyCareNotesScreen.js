@@ -11,7 +11,7 @@ class DailyCareNotesScreen extends Component {
 
         this.state = {
             DCNflag: 0,
-            week: ['2019-05-19', '2019-05-20', '2019-05-21', '2019-05-22', '2019-05-23', '2019-05-24', '2019-05-25'],
+            week: global.selectedWeek,
             totalHour: '0'
         }
     }

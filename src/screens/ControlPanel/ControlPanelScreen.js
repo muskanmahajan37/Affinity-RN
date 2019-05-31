@@ -101,6 +101,7 @@ class ControlPanelScreen extends React.Component {
     }
 
     createDCN=() => {
+        console.log('---|||---', global);
         this.setState({spinner: true});
         this.generateDCNWeek().then(
             res => { this.setState({spinner: false}); this.props.navigation.navigate('DailyCareNotes'); }

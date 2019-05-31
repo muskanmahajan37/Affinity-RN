@@ -280,3 +280,11 @@ export function getNextMonWeekArr(YYYYMM) {
     
     return nextMonWeek;
 }
+
+export function dateFomateMD (date) {
+    // input param date - YYYY-MM-DD
+    // output param date - MM/DD
+    console.log('date---', date);
+    return date.split('-')[1] + '/' + date.split('-')[2];
+
+}
