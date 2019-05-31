@@ -100,14 +100,62 @@ class ControlPanelScreen extends React.Component {
         alert('You clicked Menu!');
     }
 
-    gotoDCNScreen=() => {
-        this.props.navigation.navigate('DailyCareNotes');
+    createDCN=() => {
+        this.setState({spinner: true});
+        this.generateDCNWeek().then(
+            res => { this.setState({spinner: false}); this.props.navigation.navigate('DailyCareNotes'); }
+        );
+        
+    }
+
+    generateDCNWeek = async () => {
+        
+        var selectedMonth = global.selectedMonth;
+        var selectedWeek = global.selectedWeek;
+        var selectedWeekIndex = global.selectedWeekIndex;
+        var minIndex = 0;
+        var maxIndex = parseInt(selectedWeek.length) - 1;
+        var DCNWeek = [];
+
+        if(parseInt(selectedWeek[minIndex]) > parseInt(selectedWeek[maxIndex])) {
+            if(selectedWeekIndex) { // in the case of last week
+                for(var i = 0; i <= maxIndex; i++) {
+                    if(parseInt(selectedWeek[i]) < parseInt(selectedWeek[minIndex])) { // days of next month
+                        var calc_month = ((parseInt(selectedMonth.split('-')[1]) + 1) > 12) ? 1 : (parseInt(selectedMonth.split('-')[1]) + 1);
+                        calc_month = calc_month.toString().length > 1 ? calc_month.toString() : '0' + calc_month.toString();
+                        // on last month - calculate next year
+                        var calc_year = parseInt(calc_month) == 1 ? (parseInt(selectedMonth.split('-')[0]) + 1) : parseInt(selectedMonth.split('-')[0]);
+                        DCNWeek.push(calc_year + '-' + calc_month + '-' + selectedWeek[i]);
+                    } else { // days of current month
+                        DCNWeek.push( selectedMonth + '-' + selectedWeek[i]);
+                    }
+                }
+            } else { // in the case of first week
+                for(var i = 0; i <= maxIndex; i++) {
+                    if(parseInt(selectedWeek[i]) < parseInt(selectedWeek[minIndex])) { // days of current month
+                        DCNWeek.push(selectedMonth + '-' + selectedWeek[i]);
+                    } else { // days of previous month
+                        var calc_month = ((parseInt(selectedMonth.split('-')[1]) - 1) < 1) ? 12 : (parseInt(selectedMonth.split('-')[1]) - 1);
+                        calc_month = calc_month.toString().length > 1 ? calc_month.toString() : '0' + calc_month.toString();
+                        // on first month - calculate last year
+                        var calc_year = parseInt(calc_month) == 12 ? (parseInt(selectedMonth.split('-')[0]) - 1) : parseInt(selectedMonth.split('-')[0]);
+                        DCNWeek.push(calc_year + '-' + calc_month + '-' + selectedWeek[i]);
+                    }
+                }
+            }
+        } else {
+            for(var i = 0; i <= maxIndex; i++) {
+                DCNWeek.push(selectedMonth.split('-')[1] + '/' + selectedWeek[i]);
+            }
+        }
+        global.DCNWeek = DCNWeek;
+        return true;
     }
 
     _switchTab(){
         switch (this.state.choosenTab) {
             case 0:
-                return(<DailyCareNotesTab gotoDCNScreen={this.gotoDCNScreen} />);
+                return(<DailyCareNotesTab createDCN={this.createDCN} />);
                 break;            
             case 1:
                 return(<AssignmentSheetTab />);
@@ -117,7 +165,7 @@ class ControlPanelScreen extends React.Component {
                 break;
         
             default:
-                return(<DailyCareNotesTab gotoDCNScreen={this.gotoDCNScreen} />);
+                return(<DailyCareNotesTab createDCN={this.createDCN} />);
                 break;
         }
     }

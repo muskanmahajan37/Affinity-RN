@@ -13,13 +13,16 @@ class DailyCareNotesTab extends Component {
         this.state = { 
             filter: 'Active', 
             options: this.generateOptions(),
-            defaultValue: this.props.defaultMonth ? this.props.defaultMonth : (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
-            selectedMonth: this.props.defaultMonth ? this.props.defaultMonth : this.getCurrentYYYYDD(),
+            defaultValue: (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
+            selectedMonth: this.getCurrentYYYYDD(),
             selectedWeek: [],
+            selectedWeekIndex: 0,
             month: '',
             week: '',
             dataSource: [{title: 'first', key: 'item1'}, {title: 'second', key: 'item2'}, {title: 'third', key: 'item3'}],
         }; 
+        global.selectedMonth = this.state.selectedMonth;
+        // this.selectedMonth(this.state.selectedMonth);
     }
 
     getCurrentYYYYDD() {
@@ -39,8 +42,10 @@ class DailyCareNotesTab extends Component {
 
     selectedMonth = (value) => {
         var YYYYMM = convert2mYStr2YYYYMM(value);
+        global.selectedMonth = YYYYMM;
         this.setState({selectedMonth: YYYYMM});
         this.setState({selectedWeek: getFullMonWeeksArr(YYYYMM)[0]});
+        global.selectedWeek = getFullMonWeeksArr(YYYYMM)[0];
     }
 
     render() {
@@ -80,7 +85,7 @@ class DailyCareNotesTab extends Component {
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', zIndex: 2}}>
                     <View style={styles.weekPickerWrapper}>
-                        <DCNWeekPickerModal selectedWeek={this.state.selectedWeek} selectedMonth={this.state.selectedMonth}></DCNWeekPickerModal>
+                        <DCNWeekPickerModal selectedWeekIndex={this.state.selectedWeekIndex} selectedMonth={global.selectedMonth}></DCNWeekPickerModal>
                     </View>
                 </View>
                 <View style={{flex: 7, flexDirection: 'row'}}>
@@ -95,7 +100,7 @@ class DailyCareNotesTab extends Component {
                             <View style={{width: '25%', padding: 2}}>
                                 <TouchableOpacity
                                     style={styles.DCNCreateButton}
-                                    onPress={this.props.gotoDCNScreen}
+                                    onPress={this.props.createDCN}
                                 >
                                     <Text style={styles.DCNCreateButtonText}>Create New</Text>
                                 </TouchableOpacity>
