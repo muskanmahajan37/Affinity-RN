@@ -109,7 +109,9 @@ export function getFullMonWeeksArr(YYYYMM) {
     // full current month weeks
     // --- first week fully
     for (var m = arr_mlweek.length - 1; m >= 0 ; m--) {
-        arr_weeks[0].unshift(arr_mlweek[m]);
+        if(arr_weeks[0].length < 7) {
+            arr_weeks[0].unshift(arr_mlweek[m]);
+        } 
     }
     // --- last week fully
     var nextMonWeek = new Array();

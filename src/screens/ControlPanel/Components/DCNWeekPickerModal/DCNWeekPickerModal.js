@@ -11,7 +11,8 @@ class DCNWeekPickerModal extends Component {
             modalVisible: false,
             selectedMonth: this.props.selectedMonth,
             weeks: getFullMonWeeksArr(this.props.selectedMonth),
-            selectedWeek: 0, 
+            selectedWeek: [], 
+            selectedWeekIndex: this.props.selectedWeekIndex, 
             cdate: new Date().getDate(),
             cmonth: new Date().getMonth() + 1,
             cyear: new Date().getFullYear(),
@@ -20,6 +21,9 @@ class DCNWeekPickerModal extends Component {
             nextMonWeek: [],
             showDropdownMenu: false
         };
+        // global.selectedMonth = this.props.selectedMonth;
+        global.selectedWeekIndex = this.props.selectedWeekIndex;
+        global.selectedWeek = this.state.weeks[this.props.selectedWeekIndex];
     }
 
     setModalVisible(visible) {
@@ -27,9 +31,11 @@ class DCNWeekPickerModal extends Component {
     }
 
     selectWeek = (index) => {
-        this.setState({ selectedWeek: index, modalVisible: false });
-        global.selectedMonth = this.state.selectedMonth;
-        global.selectedWeek = this.state.weeks[index];
+        var reweeks = getFullMonWeeksArr(global.selectedMonth);
+        this.setState({ weeks: reweeks, selectedWeekIndex: index, selectedWeek: reweeks[index], modalVisible: false });
+        // global.selectedMonth = this.state.selectedMonth;
+        global.selectedWeek = reweeks[index];
+        global.selectedWeekIndex = index;
     }
 
     render() {
@@ -75,7 +81,7 @@ class DCNWeekPickerModal extends Component {
                     onPress={() => {
                         this.setModalVisible(true);
                     }}>
-                    <DCNSelectedWeekItem week={this.state.weeks[this.state.selectedWeek]}></DCNSelectedWeekItem>
+                    <DCNSelectedWeekItem week={global.selectedWeek}></DCNSelectedWeekItem>
                 </TouchableOpacity>
             </View>
         );
