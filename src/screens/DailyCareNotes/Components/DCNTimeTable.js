@@ -11,7 +11,22 @@ class DCNTimeTable extends Component {
         this.state = {
             week: this.props.week,
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            TimeInOutLength: global.TimeInOutLength ? global.TimeInOutLength : 0,
         }
+        this.initTimeSheet();
+    }
+
+    initTimeSheet = () => {
+        global.TimeInOutLength = 0;
+        global.TimeIn_1_Arr = ['', '', '', '', '', '', ''];
+        global.TimeIn_2_Arr = ['', '', '', '', '', '', ''];
+        global.TimeIn_3_Arr = ['', '', '', '', '', '', ''];
+        global.TimeIn_4_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_1_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_2_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_3_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_4_Arr = ['', '', '', '', '', '', ''];
+        global.HoursPerDay_Arr = [0, 0, 0, 0, 0, 0, 0];
     }
 
     createTableHeader = () => {
@@ -35,52 +50,176 @@ class DCNTimeTable extends Component {
         }
         return weekHeader;
     }
+    
+    _renderTimeInOutSheet_2 = () => {
+        if(this.state.TimeInOutLength > 0) {
+            return (
+                <View>
+                    <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
+                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 2</Text></View>
+                        <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn2"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
+                        </View>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
+                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 2</Text></View>
+                        <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut2"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
+                        </View>
+                    </View>
+                </View>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    _renderTimeInOutSheet_3 = () => {
+        if(this.state.TimeInOutLength > 1) {
+            return (
+                <View>
+                    <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
+                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 3</Text></View>
+                        <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn3"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
+                        </View>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
+                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 3</Text></View>
+                        <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut3"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
+                        </View>
+                    </View>
+                </View>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    _renderTimeInOutSheet_4 = () => {
+        if(this.state.TimeInOutLength > 2) {
+            return (
+                <View>
+                    <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
+                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 4</Text></View>
+                        <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn4"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
+                        </View>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
+                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 4</Text></View>
+                        <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                            <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut4"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
+                        </View>
+                    </View>
+                </View>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    calSum = () => {
+        var all = 0;
+        for(var i = 0; i < global.HoursPerDay_Arr.length; i++) {
+            all += global.HoursPerDay_Arr[i] ? global.HoursPerDay_Arr[i] : 0;
+        }
+        global.WeekTotal = all; // DB - WeekTotalHours
+        this.setState({ WeekTotal: all});
+        this.props.weekTotal();
+    }
 
     render() {
         const state = this.state;
         return (
             <View>
                 <View style={{flex: 1, flexDirection: 'column', borderColor: '#000', borderWidth: 0, paddingLeft: 20}}>
+                    {/* =============== ----------- Day of Week ------------ =============== */}
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1, borderTopWidth: 1}}>
                         <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Year: 2019</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             {this.createTableHeader()}
                         </View>
                     </View>
+                    {/* ================= ---------- Date of Month --------- ================= */}
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
                         <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Date of Service</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             {this.createTableDateRow()}
                         </View>
                     </View>
-
+                    {/* ================= ---------- TimeIn/TimeOut ---------- ================ */}
+                    {/* ------ 1 ------ TimeIn1/TimeOut1 ------------ */}
                     <View>
                         <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
                             <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In</Text></View>
                             <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeIn1"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
                             </View>
                         </View>
                         <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                            <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time out</Text></View>
+                            <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out</Text></View>
                             <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
-                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={2} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={3} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={4} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={5} selectTime={this.calSum}></DCNTimePicker></View>
+                                <View style={styles.DCNTimeCellContainer}><DCNTimePicker timeType={"timeOut1"} timeIndex={6} selectTime={this.calSum}></DCNTimePicker></View>
                             </View>
                         </View>
                     </View>
-                    
+                    {/* ------ 2 ------ TimeIn2/TimeOut2 ------------ */}
+                    { this._renderTimeInOutSheet_2() }
+                    {/* ------ 3 ------ TimeIn3/TimeOut3 ------------ */}
+                    { this._renderTimeInOutSheet_3() }
+                    {/* ------ 4 ------ TimeIn4/TimeOut4 ------------ */}
+                    { this._renderTimeInOutSheet_4() }
+                    {/* ==================== --------- Hourly Per Day --------- =================== */}
                     <View>
                         <TouchableOpacity style={{position: 'absolute', top: -12, left: -25}}
                             onPress={() => this.addSplitShift()}
@@ -92,13 +231,13 @@ class DCNTimeTable extends Component {
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
                         <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', fontWeight: '600'}}>Hours per Day</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
-                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}> </Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[0] ? global.HoursPerDay_Arr[0] : '' }</Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[1] ? global.HoursPerDay_Arr[1] : '' }</Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[2] ? global.HoursPerDay_Arr[2] : '' }</Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[3] ? global.HoursPerDay_Arr[3] : '' }</Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[4] ? global.HoursPerDay_Arr[4] : '' }</Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[5] ? global.HoursPerDay_Arr[5] : '' }</Text></View>
+                            <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[6] ? global.HoursPerDay_Arr[6] : '' }</Text></View>
                         </View>
                     </View>
                 </View>
@@ -106,8 +245,15 @@ class DCNTimeTable extends Component {
         );
     };
 
-    addSplitShift() {
-        alert('You clicked add split shift button!');
+    addSplitShift = () => {
+        var newLength = parseInt(this.state.TimeInOutLength);
+        console.log('before==', newLength);
+        if(newLength < 4) {
+            newLength = newLength + 1;
+        }
+        console.log('after==', newLength);
+        global.TimeInOutLength = newLength; // DB-assist
+        this.setState({ TimeInOutLength: newLength });
     }
 }
 

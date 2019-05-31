@@ -23,6 +23,10 @@ class DailyCareNotesScreen extends Component {
         global.OvernightFlag = global.OvernightFlag ? global.OvernightFlag : false; // DB - OvernightFlag
     }
 
+    calcTotalHours = () => {
+        this.setState({ totalHour: global.WeekTotal });
+    }
+
     render() {
         return (
             <ScrollView contentContainerStyle={styles.contentContainer} horizontal={true}>
@@ -36,19 +40,16 @@ class DailyCareNotesScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.container}>
-                        <DCNTimeTable week={this.state.week}></DCNTimeTable>
+                        <DCNTimeTable week={this.state.week} weekTotal={this.calcTotalHours}></DCNTimeTable>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', height: 40}}>
                         <View style={{flexDirection: 'row', marginLeft: 'auto'}}>
                             <Text style={{fontSize: 20, color: '#000', fontWeight: '700', height: 35, paddingTop: 5}}>Week Total (hours):</Text>
                             <View style={{width: 70, height: 35, marginLeft: 5, marginRight: 25, borderBottomWidth: 1, borderBottomColor: '#000'}}>
-                                <TextInput 
-                                    value={this.state.totalHour} 
-                                    style={{fontSize: 20, color: '#000', fontWeight: '500', paddingBottom: 2, textAlign: 'center'}} 
-                                    onChangeText={(hour) => this.setState({totalHour: hour})}
-                                    keyboardType='numeric' 
-                                    maxLength={2} 
-                                ></TextInput>
+                                <Text 
+                                    style={{fontSize: 20, color: '#000', fontWeight: '500', paddingBottom: 2, textAlign: 'center'}}>
+                                    {this.state.totalHour != 0 ? this.state.totalHour : ''}
+                                </Text>
                             </View>
                         </View>
                     </View>

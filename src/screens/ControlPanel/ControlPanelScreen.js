@@ -103,13 +103,30 @@ class ControlPanelScreen extends React.Component {
         alert('You clicked Menu!');
     }
 
-    createDCN=() => {
-        console.log('---|||---', global);
-        // this.setState({spinner: true});
+    _switchTab(){
+        switch (this.state.choosenTab) {
+            case 0:
+                return(<DailyCareNotesTab createDCN={this.goCreateDCN} />);
+                break;            
+            case 1:
+                return(<AssignmentSheetTab />);
+                break;
+            case 2:
+                return(<PlanOfCareTab />);
+                break;
+        
+            default:
+                return(<DailyCareNotesTab createDCN={this.goCreateDCN} />);
+                break;
+        }
+    }
+
+    chooseTab(tabId) {
+        this.setState({choosenTab: tabId})
+    }
+
+    goCreateDCN=() => {
         this.generateDCNWeek();
-        // this.generateDCNWeek().then(
-        //     res => { this.setState({spinner: false}); this.props.navigation.navigate('DailyCareNotes'); }
-        // );
         this.props.navigation.navigate('DailyCareNotes');
     }
 
@@ -156,28 +173,6 @@ class ControlPanelScreen extends React.Component {
         global.DCNWeek = DCNWeek;
         global.LastSaturdayDate = DCNWeek[DCNWeek.length - 1]; // DB - LastSaturdayDate
         return true;
-    }
-
-    _switchTab(){
-        switch (this.state.choosenTab) {
-            case 0:
-                return(<DailyCareNotesTab createDCN={this.createDCN} />);
-                break;            
-            case 1:
-                return(<AssignmentSheetTab />);
-                break;
-            case 2:
-                return(<PlanOfCareTab />);
-                break;
-        
-            default:
-                return(<DailyCareNotesTab createDCN={this.createDCN} />);
-                break;
-        }
-    }
-
-    chooseTab(tabId) {
-        this.setState({choosenTab: tabId})
     }
 }
 
