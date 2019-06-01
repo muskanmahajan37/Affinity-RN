@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
     TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import CONSTS from '../../helpers/Consts';
-// import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
 import { USER_KEY, USER_DATA } from '../../helpers/Consts';
 
@@ -82,11 +82,11 @@ class LoginScreen extends React.Component {
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
-                {/* <Spinner 
+                <Spinner 
                     visible={this.state.spinner} 
                     textContent={'Loading...'}
                     textStyle={styles.spinnerTextStyle}
-                /> */}
+                />
                 <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                         style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 

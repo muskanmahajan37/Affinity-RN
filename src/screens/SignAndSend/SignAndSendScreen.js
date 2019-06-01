@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput,
 import moment from 'moment';
 import CONSTS from '../../helpers/Consts';
 import SignCaptureModal from './Components/SignCaptureModal';
+import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-community/async-storage';
+import { USER_KEY, USER_DATA } from '../../helpers/Consts';
 
 class SignAndSendScreen extends Component {
     constructor(props) {
@@ -45,6 +48,11 @@ class SignAndSendScreen extends Component {
         return (
             <ScrollView contentContainerStyle={styles.contentContainer} horizontal={true}>
                 <ScrollView horizontal={false}>
+                    <Spinner 
+                        visible={this.state.spinner} 
+                        textContent={'Loading...'}
+                        textStyle={styles.spinnerTextStyle}
+                    />
                     <View style={{flex: 1, flexDirection: 'row', height:'auto'}}>
                         <View>
                             <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={this.setComplianceFlag}>
@@ -229,13 +237,74 @@ class SignAndSendScreen extends Component {
     }
 
     saveAndExitSignForm() {
-        alert('clicked Save & Exit button!')
-        this.props.navigation.goBack()
+        this.props.navigation.navigate('ControlPanel')
     }
 
     sendSignForm() {
-        alert('clicked Send button!')
-        // this.props.navigation.navigate('')
+        fetch(CONSTS.BASE_API + 'send_data', {
+            method: 'POST', 
+            headers:{
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+                SocialSecurityNum: global.SocialSecurityNum, // for DCN Submitted Header
+                ClientId: global.ClientId,
+                LastSaturdayDate: global.LastSaturdayDate,
+                HourlyFlag: global.HourlyFlag,
+                LiveInFlag: global.LiveInFlag,
+                OvernightFlag: global.OvernightFlag,
+                WeekTotalHours: global.WeekTotalHours,
+                ComplianceFlag: global.ComplianceFlag,
+                CaregiverSignature: global.CaregiverSignature,
+                CaregiverSignatureDate: global.CaregiverSignatureDate,
+                ClientSignature: global.ClientSignature,
+                ClientSignatureDate: global.ClientSignatureDate,
+                SendToPhoneFlag: global.SendToPhoneFlag,
+                Phone1: global.Phone1,
+                Phone2: global.Phone2,
+                SendToEmailFlag: global.SendToEmailFlag,
+                Email1: global.Email1,
+                Email2: global.Email2,
+                DateTimeOfSubmission: global.DateTimeOfSubmission,
+                GPSLocationOfSubmission: global.GPSLocationOfSubmission,
+                ImageOfDCN: global.ImageOfDCN,
+                PDFOfDCN: global.PDFOfDCN,
+                selectedWeek: global.selectedWeek, // for DCN Submitted Detail
+                TimeInOutLength: global.TimeInOutLength,
+                TimeIn1: global.TimeIn_1_Arr,
+                TimeIn1: global.TimeIn_2_Arr,
+                TimeIn1: global.TimeIn_3_Arr,
+                TimeIn1: global.TimeIn_4_Arr,
+                TimeOut1: global.TimeOut_1_Arr,
+                TimeOut2: global.TimeOut_2_Arr,
+                TimeOut3: global.TimeOut_3_Arr,
+                TimeOut4: global.TimeOut_4_Arr,
+                HoursPerDay: global.HoursPerDay_Arr,
+                MobilityWalkingMovingFlag: global.MobilityWalkingMovingFlag,
+                BathingShoweringFlag: global.BathingShoweringFlag,
+                DressingFlag: global.DressingFlag,
+                ToiletingFlag: global.ToiletingFlag,
+                EatingFlag: global.EatingFlag,
+                ContinenceBladderBowelFlag: global.ContinenceBladderBowelFlag,
+                MealPrepIncludingFlag: global.MealPrepIncludingFlag,
+                LaundryFlag: global.LaundryFlag,
+                // PersonalCareHours: global.PersonalCareHours,
+                // HomemakingHours: global.HomemakingHours,
+                // CompanionHours: global.CompanionHours,
+                // RespiteHours: global.RespiteHours,
+                // AttendantHours: global.AttendantHours,
+                author: global.FirstName + ' ' + global.LastName, // --- created by or updated by
+            })
+        })
+        .then((res) => res.json())
+        .then((resJson) => {
+            console.log('resjson=', resJson);
+            this.setState({spinner: false});
+        })
+        .catch((err) => {
+            console.log('err=', err);
+            this.setState({spinner: false});
+        });
     }
     
 }
@@ -248,7 +317,8 @@ const styles = StyleSheet.create({
     btnBlue: { backgroundColor: '#b8d5ff' },
     btnRed: { backgroundColor: '#fc8d82' },
     btnGreen: { backgroundColor: '#aeffb2' },
-    btnText: { fontSize: 17, color: '#000', textAlign: 'center', fontWeight: '700' }
+    btnText: { fontSize: 17, color: '#000', textAlign: 'center', fontWeight: '700' },
+    spinnerTextStyle: { color: '#FFF' }
 });
 
 export default SignAndSendScreen;
