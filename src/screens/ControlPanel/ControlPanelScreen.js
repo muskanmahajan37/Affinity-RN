@@ -9,6 +9,7 @@ import PlanOfCareTab from './TabScreens/PlanOfCareTab';
 import CONSTS from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
+import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr, getCurrentWeekIndex } from '../../helpers/AFDate';
 
 class ControlPanelScreen extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class ControlPanelScreen extends React.Component {
             clientId: null,
             choosenTab: 0,
             clientArr: global.clientArr, 
-            arr: [{label: 'First', value: '123'}, {label: 'Second', value: '456'}]
+            arr: [{label: 'First', value: '123'}, {label: 'Second', value: '456'}],
         }; 
         this.initControlPanel();
     }
@@ -29,6 +30,15 @@ class ControlPanelScreen extends React.Component {
         this.setState({clientId: global.clientArr[0].value});
         global.client = global.clientArr[0];
         global.ClientId = global.client.value;
+        // ---- default global selected (current) YYYY MM DD
+        global.selectedMonth = this.getCurrentYYYYDD();
+        global.selectedWeekIndex = getCurrentWeekIndex() ? getCurrentWeekIndex() : 0
+        global.selectedWeek = getFullMonWeeksArr(global.selectedMonth)[global.selectedWeekIndex];
+    }
+
+    getCurrentYYYYDD() {
+        var today = new Date();
+        return today.getFullYear() + '-' + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1))
     }
 
     selectClient = (value, index) => {
@@ -175,7 +185,7 @@ class ControlPanelScreen extends React.Component {
             }
         } else {
             for(var i = 0; i <= maxIndex; i++) {
-                DCNWeek.push(selectedMonth.split('-')[1] + '/' + selectedWeek[i]);
+                DCNWeek.push(selectedMonth + '-' + selectedWeek[i]);
             }
         }
         global.DCNWeek = DCNWeek;

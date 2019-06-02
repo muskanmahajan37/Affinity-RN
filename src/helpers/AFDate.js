@@ -83,7 +83,7 @@ export function getFullMonWeeksArr(YYYYMM) {
         var nthOfMon = Math.ceil((i + firstDay) / 7);
         for (var j = 0; j < max_week; j++) {
             if (nthOfMon == j + 1) {
-                arr_weeks[j].push((i < 10) ? ('0'+i) : i);
+                arr_weeks[j].push((i < 10) ? ('0'+i.toString()) : i.toString());
             }
         }
     }
@@ -102,7 +102,7 @@ export function getFullMonWeeksArr(YYYYMM) {
     for (var l = 1; l <= llastDD; l++) {
         var nthOfMon = Math.ceil((moment(moment(new Date(sYear, sMonthNum - 2, l)).format("YYYY-MM-DD")).date() + lmfirst.day()) / 7);
         if (nthOfMon == max_mlweek) {
-            arr_mlweek.push((l < 10) ? ('0'+l) : l);
+            arr_mlweek.push((l < 10) ? ('0'+l.toString()) : l.toString());
         }
     }
 
@@ -117,8 +117,8 @@ export function getFullMonWeeksArr(YYYYMM) {
     var nextMonWeek = new Array();
     for (var n = 1; n <= 7; n++) {
         if(arr_weeks[max_week - 1].length >= 7) break;
-        nextMonWeek.push((n < 10) ? ('0'+n) : n);
-        arr_weeks[max_week - 1].push((n < 10) ? ('0'+n) : n);
+        nextMonWeek.push((n < 10) ? ('0'+n.toString()) : n.toString());
+        arr_weeks[max_week - 1].push((n < 10) ? ('0'+n.toString()) : n.toString());
     }
 
     return arr_weeks;
@@ -153,7 +153,7 @@ export function getPureMonWeeksArr(YYYYMM) {
         // this.state.weeks.push(i);
         for (var j = 0; j < max_week; j++) {
             if (nthOfMon == j + 1) {
-                arr_weeks[j].push(i);
+                arr_weeks[j].push(i.toString());
             }
         }
     }
@@ -190,7 +190,7 @@ export function getLastMonWeekArr(YYYYMM) {
         // this.state.weeks.push(i);
         for (var j = 0; j < max_week; j++) {
             if (nthOfMon == j + 1) {
-                arr_weeks[j].push(i);
+                arr_weeks[j].push(i.toString());
             }
         }
     }
@@ -208,7 +208,7 @@ export function getLastMonWeekArr(YYYYMM) {
     for (var l = 1; l <= llastDD; l++) {
         var nthOfMon = Math.ceil((moment(moment(new Date(sYear, sMonthNum - 2, l)).format("YYYY-MM-DD")).date() + lmfirst.day()) / 7);
         if (nthOfMon == max_mlweek) {
-            arr_mlweek.push(l);
+            arr_mlweek.push(l.toString());
         }
         
     }
@@ -244,7 +244,7 @@ export function getNextMonWeekArr(YYYYMM) {
         // this.state.weeks.push(i);
         for (var j = 0; j < max_week; j++) {
             if (nthOfMon == j + 1) {
-                arr_weeks[j].push(i);
+                arr_weeks[j].push(i.toString());
             }
         }
     }
@@ -262,7 +262,7 @@ export function getNextMonWeekArr(YYYYMM) {
     for (var l = 1; l <= llastDD; l++) {
         var nthOfMon = Math.ceil((moment(moment(new Date(sYear, sMonthNum - 2, l)).format("YYYY-MM-DD")).date() + lmfirst.day()) / 7);
         if (nthOfMon == max_mlweek) {
-            arr_mlweek.push(l);
+            arr_mlweek.push(l.toString());
         }
         
     }
@@ -275,7 +275,7 @@ export function getNextMonWeekArr(YYYYMM) {
     // --- last week fully
     var nextMonWeek = new Array();
     for (var n = 1; n <= 7 - arr_weeks[max_week - 1].length; n++) {
-        nextMonWeek.push(n);
+        nextMonWeek.push(n.toString());
     }
     
     return nextMonWeek;
@@ -284,7 +284,45 @@ export function getNextMonWeekArr(YYYYMM) {
 export function dateFomateMD (date) {
     // input param date - YYYY-MM-DD
     // output param date - MM/DD
-    console.log('date---', date);
     return date.split('-')[1] + '/' + date.split('-')[2];
 
+}
+
+export function getCurrentWeek () {
+    var dd = new Date();
+    var mm = moment(dd).format("YYYY-MM-DD");
+    var todayDate = dd.getDate();
+    
+    var YYYYMM = moment(dd).format("YYYY-MM");
+    var sYear = YYYYMM.split('-')[0];
+    var sMonthNum = Number(YYYYMM.split('-')[1]);
+    
+    var firstDate = moment(new Date(sYear, sMonthNum - 1, 1)).format("YYYY-MM-DD");
+    var firstDD = Number(moment(new Date(sYear, sMonthNum - 1, 1)).format("DD"));
+    var mfirst = moment(firstDate);
+    var firstDay = mfirst.day();
+    var nthOfMon = Math.ceil((todayDate + firstDay) / 7);
+    return nthOfMon;
+}
+
+export function getCurrentWeekIndex () {
+    var dd = new Date();
+    var mm = moment(dd).format("YYYY-MM-DD");
+    var todayDate = dd.getDate();
+    
+    var YYYYMM = moment(dd).format("YYYY-MM");
+    var sYear = YYYYMM.split('-')[0];
+    var sMonthNum = Number(YYYYMM.split('-')[1]);
+    
+    var firstDate = moment(new Date(sYear, sMonthNum - 1, 1)).format("YYYY-MM-DD");
+    var firstDD = Number(moment(new Date(sYear, sMonthNum - 1, 1)).format("DD"));
+    var mfirst = moment(firstDate);
+    var firstDay = mfirst.day();
+    var nthOfMon = Math.ceil((todayDate + firstDay) / 7);
+    return nthOfMon - 1;
+}
+
+export function getCurrentYYYYDD() {
+    var today = new Date();
+    return today.getFullYear() + '-' + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1))
 }

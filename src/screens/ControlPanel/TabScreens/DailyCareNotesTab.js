@@ -4,7 +4,7 @@ import ModalDropdown from 'react-native-modal-dropdown-updated';
 import DCNItem from '../Components/DCNItem';
 import DCNWeekPickerModal from '../Components/DCNWeekPickerModal/DCNWeekPickerModal';
 // import AFWeekSelect from '../../../AFModules/AFWeekSelect/AFWeekSelect';
-import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr } from '../../../helpers/AFDate';
+import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr, getCurrentWeekIndex } from '../../../helpers/AFDate';
 
 
 class DailyCareNotesTab extends Component {
@@ -16,12 +16,14 @@ class DailyCareNotesTab extends Component {
             defaultValue: (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
             selectedMonth: this.getCurrentYYYYDD(),
             selectedWeek: [],
-            selectedWeekIndex: 0,
+            selectedWeekIndex: getCurrentWeekIndex() ? getCurrentWeekIndex() : 0,
             month: '',
             week: '',
             dataSource: [{title: 'first', key: 'item1'}, {title: 'second', key: 'item2'}, {title: 'third', key: 'item3'}],
         }; 
-        global.selectedMonth = this.state.selectedMonth;
+        global.selectedMonth = this.getCurrentYYYYDD();
+        global.selectedWeekIndex = getCurrentWeekIndex() ? getCurrentWeekIndex() : 0
+        global.selectedWeek = getFullMonWeeksArr(global.selectedMonth)[global.selectedWeekIndex];
         // this.selectedMonth(this.state.selectedMonth);
     }
 

@@ -115,7 +115,6 @@ class DCNTimePicker extends Component {
         var HoursPerDay_3 = (global.TimeIn_3_Arr[this.state.timeIndex] && global.TimeOut_3_Arr[this.state.timeIndex]) ? (global.TimeOut_3_Arr[this.state.timeIndex] - global.TimeIn_3_Arr[this.state.timeIndex]) : 0;
         var HoursPerDay_4 = (global.TimeIn_4_Arr[this.state.timeIndex] && global.TimeOut_4_Arr[this.state.timeIndex]) ? (global.TimeOut_4_Arr[this.state.timeIndex] - global.TimeIn_4_Arr[this.state.timeIndex]) : 0;
         global.HoursPerDay_Arr[this.state.timeIndex] = HoursPerDay_1 + HoursPerDay_2 + HoursPerDay_3 + HoursPerDay_4;
-        console.log('after---sum--', global.HoursPerDay_Arr);
         this.props.selectTime();
     }
 

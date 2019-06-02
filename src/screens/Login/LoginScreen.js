@@ -29,7 +29,6 @@ class LoginScreen extends React.Component {
             });    
         });
         AsyncStorage.getItem('loginLimit').then(res => {
-            console.log('===999===', res);
             if(!res) AsyncStorage.setItem('loginLimit', '0');
         });
     }
@@ -37,7 +36,6 @@ class LoginScreen extends React.Component {
     generatePassCode() {
         AsyncStorage.getItem('loginLimit').then((value) => {
             var loginLimit = value ? parseInt(value) : 0;
-            console.log('-0=-0=', value, loginLimit);
             if (loginLimit >= 3) {
                 Alert.alert('Please call our office for help at 954-782-3741');
             } else {
@@ -153,7 +151,6 @@ class LoginScreen extends React.Component {
     submitLoginForm() {
         AsyncStorage.getItem('passcodeLimit').then((value) => {
             var passcodeLimit = value ? parseInt(value) : 0;
-            console.log('-0=-0=', value, passcodeLimit);
             if (passcodeLimit >= 3) {
                 Alert.alert('Please call our office for help at 954-782-3741');
             } else {
@@ -173,7 +170,6 @@ class LoginScreen extends React.Component {
                 })
                 .then((res) => res.json())
                 .then((resJson) => {
-                    console.log('resjson=', resJson);
                     var data = JSON.parse(resJson.data);
                     if(resJson.status == 0) {
                         global.FirstName = data.userinfo.firstname; // Caregiver First Name
@@ -188,7 +184,6 @@ class LoginScreen extends React.Component {
                         Alert.alert('', resJson.msg);
                         this.setState({spinner: false});
                     }
-                    console.log('0000===', passcodeLimit + 1);
                     AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 })
                 .catch((err) => {
@@ -206,7 +201,6 @@ class LoginScreen extends React.Component {
         fetch(CONSTS.BASE_API + 'cpanel/client')
         .then((res) => res.json())
         .then((resJson) => {
-            console.log('resjson=', resJson);
             if(resJson.status == 0) {
                 var clientObjArr = JSON.parse(resJson.data);
                 var clientArr = [];
