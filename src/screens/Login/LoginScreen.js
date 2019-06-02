@@ -21,18 +21,22 @@ class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
-        var user = AsyncStorage.getItem(USER_KEY).then(res => {
+        AsyncStorage.getItem(USER_KEY).then(res => {
             var userinfo = JSON.parse(res);
             this.setState({
                 firstname: userinfo.firstname,
                 lastname: userinfo.lastname
             });    
         });
+        AsyncStorage.getItem('loginLimit').then(res => {
+            console.log('===999===', res);
+            if(!res) AsyncStorage.setItem('loginLimit', '0');
+        });
     }
 
     generatePassCode() {
         AsyncStorage.getItem('loginLimit').then((value) => {
-            var loginLimit = value ? value : 0;
+            var loginLimit = value ? parseInt(value) : 0;
             console.log('-0=-0=', value, loginLimit);
             if (loginLimit >= 3) {
                 Alert.alert('Please call our office for help at 954-782-3741');
@@ -59,21 +63,18 @@ class LoginScreen extends React.Component {
                         global.LastName = data.userinfo.lastname; // DB - Caregiver Last Name
                         global.SocialSecurityNum = data.userinfo.ssn; // DB - Caregiver SSN
                         AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
+                        AsyncStorage.setItem('loginLimit', '0');
+                        AsyncStorage.setItem('passcodeLimit', '0');
                     } else {
                         Alert.alert('', resJson.msg);
+                        AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
                     }
-                    console.log('0000===', loginLimit + 1);
                     this.setState({spinner: false});
-                    // AsyncStorage.setItem('loginLimit', loginLimit + 1).then(x => {
-                    //     this.setState({spinner: false});
-                    // })
                 })
                 .catch((err) => {
                     console.log('err=', err);
+                    AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString)
                     this.setState({spinner: false});
-                    // AsyncStorage.setItem('loginLimit', loginLimit + 1).then(x => {
-                    //     this.setState({spinner: false});
-                    // })
                 });
             }
         }).done();       
@@ -151,7 +152,7 @@ class LoginScreen extends React.Component {
 
     submitLoginForm() {
         AsyncStorage.getItem('passcodeLimit').then((value) => {
-            var passcodeLimit = value ? value : 0;
+            var passcodeLimit = value ? parseInt(value) : 0;
             console.log('-0=-0=', value, passcodeLimit);
             if (passcodeLimit >= 3) {
                 Alert.alert('Please call our office for help at 954-782-3741');
@@ -179,6 +180,8 @@ class LoginScreen extends React.Component {
                         global.LastName = data.userinfo.lastname; // Caregiver Last Name
                         global.SocialSecurityNum = data.userinfo.ssn; // Caregiver SSN
                         AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
+                        AsyncStorage.setItem('loginLimit', '0');
+                        AsyncStorage.setItem('passcodeLimit', '0');
                         this.fetchClients();
                     } else {
                         if (data.passcode) { this.setState({ randomPassCode: data.passcode }); }
@@ -186,20 +189,16 @@ class LoginScreen extends React.Component {
                         this.setState({spinner: false});
                     }
                     console.log('0000===', passcodeLimit + 1);
-                    // AsyncStorage.setItem('passcodeLimit', passcodeLimit + 1).then(x => {
-                    //     this.setState({spinner: false});
-                    // })
+                    AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 })
                 .catch((err) => {
                     console.log('err=', err);
                     this.setState({spinner: false});
                     Alert.alert('', 'Can not find server.');
-                    // AsyncStorage.setItem('passcodeLimit', passcodeLimit + 1).then(x => {
-                    //     this.setState({spinner: false});
-                    // })
+                    AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 });
             }
-        }).done();  
+        }).done();
     }
 
     fetchClients() {
