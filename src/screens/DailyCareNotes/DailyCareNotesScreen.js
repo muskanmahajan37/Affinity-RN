@@ -25,7 +25,7 @@ class DailyCareNotesScreen extends Component {
     }
 
     calcTotalHours = () => {
-        this.setState({ totalHour: global.WeekTotal });
+        this.setState({ totalHour: global.WeekTotalHours });
     }
 
     takeScreenShot = () => {
@@ -54,7 +54,7 @@ class DailyCareNotesScreen extends Component {
                             </View>
                         </View>
                         <View style={styles.container}>
-                            <DCNTimeTable week={this.state.week} weekTotal={this.calcTotalHours}></DCNTimeTable>
+                            <DCNTimeTable week={this.state.week} WeekTotalHours={this.calcTotalHours}></DCNTimeTable>
                         </View>
                         <View style={{flex: 1, flexDirection: 'row', height: 40}}>
                             <View style={{flexDirection: 'row', marginLeft: 'auto'}}>

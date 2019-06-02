@@ -73,7 +73,7 @@ class SignAndSendScreen extends Component {
                             <View style={{flex: 4, flexDirection: 'row'}}>
                                 <View style={{alignItems: 'center', marginLeft: 10}}>
                                     <Text style={{fontSize: 30, fontWeight: '700', color: '#000'}}>CAREGIVER</Text>
-                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic'}}>Marie Petit</Text>
+                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic'}}>{ global.FirstName + ' ' + global.LastName }</Text>
                                 </View>
                             </View>
                             <View style={{flex: 5, flexDirection: 'row'}}>
@@ -113,7 +113,7 @@ class SignAndSendScreen extends Component {
                             <View style={{flex: 4, flexDirection: 'row'}}>
                                 <View style={{alignItems: 'center', marginLeft: 10}}>
                                     <Text style={{fontSize: 30, fontWeight: '700', color: '#000'}}>CLIENT</Text>
-                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic'}}>Marie Smith</Text>
+                                    <Text style={{fontSize: 18, color: '#000', fontStyle: 'italic'}}>{ global.client.label }</Text>
                                 </View>
                             </View>
                             <View style={{flex: 5, flexDirection: 'row'}}>
@@ -160,10 +160,10 @@ class SignAndSendScreen extends Component {
                             </TouchableOpacity>
                             <View style={{width: '100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.Phone1} onChangeText={(phone) => this.setState({Phone1: phone})} placeholder='Client Phone Number' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.Phone1} onChangeText={(phone) => { this.setState({Phone1: phone}); global.Phone1 = phone; }} placeholder='Client Phone Number' />
                                 </View>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.Phone2} onChangeText={(phone) => this.setState({Phone2: phone})} placeholder='Caregiver Phone Number' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={20} keyboardType='phone-pad' value={this.state.Phone2} onChangeText={(phone) => { this.setState({Phone2: phone}); global.Phone2 = phone; }} placeholder='Caregiver Phone Number' />
                                 </View>
                             </View>
                         </View>
@@ -178,10 +178,10 @@ class SignAndSendScreen extends Component {
                             </TouchableOpacity>
                             <View style={{width:'100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.Email1} onChangeText={(email) => this.setState({Email1: email})} placeholder='Client Email' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.Email1} onChangeText={(email) => { this.setState({Email1: email}); global.Email1 = email; }} placeholder='Client Email' />
                                 </View>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
-                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.Email2} onChangeText={(email) => this.setState({Email2: email})} placeholder='Caregiver Email' />
+                                    <TextInput style={{width: '100%', padding: 5, fontWeight: '600', fontSize: 18}} maxLength={25} keyboardType='email-address' value={this.state.Email2} onChangeText={(email) => { this.setState({Email2: email}); global.Email2 = email; }} placeholder='Caregiver Email' />
                                 </View>
                             </View>
                         </View>
@@ -258,9 +258,9 @@ class SignAndSendScreen extends Component {
         data.append('WeekTotalHours', global.WeekTotalHours);
         data.append('ComplianceFlag', global.ComplianceFlag);
         data.append('CaregiverSignature', global.CaregiverSignature);
-        data.append('CaregiverSignatureDate', global.CaregiverSignatureDate);
+        data.append('CaregiverSignatureDate', moment(new Date(global.CaregiverSignatureDate)).format("YYYY-MM-DD"));
         data.append('ClientSignature', global.ClientSignature);
-        data.append('ClientSignatureDate', global.ClientSignatureDate);
+        data.append('ClientSignatureDate', moment(new Date(global.ClientSignatureDate)).format("YYYY-MM-DD"));
         data.append('HasPAF', global.HasPAF);
         // // data.append('PafId', global.PafId);
         data.append('SendToPhoneFlag', global.SendToPhoneFlag);
@@ -270,9 +270,9 @@ class SignAndSendScreen extends Component {
         data.append('Email1', global.Email1);
         data.append('Email2', global.Email2);
         data.append('DateTimeOfSubmission', global.DateTimeOfSubmission);
-        // data.append('GPSLocationOfSubmission', global.GPSLocationOfSubmission);
+        data.append('GPSLocationOfSubmission', global.GPSLocationOfSubmission); // ---
         // data.append('ImageOfDCN', global.ImageOfDCN);
-        // data.append('PDFOfDCN', global.PDFOfDCN);
+        data.append('PDFOfDCN', global.PDFOfDCN); // ===
         // data.append('createdBy', global.createdBy);
         // data.append('created', global.created);
         // data.append('updatedBy', global.updatedBy);
@@ -297,64 +297,15 @@ class SignAndSendScreen extends Component {
         data.append('MealPrepIncludingFlag', JSON.stringify(global.MealPrepIncludingFlag));
         data.append('LaundryFlag', JSON.stringify(global.LaundryFlag));
         data.append('LightHousekeepingIncludingFlag', JSON.stringify(global.LightHousekeepingIncludingFlag));
-        // data.append('PersonalCareHours', global.PersonalCareHours);
-        // data.append('HomemakingHours', global.HomemakingHours);
-        // data.append('CompanionHours', global.CompanionHours);
-        // data.append('RespiteHours', global.RespiteHours);
-        // data.append('AttendantHours', global.AttendantHours);
+        data.append('PersonalCareHours', global.PersonalCareHours); // -----
+        data.append('HomemakingHours', global.HomemakingHours);
+        data.append('CompanionHours', global.CompanionHours);
+        data.append('RespiteHours', global.RespiteHours);
+        data.append('AttendantHours', global.AttendantHours); // =====
         data.append('author', global.FirstName + ' ' + global.LastName); // --- created by or updated by
         fetch(CONSTS.BASE_API + 'send_data', {
             method: 'POST', 
             body: data
-            // JSON.stringify({
-            //     SocialSecurityNum: global.SocialSecurityNum, // for DCN Submitted Header
-            //     ClientId: global.ClientId,
-            //     LastSaturdayDate: global.LastSaturdayDate,
-            //     HourlyFlag: global.HourlyFlag,
-            //     LiveInFlag: global.LiveInFlag,
-            //     OvernightFlag: global.OvernightFlag,
-            //     WeekTotalHours: global.WeekTotalHours,
-            //     ComplianceFlag: global.ComplianceFlag,
-            //     CaregiverSignature: global.CaregiverSignature,
-            //     CaregiverSignatureDate: global.CaregiverSignatureDate,
-            //     ClientSignature: global.ClientSignature,
-            //     ClientSignatureDate: global.ClientSignatureDate,
-            //     SendToPhoneFlag: global.SendToPhoneFlag,
-            //     Phone1: global.Phone1,
-            //     Phone2: global.Phone2,
-            //     SendToEmailFlag: global.SendToEmailFlag,
-            //     Email1: global.Email1,
-            //     Email2: global.Email2,
-            //     DateTimeOfSubmission: global.DateTimeOfSubmission,
-            //     GPSLocationOfSubmission: global.GPSLocationOfSubmission,
-            //     ImageOfDCN: global.ImageOfDCN,
-            //     PDFOfDCN: global.PDFOfDCN,
-            //     selectedWeek: global.selectedWeek, // for DCN Submitted Detail
-            //     TimeInOutLength: global.TimeInOutLength,
-            //     TimeIn1: global.TimeIn_1_Arr,
-            //     TimeIn1: global.TimeIn_2_Arr,
-            //     TimeIn1: global.TimeIn_3_Arr,
-            //     TimeIn1: global.TimeIn_4_Arr,
-            //     TimeOut1: global.TimeOut_1_Arr,
-            //     TimeOut2: global.TimeOut_2_Arr,
-            //     TimeOut3: global.TimeOut_3_Arr,
-            //     TimeOut4: global.TimeOut_4_Arr,
-            //     HoursPerDay: global.HoursPerDay_Arr,
-            //     MobilityWalkingMovingFlag: global.MobilityWalkingMovingFlag,
-            //     BathingShoweringFlag: global.BathingShoweringFlag,
-            //     DressingFlag: global.DressingFlag,
-            //     ToiletingFlag: global.ToiletingFlag,
-            //     EatingFlag: global.EatingFlag,
-            //     ContinenceBladderBowelFlag: global.ContinenceBladderBowelFlag,
-            //     MealPrepIncludingFlag: global.MealPrepIncludingFlag,
-            //     LaundryFlag: global.LaundryFlag,
-            //     // PersonalCareHours: global.PersonalCareHours,
-            //     // HomemakingHours: global.HomemakingHours,
-            //     // CompanionHours: global.CompanionHours,
-            //     // RespiteHours: global.RespiteHours,
-            //     // AttendantHours: global.AttendantHours,
-            //     author: global.FirstName + ' ' + global.LastName, // --- created by or updated by
-            // })
         })
         .then((res) => res.json())
         .then((resJson) => {
