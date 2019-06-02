@@ -33,7 +33,8 @@ class DailyCareNotesScreen extends Component {
             quality: 0.8, 
             result: "base64"
         }).then(uri => {
-            console.log("do something with ===", uri);
+            global.ImageOfDCN = uri;
+            this.props.navigation.navigate('SignAndSend')
         }).catch(err => {
             console.log("=== err: ===", err);
         })
@@ -43,7 +44,7 @@ class DailyCareNotesScreen extends Component {
         return (
             <ScrollView contentContainerStyle={styles.contentContainer} horizontal={true}>
                 <ScrollView horizontal={false}>
-                    <ViewShot ref="viewShot">
+                    <ViewShot ref="viewShot" style={{backgroundColor: '#fff'}}>
                         <View style={{flexDirection: 'row'}}>
                             <View style={{}}>
                                 <Text style={{color: '#000', fontSize: 19, padding: 10, fontWeight: '700'}}>Daily Care Notes</Text>
