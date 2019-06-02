@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, Dimensions, Alert } from 'react-native';
 import moment from 'moment';
 import CONSTS from '../../helpers/Consts';
 import SignCaptureModal from './Components/SignCaptureModal';
@@ -241,60 +241,120 @@ class SignAndSendScreen extends Component {
     }
 
     sendSignForm() {
+        var DCNImageFileName = global.FirstName + global.LastName + '_' + (new Date().getTime());
+        const data = new FormData();
+        data.append('ImageOfDCN', {
+            uri: global.ImageOfDCN,
+            type: 'image/png',
+            name: DCNImageFileName
+        });
+        data.append('DCNImageFileName', DCNImageFileName);
+        data.append('SocialSecurityNum', global.SocialSecurityNum); // for DCN Submitted Header
+        data.append('ClientId', global.ClientId);
+        data.append('LastSaturdayDate', global.LastSaturdayDate);
+        data.append('HourlyFlag', global.HourlyFlag);
+        data.append('LiveInFlag', global.LiveInFlag);
+        data.append('OvernightFlag', global.OvernightFlag);
+        data.append('WeekTotalHours', global.WeekTotalHours);
+        data.append('ComplianceFlag', global.ComplianceFlag);
+        data.append('CaregiverSignature', global.CaregiverSignature);
+        data.append('CaregiverSignatureDate', global.CaregiverSignatureDate);
+        data.append('ClientSignature', global.ClientSignature);
+        data.append('ClientSignatureDate', global.ClientSignatureDate);
+        data.append('HasPAF', global.HasPAF);
+        // // data.append('PafId', global.PafId);
+        data.append('SendToPhoneFlag', global.SendToPhoneFlag);
+        data.append('Phone1', global.Phone1);
+        data.append('Phone2', global.Phone2);
+        data.append('SendToEmailFlag', global.SendToEmailFlag);
+        data.append('Email1', global.Email1);
+        data.append('Email2', global.Email2);
+        data.append('DateTimeOfSubmission', global.DateTimeOfSubmission);
+        // data.append('GPSLocationOfSubmission', global.GPSLocationOfSubmission);
+        // data.append('ImageOfDCN', global.ImageOfDCN);
+        // data.append('PDFOfDCN', global.PDFOfDCN);
+        // data.append('createdBy', global.createdBy);
+        // data.append('created', global.created);
+        // data.append('updatedBy', global.updatedBy);
+        // data.append('updated', global.updated);
+        data.append('selectedWeek', global.selectedWeek); // for DCN Submitted Detail
+        data.append('TimeInOutLength', global.TimeInOutLength);
+        data.append('TimeIn1', JSON.stringify(global.TimeIn_1_Arr));
+        data.append('TimeIn2', JSON.stringify(global.TimeIn_2_Arr));
+        data.append('TimeIn3', JSON.stringify(global.TimeIn_3_Arr));
+        data.append('TimeIn4', JSON.stringify(global.TimeIn_4_Arr));
+        data.append('TimeOut1', JSON.stringify(global.TimeOut_1_Arr));
+        data.append('TimeOut2', JSON.stringify(global.TimeOut_2_Arr));
+        data.append('TimeOut3', JSON.stringify(global.TimeOut_3_Arr));
+        data.append('TimeOut4', JSON.stringify(global.TimeOut_4_Arr));
+        data.append('HoursPerDay', JSON.stringify(global.HoursPerDay_Arr));
+        data.append('MobilityWalkingMovingFlag', JSON.stringify(global.MobilityWalkingMovingFlag));
+        data.append('BathingShoweringFlag', JSON.stringify(global.BathingShoweringFlag));
+        data.append('DressingFlag', JSON.stringify(global.DressingFlag));
+        data.append('ToiletingFlag', JSON.stringify(global.ToiletingFlag));
+        data.append('EatingFlag', JSON.stringify(global.EatingFlag));
+        data.append('ContinenceBladderBowelFlag', JSON.stringify(global.ContinenceBladderBowelFlag));
+        data.append('MealPrepIncludingFlag', JSON.stringify(global.MealPrepIncludingFlag));
+        data.append('LaundryFlag', JSON.stringify(global.LaundryFlag));
+        data.append('LightHousekeepingIncludingFlag', JSON.stringify(global.LightHousekeepingIncludingFlag));
+        // data.append('PersonalCareHours', global.PersonalCareHours);
+        // data.append('HomemakingHours', global.HomemakingHours);
+        // data.append('CompanionHours', global.CompanionHours);
+        // data.append('RespiteHours', global.RespiteHours);
+        // data.append('AttendantHours', global.AttendantHours);
+        data.append('author', global.FirstName + ' ' + global.LastName); // --- created by or updated by
         fetch(CONSTS.BASE_API + 'send_data', {
             method: 'POST', 
-            headers:{
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({
-                SocialSecurityNum: global.SocialSecurityNum, // for DCN Submitted Header
-                ClientId: global.ClientId,
-                LastSaturdayDate: global.LastSaturdayDate,
-                HourlyFlag: global.HourlyFlag,
-                LiveInFlag: global.LiveInFlag,
-                OvernightFlag: global.OvernightFlag,
-                WeekTotalHours: global.WeekTotalHours,
-                ComplianceFlag: global.ComplianceFlag,
-                CaregiverSignature: global.CaregiverSignature,
-                CaregiverSignatureDate: global.CaregiverSignatureDate,
-                ClientSignature: global.ClientSignature,
-                ClientSignatureDate: global.ClientSignatureDate,
-                SendToPhoneFlag: global.SendToPhoneFlag,
-                Phone1: global.Phone1,
-                Phone2: global.Phone2,
-                SendToEmailFlag: global.SendToEmailFlag,
-                Email1: global.Email1,
-                Email2: global.Email2,
-                DateTimeOfSubmission: global.DateTimeOfSubmission,
-                GPSLocationOfSubmission: global.GPSLocationOfSubmission,
-                ImageOfDCN: global.ImageOfDCN,
-                PDFOfDCN: global.PDFOfDCN,
-                selectedWeek: global.selectedWeek, // for DCN Submitted Detail
-                TimeInOutLength: global.TimeInOutLength,
-                TimeIn1: global.TimeIn_1_Arr,
-                TimeIn1: global.TimeIn_2_Arr,
-                TimeIn1: global.TimeIn_3_Arr,
-                TimeIn1: global.TimeIn_4_Arr,
-                TimeOut1: global.TimeOut_1_Arr,
-                TimeOut2: global.TimeOut_2_Arr,
-                TimeOut3: global.TimeOut_3_Arr,
-                TimeOut4: global.TimeOut_4_Arr,
-                HoursPerDay: global.HoursPerDay_Arr,
-                MobilityWalkingMovingFlag: global.MobilityWalkingMovingFlag,
-                BathingShoweringFlag: global.BathingShoweringFlag,
-                DressingFlag: global.DressingFlag,
-                ToiletingFlag: global.ToiletingFlag,
-                EatingFlag: global.EatingFlag,
-                ContinenceBladderBowelFlag: global.ContinenceBladderBowelFlag,
-                MealPrepIncludingFlag: global.MealPrepIncludingFlag,
-                LaundryFlag: global.LaundryFlag,
-                // PersonalCareHours: global.PersonalCareHours,
-                // HomemakingHours: global.HomemakingHours,
-                // CompanionHours: global.CompanionHours,
-                // RespiteHours: global.RespiteHours,
-                // AttendantHours: global.AttendantHours,
-                author: global.FirstName + ' ' + global.LastName, // --- created by or updated by
-            })
+            body: data
+            // JSON.stringify({
+            //     SocialSecurityNum: global.SocialSecurityNum, // for DCN Submitted Header
+            //     ClientId: global.ClientId,
+            //     LastSaturdayDate: global.LastSaturdayDate,
+            //     HourlyFlag: global.HourlyFlag,
+            //     LiveInFlag: global.LiveInFlag,
+            //     OvernightFlag: global.OvernightFlag,
+            //     WeekTotalHours: global.WeekTotalHours,
+            //     ComplianceFlag: global.ComplianceFlag,
+            //     CaregiverSignature: global.CaregiverSignature,
+            //     CaregiverSignatureDate: global.CaregiverSignatureDate,
+            //     ClientSignature: global.ClientSignature,
+            //     ClientSignatureDate: global.ClientSignatureDate,
+            //     SendToPhoneFlag: global.SendToPhoneFlag,
+            //     Phone1: global.Phone1,
+            //     Phone2: global.Phone2,
+            //     SendToEmailFlag: global.SendToEmailFlag,
+            //     Email1: global.Email1,
+            //     Email2: global.Email2,
+            //     DateTimeOfSubmission: global.DateTimeOfSubmission,
+            //     GPSLocationOfSubmission: global.GPSLocationOfSubmission,
+            //     ImageOfDCN: global.ImageOfDCN,
+            //     PDFOfDCN: global.PDFOfDCN,
+            //     selectedWeek: global.selectedWeek, // for DCN Submitted Detail
+            //     TimeInOutLength: global.TimeInOutLength,
+            //     TimeIn1: global.TimeIn_1_Arr,
+            //     TimeIn1: global.TimeIn_2_Arr,
+            //     TimeIn1: global.TimeIn_3_Arr,
+            //     TimeIn1: global.TimeIn_4_Arr,
+            //     TimeOut1: global.TimeOut_1_Arr,
+            //     TimeOut2: global.TimeOut_2_Arr,
+            //     TimeOut3: global.TimeOut_3_Arr,
+            //     TimeOut4: global.TimeOut_4_Arr,
+            //     HoursPerDay: global.HoursPerDay_Arr,
+            //     MobilityWalkingMovingFlag: global.MobilityWalkingMovingFlag,
+            //     BathingShoweringFlag: global.BathingShoweringFlag,
+            //     DressingFlag: global.DressingFlag,
+            //     ToiletingFlag: global.ToiletingFlag,
+            //     EatingFlag: global.EatingFlag,
+            //     ContinenceBladderBowelFlag: global.ContinenceBladderBowelFlag,
+            //     MealPrepIncludingFlag: global.MealPrepIncludingFlag,
+            //     LaundryFlag: global.LaundryFlag,
+            //     // PersonalCareHours: global.PersonalCareHours,
+            //     // HomemakingHours: global.HomemakingHours,
+            //     // CompanionHours: global.CompanionHours,
+            //     // RespiteHours: global.RespiteHours,
+            //     // AttendantHours: global.AttendantHours,
+            //     author: global.FirstName + ' ' + global.LastName, // --- created by or updated by
+            // })
         })
         .then((res) => res.json())
         .then((resJson) => {
@@ -303,6 +363,7 @@ class SignAndSendScreen extends Component {
         })
         .catch((err) => {
             console.log('err=', err);
+            Alert.alert('Error', 'Network request failed');
             this.setState({spinner: false});
         });
     }
