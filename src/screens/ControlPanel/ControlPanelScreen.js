@@ -22,11 +22,19 @@ class ControlPanelScreen extends React.Component {
             clientArr: global.clientArr, 
             arr: [{label: 'First', value: '123'}, {label: 'Second', value: '456'}]
         }; 
+        this.initControlPanel();
+    }
+
+    initControlPanel = () => {
+        this.setState({clientId: global.clientArr[0].value});
+        global.client = global.clientArr[0];
+        global.ClientId = global.client.value;
     }
 
     selectClient = (value, index) => {
         this.setState({client: value}); 
         global.ClientId = value; // DB - ClientId
+        global.client = global.clientArr[index];
     }
 
     render() {

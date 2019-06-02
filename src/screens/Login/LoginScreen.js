@@ -140,7 +140,7 @@ class LoginScreen extends React.Component {
                     />
                     <TouchableOpacity 
                         style={styles.submit}
-                        onPress={() => this.fetchClients()}
+                        onPress={() => this.submitLoginForm()}
                         >
                         <Text style={styles.submitText}>Submit</Text>
                     </TouchableOpacity>
