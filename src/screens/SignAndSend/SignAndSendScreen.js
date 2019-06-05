@@ -12,6 +12,7 @@ class SignAndSendScreen extends Component {
         super(props);
 
         this.state = {
+            spinner: false,
             ComplianceFlag: true,
             caregiverSign: '',
             caregiverSignDate: '',
@@ -277,7 +278,8 @@ class SignAndSendScreen extends Component {
         // data.append('created', global.created);
         // data.append('updatedBy', global.updatedBy);
         // data.append('updated', global.updated);
-        data.append('selectedWeek', global.selectedWeek); // for DCN Submitted Detail
+        data.append('selectedWeek', JSON.stringify(global.selectedWeek)); // for DCN Submitted Detail
+        data.append('DCNWeek', JSON.stringify(global.DCNWeek)); // for DCNWeek Submitted Detail
         data.append('TimeInOutLength', global.TimeInOutLength);
         data.append('TimeIn1', JSON.stringify(global.TimeIn_1_Arr));
         data.append('TimeIn2', JSON.stringify(global.TimeIn_2_Arr));
@@ -303,18 +305,23 @@ class SignAndSendScreen extends Component {
         data.append('RespiteHours', global.RespiteHours);
         data.append('AttendantHours', global.AttendantHours); // =====
         data.append('author', global.FirstName + ' ' + global.LastName); // --- created by or updated by
+        
+        this.setState({spinner: true});
         fetch(CONSTS.BASE_API + 'send_data', {
             method: 'POST', 
+            headers:{
+                "Content-Type": "multipart/form-data; charset=utf-8",
+            },
             body: data
         })
         .then((res) => res.json())
         .then((resJson) => {
-            console.log('resjson=', resJson);
             this.setState({spinner: false});
+            Alert.alert('', resJson.msg);
         })
         .catch((err) => {
-            console.log('err=', err);
-            Alert.alert('Error', 'Network request failed');
+            console.log('4 err=', err);
+            // Alert.alert('Error', 'Network request failed');
             this.setState({spinner: false});
         });
     }

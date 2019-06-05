@@ -18,7 +18,7 @@ class ControlPanelScreen extends React.Component {
         this.state = { 
             spinner: false,
             client: 'first',
-            clientId: null,
+            clientId: global.clientArr[0].value,
             choosenTab: 0,
             clientArr: global.clientArr, 
             arr: [{label: 'First', value: '123'}, {label: 'Second', value: '456'}],
@@ -27,7 +27,6 @@ class ControlPanelScreen extends React.Component {
     }
 
     initControlPanel = () => {
-        this.setState({clientId: global.clientArr[0].value});
         global.client = global.clientArr[0];
         global.ClientId = global.client.value;
         // ---- default global selected (current) YYYY MM DD

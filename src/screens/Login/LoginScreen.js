@@ -21,12 +21,22 @@ class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
+        // --- auto fill to login fields for testing --- //
+        // AsyncStorage.setItem('loginLimit', '0');
+        // AsyncStorage.setItem('passcodeLimit', '0');
+        // this.setState({
+        //     firstname: 'Evan',
+        //     lastname: 'Shapiro',
+        //     ssn: '0001'
+        // });
         AsyncStorage.getItem(USER_KEY).then(res => {
-            var userinfo = JSON.parse(res);
-            this.setState({
-                firstname: userinfo.firstname,
-                lastname: userinfo.lastname
-            });    
+            if(res) {
+                var userinfo = JSON.parse(res);
+                this.setState({
+                    firstname: userinfo.firstname,
+                    lastname: userinfo.lastname
+                });
+            }
         });
         AsyncStorage.getItem('loginLimit').then(res => {
             if(!res) AsyncStorage.setItem('loginLimit', '0');
@@ -40,6 +50,7 @@ class LoginScreen extends React.Component {
                 Alert.alert('Please call our office for help at 954-782-3741');
             } else {
                 this.setState({spinner: true});
+                console.log('before=', this.state.firstname, this.state.lastname, this.state.ssn);
                 fetch(CONSTS.BASE_API + 'login/get_passcode', {
                     method: 'POST', 
                     headers:{
@@ -71,7 +82,8 @@ class LoginScreen extends React.Component {
                 })
                 .catch((err) => {
                     console.log('err=', err);
-                    AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString)
+                    alert('Error');
+                    AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
                     this.setState({spinner: false});
                 });
             }
