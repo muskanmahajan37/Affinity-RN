@@ -13,17 +13,17 @@ class SignAndSendScreen extends Component {
 
         this.state = {
             spinner: false,
-            ComplianceFlag: true,
-            caregiverSign: '',
-            caregiverSignDate: '',
-            clientSign: '',
-            clientSignDate: '',
-            SendToPhoneFlag: true,
-            Phone1: '',
-            Phone2: '',
-            SendToEmailFlag: true,
-            Email1: '',
-            Email2: '',
+            ComplianceFlag: global.ComplianceFlag ? global.ComplianceFlag : true,
+            caregiverSign: global.caregiverSign ? global.caregiverSign : '',
+            caregiverSignDate: global.caregiverSignDate ? global.caregiverSignDate : '',
+            clientSign: global.clientSign ? global.clientSign : '',
+            clientSignDate: global.clientSignDate ? global.clientSignDate : '',
+            SendToPhoneFlag: global.SendToPhoneFlag ? global.SendToPhoneFlag : true,
+            Phone1: global.Phone1 ? global.Phone1 : '',
+            Phone2: global.Phone2 ? global.Phone2 : '',
+            SendToEmailFlag: global.SendToEmailFlag ? global.SendToEmailFlag : true,
+            Email1: global.Email1 ? global.Email1 : '',
+            Email2: global.Email2 ? global.Email2 : '',
             PAFreminder: false,
         }
     }
@@ -237,19 +237,44 @@ class SignAndSendScreen extends Component {
         this.props.navigation.navigate('PatientAdmissionForm')
     }
 
+    validationOfPhone() {
+        if(this.state.SendToPhoneFlag) {
+            return this.state.Phone1 && this.state.Phone2;
+        } else {
+            return true;
+        }
+    }
+
+    validationOfEmail() {
+        if(this.state.SendToEmailFlag) {
+            return this.state.Email1 && this.state.Email2;
+        } else {
+            return true;
+        }
+    }
+
     saveAndExitSignForm() {
         this.props.navigation.navigate('ControlPanel')
     }
 
     sendSignForm() {
+        if(!this.validationOfPhone()) {
+            Alert.alert('Invalid Input', 'Please fill the Phone Number.');
+            return;
+        }
+        if(!this.validationOfEmail()) {
+            Alert.alert('Invalid Input', 'Please fill the Email Address.');
+            return;
+        }
         var DCNImageFileName = global.FirstName + global.LastName + '_' + (new Date().getTime());
+        global.DCNImageFileName = DCNImageFileName;
         const data = new FormData();
         data.append('ImageOfDCN', {
             uri: global.ImageOfDCN,
             type: 'image/png',
             name: DCNImageFileName
         });
-        data.append('DCNImageFileName', DCNImageFileName);
+        data.append('DCNImageFileName', global.DCNImageFileName);
         data.append('SocialSecurityNum', global.SocialSecurityNum); // for DCN Submitted Header
         data.append('ClientId', global.ClientId);
         data.append('LastSaturdayDate', global.LastSaturdayDate);
@@ -306,6 +331,7 @@ class SignAndSendScreen extends Component {
         data.append('AttendantHours', global.AttendantHours); // =====
         data.append('author', global.FirstName + ' ' + global.LastName); // --- created by or updated by
         
+        // this.saveDCNObjToLocal();
         this.setState({spinner: true});
         fetch(CONSTS.BASE_API + 'send_data', {
             method: 'POST', 
@@ -318,12 +344,84 @@ class SignAndSendScreen extends Component {
         .then((resJson) => {
             this.setState({spinner: false});
             Alert.alert('', resJson.msg);
+            if(resJson.status == 0) {
+                this.clearDCNObjOnLocal();
+            } else {
+                this.saveDCNObjToLocal();
+            }
         })
         .catch((err) => {
             console.log('4 err=', err);
             // Alert.alert('Error', 'Network request failed');
             this.setState({spinner: false});
+            this.saveDCNObjToLocal();
         });
+    }
+
+    clearDCNObjOnLocal() {
+        AsyncStorage.removeItem('DCNObj');
+    }
+    
+    saveDCNObjToLocal() {
+        var DCNObj = {
+            ImageOfDCN : global.ImageOfDCN,
+            DCNImageFileName : global.DCNImageFileName,
+            SocialSecurityNum : global.SocialSecurityNum, // for DCN Submitted Head,
+            ClientId : global.ClientId,
+            LastSaturdayDate : global.LastSaturdayDate,
+            HourlyFlag : global.HourlyFlag,
+            LiveInFlag : global.LiveInFlag,
+            OvernightFlag : global.OvernightFlag,
+            WeekTotalHours : global.WeekTotalHours,
+            ComplianceFlag : global.ComplianceFlag,
+            CaregiverSignature : global.CaregiverSignature,
+            CaregiverSignatureDate : moment(new Date(global.CaregiverSignatureDate)).format("YYYY-MM-DD"),
+            ClientSignature : global.ClientSignature,
+            ClientSignatureDate : moment(new Date(global.ClientSignatureDate)).format("YYYY-MM-DD"),
+            HasPAF : global.HasPAF,
+            // // PafId : global.PafId,
+            SendToPhoneFlag : global.SendToPhoneFlag,
+            Phone1 : global.Phone1,
+            Phone2 : global.Phone2,
+            SendToEmailFlag : global.SendToEmailFlag,
+            Email1 : global.Email1,
+            Email2 : global.Email2,
+            DateTimeOfSubmission : global.DateTimeOfSubmission,
+            GPSLocationOfSubmission : global.GPSLocationOfSubmission, // ---
+            PDFOfDCN : global.PDFOfDCN, // ===
+            // createdBy : global.createdBy,
+            // created : global.created,
+            // updatedBy : global.updatedBy,
+            // updated : global.updated,
+            selectedWeek : JSON.stringify(global.selectedWeek), // for DCN Submitted Detail
+            DCNWeek : JSON.stringify(global.DCNWeek), // for DCNWeek Submitted Detail
+            TimeInOutLength : global.TimeInOutLength,
+            TimeIn1 : JSON.stringify(global.TimeIn_1_Arr),
+            TimeIn2 : JSON.stringify(global.TimeIn_2_Arr),
+            TimeIn3 : JSON.stringify(global.TimeIn_3_Arr),
+            TimeIn4 : JSON.stringify(global.TimeIn_4_Arr),
+            TimeOut1 : JSON.stringify(global.TimeOut_1_Arr),
+            TimeOut2 : JSON.stringify(global.TimeOut_2_Arr),
+            TimeOut3 : JSON.stringify(global.TimeOut_3_Arr),
+            TimeOut4 : JSON.stringify(global.TimeOut_4_Arr),
+            HoursPerDay : JSON.stringify(global.HoursPerDay_Arr),
+            MobilityWalkingMovingFlag : JSON.stringify(global.MobilityWalkingMovingFlag),
+            BathingShoweringFlag : JSON.stringify(global.BathingShoweringFlag),
+            DressingFlag : JSON.stringify(global.DressingFlag),
+            ToiletingFlag : JSON.stringify(global.ToiletingFlag),
+            EatingFlag : JSON.stringify(global.EatingFlag),
+            ContinenceBladderBowelFlag : JSON.stringify(global.ContinenceBladderBowelFlag),
+            MealPrepIncludingFlag : JSON.stringify(global.MealPrepIncludingFlag),
+            LaundryFlag : JSON.stringify(global.LaundryFlag),
+            LightHousekeepingIncludingFlag : JSON.stringify(global.LightHousekeepingIncludingFlag),
+            PersonalCareHours : global.PersonalCareHours, // -----
+            HomemakingHours : global.HomemakingHours,
+            CompanionHours : global.CompanionHours,
+            RespiteHours : global.RespiteHours,
+            AttendantHours : global.AttendantHours, // =====
+            author : global.FirstName + ' ' + global.LastName, // --- created by or updated by
+        }
+        AsyncStorage.setItem({'DCNObj' : JSON.stringify(DCNObj)});
     }
     
 }
