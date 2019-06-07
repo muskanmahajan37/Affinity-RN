@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TouchableHighlight, Picker, Alert } from 'react-native';
+import DatePicker from 'react-native-datepicker';
 
 class DCNTimePicker extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            time : this.props.defaultTime ? parseInt(this.props.defaultTime) : 0,
+            time : this.props.defaultTime ? parseInt(this.props.defaultTime) : '',
             itemList: ['--', '01am', '02am', '03am', '04am', '05am', '06am', '07am', '08am', '09am', '10am', '11am', '12pm', '01pm', '02pm', '03pm', '04pm', '05pm', '06pm', '07pm', '08pm', '09pm', '10pm', '11pm', '00am'],
             timeList: [
                 {label: '--', value: ''},
@@ -119,23 +120,44 @@ class DCNTimePicker extends Component {
     }
 
     render() {
-        console.log('>>>>>>>>> default >>>>', this.state.time);
-        var list = this.state.itemList;
-        var timeArr = [];
-        for (var i=0; i<list.length; i++) {
-            timeArr.push(
-                <Picker.Item key={i} label={list[i]} value={list[i]} />
-            );
-        }
+        // console.log('>>>>>>>>> default >>>>', this.state.time);
+        // var list = this.state.itemList;
+        // var timeArr = [];
+        // for (var i=0; i<list.length; i++) {
+        //     timeArr.push(
+        //         <Picker.Item key={i} label={list[i]} value={list[i]} />
+        //     );
+        // }
         return (
             <View style={{}}>
-                <Picker 
+                {/* <Picker 
                     selectedValue={this.state.itemList[this.state.time]}
                     style={{height: 35, width: 120, backgroundColor: 'transparent'}}
                     onValueChange={(itemValue, itemIndex) => {this.selectTime(itemValue, itemIndex)} }
                 >
                     { timeArr }
-                </Picker>
+                </Picker> */}
+                <DatePicker
+                    style={{width: 68, height: 35}}
+                    date={this.state.time}
+                    mode="time"
+                    placeholder=" "
+                    format="HH:mm"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    androidMode="spinner"
+                    is24Hour={true}
+                    showIcon={false}
+                    customStyles={{
+                    dateInput: {
+                        width: 68,
+                        height: 35,
+                        borderWidth: 0
+                    }
+                    // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(date) => {this.setState({time: date}); alert(date);}}
+                />
             </View>
         );
     };
