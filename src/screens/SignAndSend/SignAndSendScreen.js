@@ -333,30 +333,7 @@ class SignAndSendScreen extends Component {
         data.append('author', global.FirstName + ' ' + global.LastName); // --- created by or updated by
         
         // this.saveDCNObjToLocal();
-        this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'send_data', {
-            method: 'POST', 
-            headers:{
-                "Content-Type": "multipart/form-data; charset=utf-8",
-            },
-            body: data
-        })
-        .then((res) => res.json())
-        .then((resJson) => {
-            this.setState({spinner: false});
-            Alert.alert('', resJson.msg);
-            if(resJson.status == 0) {
-                this.clearDCNObjOnLocal();
-            } else {
-                this.saveDCNObjToLocal();
-            }
-        })
-        .catch((err) => {
-            console.log('4 err=', err);
-            // Alert.alert('Error', 'Network request failed');
-            this.setState({spinner: false});
-            this.saveDCNObjToLocal();
-        });
+        alert('You sent DCN data.');
     }
 
     clearDCNObjOnLocal() {

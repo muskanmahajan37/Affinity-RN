@@ -156,7 +156,7 @@ class DCNTimePicker extends Component {
                     }
                     // ... You can check the source to find the other keys.
                     }}
-                    onDateChange={(date) => {this.setState({time: date}); alert(date);}}
+                    onDateChange={(date) => {this.setState({time: date});}}
                 />
             </View>
         );

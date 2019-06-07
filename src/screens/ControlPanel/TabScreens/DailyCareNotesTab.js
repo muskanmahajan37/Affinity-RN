@@ -32,64 +32,6 @@ class DailyCareNotesTab extends Component {
         // this.selectedMonth(this.state.selectedMonth);
     }
 
-    componentDidMount() {
-        if(global.selectedWeekIndex && parseInt(global.selectedWeek[0]) > parseInt(global.selectedWeek[6])) {
-            var calcY = parseInt(global.selectedMonth.split('-')[0]);
-            var calcM = parseInt(global.selectedMonth.split('-')[1]);
-            calcY = calcM == 12 ? calcY + 1 : calcY;
-            calcM = calcM == 12 ? 1 : calcM;
-            global.LastSaturdayDate = calcY + '-' + calcM + '-' + global.selectedWeek[6];
-        } else {
-            global.LastSaturdayDate = global.selectedMonth + '-' + global.selectedWeek[6];
-        }
-        console.log('=== selected week ===', global.LastSaturdayDate, global.ClientId, global.SocialSecurityNum);
-        this.fetchDCNItems();
-    }
-
-    fetchDCNItems() {
-        this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'get_dcnlist', {
-            method: 'POST', 
-            headers:{
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({
-                SocialSecurityNum: global.SocialSecurityNum.toString(),
-                ClientId: global.ClientId.toString(),
-                LastSaturdayDate: global.LastSaturdayDate.toString()
-            })
-        })
-        .then((res) => res.json())
-        .then((resJson) => {
-            this.setState({spinner: false});
-            console.log('=== fetch DCN items result ===', resJson);
-            if(resJson.status == 0) {
-                DCNList = JSON.parse(resJson.data || '{}');
-                this.setState({DCNList: DCNList});
-                this.initDCNList(DCNList);
-            } else {
-                Alert.alert('Error', resJson.msg);
-            }
-        })
-        .catch((err) => {
-            this.setState({spinner: false});
-            console.log('=== fetch DCN items - error ===', err);
-        });
-    }
-
-    initDCNList(DCNList) {
-        var DCNFlatList = [];
-        for (var i = 0; i < DCNList.length; i++) {
-            var title = DCNList[i].ClientName.split(' ').join('_') + '_' + DCNList[i].LastSaturdayDate.split('-').join('_');
-            var key = DCNList[i].DcnHeaderId.toString();
-            DCNFlatList.push({
-                title: title,
-                key: key
-            });
-        }
-        this.setState({DCNFlatList: DCNFlatList});
-    }
-
     getCurrentYYYYDD() {
         var today = new Date();
         return today.getFullYear() + '-' + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1))
