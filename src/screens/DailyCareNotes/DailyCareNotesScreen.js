@@ -13,7 +13,7 @@ class DailyCareNotesScreen extends Component {
         this.state = {
             DCNflag: 0,
             week: global.selectedWeek,
-            totalHour: global.WeekTotalHours ? global.WeekTotalHours : '0'
+            totalHour: global.WeekTotalHours ? global.WeekTotalHours : 0
         }
     }
 
