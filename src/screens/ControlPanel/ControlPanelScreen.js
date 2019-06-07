@@ -60,7 +60,7 @@ class ControlPanelScreen extends React.Component {
             <View style={styles.background}>
                 <Spinner 
                     visible={this.state.spinner} 
-                    textContent={'Loading...'}
+                    textContent={''}
                     textStyle={styles.spinnerTextStyle}
                 />
                 <View style={{flex: 3}}>

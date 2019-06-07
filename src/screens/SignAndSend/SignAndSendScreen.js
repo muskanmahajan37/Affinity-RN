@@ -51,7 +51,7 @@ class SignAndSendScreen extends Component {
                 <ScrollView horizontal={false}>
                     <Spinner 
                         visible={this.state.spinner} 
-                        textContent={'Loading...'}
+                        textContent={''}
                         textStyle={styles.spinnerTextStyle}
                     />
                     <View style={{flex: 1, flexDirection: 'row', height:'auto'}}>
