@@ -43,16 +43,17 @@ class DCNItem extends Component {
                 DcnHeaderId: DcnHeaderId.toString()
             })
         })
-        .then((res) => res.json())
+        .then((res) => res.text())
         .then((resJson) => {
-            console.log('==>>> DcnDetail >>> resJson ===>>>', resJson);
+            
+            result = JSON.parse(resJson);
+            console.log('==>>> DcnDetail >>> result ===>>>', result);
             this.setState({spinner: false});
-            if (resJson.status == 0) {
-                DCNObj = JSON.parse(resJson.data || '{}');
+            if (result.status == 0) {
+                DCNObj = result.data;
                 this.initDCNGlobalParamsFromDB(DCNObj);
-                this.initSelectedWeekTerms(DCNObj.LastSaturdayDate);
-                this.generateDCNWeek();
-                console.log('>>>>>', DCNObj);
+                // this.initSelectedWeekTerms(DCNObj.LastSaturdayDate);
+                // this.generateDCNWeek();
                 this.props.navigation.navigate('DailyCareNotes');
             } else {
                 Alert.alert('Error', resJson.msg);
@@ -94,34 +95,34 @@ class DCNItem extends Component {
         // global.created = DCNObj.created;
         // global.updatedBy = DCNObj.updatedBy;
         // global.updated = DCNObj.updated;
-        global.selectedWeek = JSON.parse(DCNObj.selectedWeek); // for DCN Submitted Detail
-        global.DCNWeek = JSON.parse(DCNObj.DCNWeek); // for DCNWeek Submitted Detail
+        global.selectedWeek = DCNObj.selectedWeek; // for DCN Submitted Detail
+        global.DCNWeek = DCNObj.DCNWeek; // for DCNWeek Submitted Detail
         global.TimeInOutLength = DCNObj.TimeInOutLength;
-        global.TimeIn_1_Arr = JSON.parse(DCNObj.TimeIn1);
-        global.TimeIn_2_Arr = JSON.parse(DCNObj.TimeIn2);
-        global.TimeIn_3_Arr = JSON.parse(DCNObj.TimeIn3);
-        global.TimeIn_4_Arr = JSON.parse(DCNObj.TimeIn4);
-        global.TimeOut_1_Arr = JSON.parse(DCNObj.TimeOut1);
-        global.TimeOut_2_Arr = JSON.parse(DCNObj.TimeOut2);
-        global.TimeOut_3_Arr = JSON.parse(DCNObj.TimeOut3);
-        global.TimeOut_4_Arr = JSON.parse(DCNObj.TimeOut4);
-        global.HoursPerDay_Arr = JSON.parse(DCNObj.HoursPerDay);
-        global.MobilityWalkingMovingFlag = JSON.parse(DCNObj.MobilityWalkingMovingFlag);
-        global.BathingShoweringFlag = JSON.parse(DCNObj.BathingShoweringFlag);
-        global.DressingFlag = JSON.parse(DCNObj.DressingFlag);
-        global.ToiletingFlag = JSON.parse(DCNObj.ToiletingFlag);
-        global.EatingFlag = JSON.parse(DCNObj.EatingFlag);
-        global.ContinenceBladderBowelFlag = JSON.parse(DCNObj.ContinenceBladderBowelFlag);
-        global.MealPrepIncludingFlag = JSON.parse(DCNObj.MealPrepIncludingFlag);
-        global.LaundryFlag = JSON.parse(DCNObj.LaundryFlag);
-        global.LightHousekeepingIncludingFlag = JSON.parse(DCNObj.LightHousekeepingIncludingFlag);
+        global.TimeIn_1_Arr = DCNObj.TimeIn1;
+        global.TimeIn_2_Arr = DCNObj.TimeIn2;
+        global.TimeIn_3_Arr = DCNObj.TimeIn3;
+        global.TimeIn_4_Arr = DCNObj.TimeIn4;
+        global.TimeOut_1_Arr = DCNObj.TimeOut1;
+        global.TimeOut_2_Arr = DCNObj.TimeOut2;
+        global.TimeOut_3_Arr = DCNObj.TimeOut3;
+        global.TimeOut_4_Arr = DCNObj.TimeOut4;
+        global.HoursPerDay_Arr = DCNObj.HoursPerDay;
+        global.MobilityWalkingMovingFlag = DCNObj.MobilityWalkingMovingFlag;
+        global.BathingShoweringFlag = DCNObj.BathingShoweringFlag;
+        global.DressingFlag = DCNObj.DressingFlag;
+        global.ToiletingFlag = DCNObj.ToiletingFlag;
+        global.EatingFlag = DCNObj.EatingFlag;
+        global.ContinenceBladderBowelFlag = DCNObj.ContinenceBladderBowelFlag;
+        global.MealPrepIncludingFlag = DCNObj.MealPrepIncludingFlag;
+        global.LaundryFlag = DCNObj.LaundryFlag;
+        global.LightHousekeepingIncludingFlag = DCNObj.LightHousekeepingIncludingFlag;
         global.PersonalCareHours = DCNObj.PersonalCareHours; // -----
         global.HomemakingHours = DCNObj.HomemakingHours;
         global.CompanionHours = DCNObj.CompanionHours;
         global.RespiteHours = DCNObj.RespiteHours;
         global.AttendantHours = DCNObj.AttendantHours; // =====
-        global.FirstName = DCNObj.author.split(' ')[0];
-        global.LastName = DCNObj.author.split(' ')[1];
+        global.FirstName = DCNObj.updatedBy.split(' ')[0];
+        global.LastName = DCNObj.updatedBy.split(' ')[1];
     }
 
     initSelectedWeekTerms = (LastSaturdayDate) => {

@@ -19,11 +19,11 @@ class SignAndSendScreen extends Component {
             clientSign: global.ClientSignature ? global.ClientSignature : '',
             clientSignDate: global.ClientSignatureDate ? global.ClientSignatureDate : '',
             SendToPhoneFlag: global.SendToPhoneFlag ? global.SendToPhoneFlag : true,
-            Phone1: global.Phone1 ? global.Phone1 : '',
-            Phone2: global.Phone2 ? global.Phone2 : '',
+            Phone1: (global.Phone1 && global.Phone1 != 'undefined' && global.Phone1 != 'NULL') ? global.Phone1 : '',
+            Phone2: (global.Phone2 && global.Phone2 != 'undefined' && global.Phone2 != 'NULL') ? global.Phone2 : '',
             SendToEmailFlag: global.SendToEmailFlag ? global.SendToEmailFlag : true,
-            Email1: global.Email1 ? global.Email1 : '',
-            Email2: global.Email2 ? global.Email2 : '',
+            Email1: (global.Email1 && global.Email1 != 'undefined' && global.Email1 != 'NULL') ? global.Email1 : '',
+            Email2: (global.Email2 && global.Email2 != 'undefined' && global.Email2 != 'NULL') ? global.Email2 : '',
             PAFreminder: false,
         }
     }
@@ -291,11 +291,11 @@ class SignAndSendScreen extends Component {
         data.append('HasPAF', global.HasPAF);
         // // data.append('PafId', global.PafId);
         data.append('SendToPhoneFlag', global.SendToPhoneFlag);
-        data.append('Phone1', global.Phone1);
-        data.append('Phone2', global.Phone2);
+        data.append('Phone1', global.Phone1 ? global.Phone1 : '');
+        data.append('Phone2', global.Phone2 ? global.Phone2 : '');
         data.append('SendToEmailFlag', global.SendToEmailFlag);
-        data.append('Email1', global.Email1);
-        data.append('Email2', global.Email2);
+        data.append('Email1', global.Email1 ? global.Email1 : '');
+        data.append('Email2', global.Email2 ? global.Email2 : '');
         data.append('DateTimeOfSubmission', global.DateTimeOfSubmission);
         data.append('GPSLocationOfSubmission', global.GPSLocationOfSubmission); // ---
         // data.append('ImageOfDCN', global.ImageOfDCN);

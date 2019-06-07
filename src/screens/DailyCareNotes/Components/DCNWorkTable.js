@@ -9,17 +9,17 @@ class DCNWorkTable extends Component {
         this.state = {
             week: this.props.week,
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            Mobility_Walking_Moving_Flag: [false, false, false, false, false, false, false],
-            Bathing_Showering_Flag: [false, false, false, false, false, false, false],
-            Dressing_Flag: [false, false, false, false, false, false, false],
-            Toileting_Flag: [false, false, false, false, false, false, false],
-            Eating_Flag: [false, false, false, false, false, false, false],
-            Continence_Bladder_Bowel_Flag: [false, false, false, false, false, false, false],
-            Meal_Prep_Including_Flag: [false, false, false, false, false, false, false],
-            Laundry_Flag: [false, false, false, false, false, false, false],
-            Light_Housekeeping_Including_Flag: [false, false, false, false, false, false, false],
+            Mobility_Walking_Moving_Flag: global.MobilityWalkingMovingFlag ? global.MobilityWalkingMovingFlag : [false, false, false, false, false, false, false],
+            Bathing_Showering_Flag: global.BathingShoweringFlag ? global.BathingShoweringFlag : [false, false, false, false, false, false, false],
+            Dressing_Flag: global.DressingFlag ? global.DressingFlag : [false, false, false, false, false, false, false],
+            Toileting_Flag: global.ToiletingFlag ? global.ToiletingFlag : [false, false, false, false, false, false, false],
+            Eating_Flag: global.EatingFlag ? global.EatingFlag : [false, false, false, false, false, false, false],
+            Continence_Bladder_Bowel_Flag: global.ContinenceBladderBowelFlag ? global.ContinenceBladderBowelFlag : [false, false, false, false, false, false, false],
+            Meal_Prep_Including_Flag: global.MealPrepIncludingFlag ? global.MealPrepIncludingFlag : [false, false, false, false, false, false, false],
+            Laundry_Flag: global.LaundryFlag ? global.LaundryFlag : [false, false, false, false, false, false, false],
+            Light_Housekeeping_Including_Flag: global.LightHousekeepingIncludingFlag ? global.LightHousekeepingIncludingFlag : [false, false, false, false, false, false, false],
         }
-        this.initDCNWorkFlags();
+        // this.initDCNWorkFlags();
     }
 
     initDCNWorkFlags = () => {

@@ -145,6 +145,7 @@ class ControlPanelScreen extends React.Component {
 
     goCreateDCN=() => {
         this.generateDCNWeek();
+        this.initCreateDCNGlobalParams();
         this.props.navigation.navigate('DailyCareNotes');
     }
 
@@ -191,6 +192,12 @@ class ControlPanelScreen extends React.Component {
         global.DCNWeek = DCNWeek;
         global.LastSaturdayDate = DCNWeek[DCNWeek.length - 1]; // DB - LastSaturdayDate
         return true;
+    }
+
+    initCreateDCNGlobalParams(){
+        global.HourlyFlag = true; // DB - HourlyFlag
+        global.LiveInFlag = false; // DB - LiveInFlag
+        global.OvernightFlag = false; // DB - OvernightFlag
     }
 }
 
