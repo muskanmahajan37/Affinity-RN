@@ -15,6 +15,7 @@ import ControlPanelScreen from './src/screens/ControlPanel/ControlPanelScreen';
 import DailyCareNotesScreen from './src/screens/DailyCareNotes/DailyCareNotesScreen';
 import SignAndSendScreen from './src/screens/SignAndSend/SignAndSendScreen';
 import PatientAdmissionFormScreen from './src/screens/PatientAdmissionForm/PatientAdmissionFormScreen';
+import Test from './src/screens/Test';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -24,6 +25,13 @@ const instructions = Platform.select({
 });
 
 const MainNavigator = createStackNavigator({
+  // Test: {
+  //   screen: Test,
+  //   navigationOptions: {
+  //     headerStyle: { display: 'none' },
+  //     headerLeft: null
+  //   }
+  // },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
