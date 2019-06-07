@@ -164,7 +164,7 @@ class LoginScreen extends React.Component {
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
                 <Spinner 
                     visible={this.state.spinner} 
-                    textContent={'Loading...'}
+                    textContent={''}
                     textStyle={styles.spinnerTextStyle}
                 />
                 <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center'}}>
