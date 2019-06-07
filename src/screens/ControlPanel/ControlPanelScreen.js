@@ -29,6 +29,7 @@ class ControlPanelScreen extends React.Component {
     initControlPanel = () => {
         global.client = global.clientArr[0];
         global.ClientId = global.client.value;
+        global.ClientName = global.client.label;
         // ---- default global selected (current) YYYY MM DD
         global.selectedMonth = this.getCurrentYYYYDD();
         global.selectedWeekIndex = getCurrentWeekIndex() ? getCurrentWeekIndex() : 0

@@ -14,10 +14,10 @@ class SignAndSendScreen extends Component {
         this.state = {
             spinner: false,
             ComplianceFlag: global.ComplianceFlag ? global.ComplianceFlag : true,
-            caregiverSign: global.caregiverSign ? global.caregiverSign : '',
-            caregiverSignDate: global.caregiverSignDate ? global.caregiverSignDate : '',
-            clientSign: global.clientSign ? global.clientSign : '',
-            clientSignDate: global.clientSignDate ? global.clientSignDate : '',
+            caregiverSign: global.CaregiverSignature ? global.CaregiverSignature : '',
+            caregiverSignDate: global.CaregiverSignatureDate ? global.CaregiverSignatureDate : '',
+            clientSign: global.ClientSignature ? global.ClientSignature : '',
+            clientSignDate: global.ClientSignatureDate ? global.ClientSignatureDate : '',
             SendToPhoneFlag: global.SendToPhoneFlag ? global.SendToPhoneFlag : true,
             Phone1: global.Phone1 ? global.Phone1 : '',
             Phone2: global.Phone2 ? global.Phone2 : '',
@@ -277,6 +277,7 @@ class SignAndSendScreen extends Component {
         data.append('DCNImageFileName', global.DCNImageFileName);
         data.append('SocialSecurityNum', global.SocialSecurityNum); // for DCN Submitted Header
         data.append('ClientId', global.ClientId);
+        data.append('ClientName', global.ClientName);
         data.append('LastSaturdayDate', global.LastSaturdayDate);
         data.append('HourlyFlag', global.HourlyFlag);
         data.append('LiveInFlag', global.LiveInFlag);
@@ -368,6 +369,7 @@ class SignAndSendScreen extends Component {
             DCNImageFileName : global.DCNImageFileName,
             SocialSecurityNum : global.SocialSecurityNum, // for DCN Submitted Head,
             ClientId : global.ClientId,
+            ClientName : global.ClientName,
             LastSaturdayDate : global.LastSaturdayDate,
             HourlyFlag : global.HourlyFlag,
             LiveInFlag : global.LiveInFlag,
