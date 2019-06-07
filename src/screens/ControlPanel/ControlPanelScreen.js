@@ -195,9 +195,42 @@ class ControlPanelScreen extends React.Component {
     }
 
     initCreateDCNGlobalParams(){
+        // DCNForm
         global.HourlyFlag = true; // DB - HourlyFlag
         global.LiveInFlag = false; // DB - LiveInFlag
         global.OvernightFlag = false; // DB - OvernightFlag
+        global.TimeInOutLength = 0;
+        global.TimeIn_1_Arr = ['', '', '', '', '', '', ''];
+        global.TimeIn_2_Arr = ['', '', '', '', '', '', ''];
+        global.TimeIn_3_Arr = ['', '', '', '', '', '', ''];
+        global.TimeIn_4_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_1_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_2_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_3_Arr = ['', '', '', '', '', '', ''];
+        global.TimeOut_4_Arr = ['', '', '', '', '', '', ''];
+        global.HoursPerDay_Arr = [0, 0, 0, 0, 0, 0, 0];
+        global.WeekTotalHours = 0;
+        global.MobilityWalkingMovingFlag = [false, false, false, false, false, false, false];
+        global.BathingShoweringFlag = [false, false, false, false, false, false, false];
+        global.DressingFlag = [false, false, false, false, false, false, false];
+        global.ToiletingFlag = [false, false, false, false, false, false, false];
+        global.EatingFlag = [false, false, false, false, false, false, false];
+        global.ContinenceBladderBowelFlag = [false, false, false, false, false, false, false];
+        global.MealPrepIncludingFlag = [false, false, false, false, false, false, false];
+        global.LaundryFlag = [false, false, false, false, false, false, false];
+        global.LightHousekeepingIncludingFlag = [false, false, false, false, false, false, false];
+        // SignAndSend
+        global.ComplianceFlag = true;
+        global.CaregiverSignature = '';
+        global.CaregiverSignatureDate = '';
+        global.ClientSignature = '';
+        global.ClientSignatureDate = '';
+        global.SendToPhoneFlag = true;
+        global.Phone1 = '';
+        global.Phone2 = '';
+        global.SendToEmailFlag = true;
+        global.Email1 = '';
+        global.Email2 = '';
     }
 }
 

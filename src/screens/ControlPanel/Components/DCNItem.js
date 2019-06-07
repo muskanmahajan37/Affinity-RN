@@ -97,7 +97,7 @@ class DCNItem extends Component {
         // global.updated = DCNObj.updated;
         global.selectedWeek = DCNObj.selectedWeek; // for DCN Submitted Detail
         global.DCNWeek = DCNObj.DCNWeek; // for DCNWeek Submitted Detail
-        global.TimeInOutLength = DCNObj.TimeInOutLength;
+        global.TimeInOutLength = parseInt(DCNObj.TimeInOutLength);
         global.TimeIn_1_Arr = DCNObj.TimeIn1;
         global.TimeIn_2_Arr = DCNObj.TimeIn2;
         global.TimeIn_3_Arr = DCNObj.TimeIn3;

@@ -17,7 +17,7 @@ class DCNTimeTable extends Component {
     }
 
     initTimeSheet = () => {
-        global.TimeInOutLength = 0;
+        global.TimeInOutLength = global.TimeInOutLength ? global.TimeInOutLength : 0;
         global.TimeIn_1_Arr = global.TimeIn_1_Arr ? global.TimeIn_1_Arr : ['', '', '', '', '', '', ''];
         global.TimeIn_2_Arr = global.TimeIn_2_Arr ? global.TimeIn_2_Arr : ['', '', '', '', '', '', ''];
         global.TimeIn_3_Arr = global.TimeIn_3_Arr ? global.TimeIn_3_Arr : ['', '', '', '', '', '', ''];
@@ -27,6 +27,7 @@ class DCNTimeTable extends Component {
         global.TimeOut_3_Arr = global.TimeOut_3_Arr ? global.TimeOut_3_Arr : ['', '', '', '', '', '', ''];
         global.TimeOut_4_Arr = global.TimeOut_4_Arr ? global.TimeOut_4_Arr : ['', '', '', '', '', '', ''];
         global.HoursPerDay_Arr = global.HoursPerDay_Arr ? global.HoursPerDay_Arr : [0, 0, 0, 0, 0, 0, 0];
+        global.WeekTotalHours = 0;
     }
 
     createTableHeader = () => {
