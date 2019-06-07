@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions, Alert } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 import DCNItem from '../Components/DCNItem';
 import DCNWeekPickerModal from '../Components/DCNWeekPickerModal/DCNWeekPickerModal';
 // import AFWeekSelect from '../../../AFModules/AFWeekSelect/AFWeekSelect';
 import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr, getCurrentWeekIndex } from '../../../helpers/AFDate';
-
+import CONSTS, { USER_KEY, USER_DATA } from '../../../helpers/Consts';
+import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 
 class DailyCareNotesTab extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+            spinner: false, 
             filter: 'Active', 
             options: this.generateOptions(),
             defaultValue: (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
@@ -19,12 +22,72 @@ class DailyCareNotesTab extends Component {
             selectedWeekIndex: getCurrentWeekIndex() ? getCurrentWeekIndex() : 0,
             month: '',
             week: '',
+            DCNList: [], // {DcnHeaderId, ClientName, LastSaturdayDate}
+            DCNFlatList: [], // {title, key}
             dataSource: [{title: 'first', key: 'item1'}, {title: 'second', key: 'item2'}, {title: 'third', key: 'item3'}],
         }; 
         global.selectedMonth = this.getCurrentYYYYDD();
         global.selectedWeekIndex = getCurrentWeekIndex() ? getCurrentWeekIndex() : 0
         global.selectedWeek = getFullMonWeeksArr(global.selectedMonth)[global.selectedWeekIndex];
         // this.selectedMonth(this.state.selectedMonth);
+    }
+
+    componentDidMount() {
+        if(global.selectedWeekIndex && parseInt(global.selectedWeek[0]) > parseInt(global.selectedWeek[6])) {
+            var calcY = parseInt(global.selectedMonth.split('-')[0]);
+            var calcM = parseInt(global.selectedMonth.split('-')[1]);
+            calcY = calcM == 12 ? calcY + 1 : calcY;
+            calcM = calcM == 12 ? 1 : calcM;
+            global.LastSaturdayDate = calcY + '-' + calcM + '-' + global.selectedWeek[6];
+        } else {
+            global.LastSaturdayDate = global.selectedMonth + '-' + global.selectedWeek[6];
+        }
+        console.log('=== selected week ===', global.LastSaturdayDate, global.ClientId, global.SocialSecurityNum);
+        this.fetchDCNItems();
+    }
+
+    fetchDCNItems() {
+        this.setState({spinner: true});
+        fetch(CONSTS.BASE_API + 'get_dcnlist', {
+            method: 'POST', 
+            headers:{
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+                SocialSecurityNum: global.SocialSecurityNum.toString(),
+                ClientId: global.ClientId.toString(),
+                LastSaturdayDate: global.LastSaturdayDate.toString()
+            })
+        })
+        .then((res) => res.json())
+        .then((resJson) => {
+            this.setState({spinner: false});
+            console.log('=== fetch DCN items result ===', resJson);
+            if(resJson.status == 0) {
+                DCNList = JSON.parse(resJson.data || '{}');
+                this.setState({DCNList: DCNList});
+                this.initDCNList(DCNList);
+            } else {
+                Alert.alert('Error', resJson.msg);
+            }
+        })
+        .catch((err) => {
+            this.setState({spinner: false});
+            console.log('=== fetch DCN items - error ===', err);
+        });
+    }
+
+    initDCNList(DCNList) {
+        var DCNFlatList = [];
+        for (var i = 0; i < DCNList.length; i++) {
+            var title = DCNList[i].ClientName.split(' ').join('_') + '_' + DCNList[i].LastSaturdayDate.split('-').join('_');
+            var key = DCNList[i].DcnHeaderId.toString();
+            DCNFlatList.push({
+                title: title,
+                key: key
+            });
+        }
+        this.setState({DCNFlatList: DCNFlatList});
     }
 
     getCurrentYYYYDD() {
@@ -53,6 +116,11 @@ class DailyCareNotesTab extends Component {
     render() {
         return (
             <View style={{flex: 11, zIndex: 1}}>
+                <Spinner 
+                    visible={this.state.spinner} 
+                    textContent={''}
+                    textStyle={styles.spinnerTextStyle}
+                />
                 <View style={{flex: 2, flexDirection: 'row'}}>
                     <Text style={styles.filterText}>Fitler</Text>
                     <View style={styles.filterPickerWrapper}>
@@ -94,8 +162,8 @@ class DailyCareNotesTab extends Component {
                     <View style={{width: '100%'}}>
                         <View style={{width: '100%'}}>
                             <FlatList 
-                                data={this.state.dataSource}
-                                renderItem={({item}) => <DCNItem title={item.title} btnTitle={"Open"}></DCNItem>}
+                                data={this.state.DCNFlatList}
+                                renderItem={({item}) => <DCNItem title={item.title} DcnId={item.key} btnTitle={"Open"}></DCNItem>}
                             />
                         </View>
                         <View style={{width: '100%', alignItems: 'flex-end', paddingRight: 10, paddingTop: 5}}>
@@ -113,7 +181,11 @@ class DailyCareNotesTab extends Component {
             </View>
         );
     };
+
+    
 }
+
+
 
 const styles = StyleSheet.create({
     filterText: {

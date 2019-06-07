@@ -1,10 +1,9 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
     TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import CONSTS from '../../helpers/Consts';
+import CONSTS, { USER_KEY, USER_DATA } from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
-import { USER_KEY, USER_DATA } from '../../helpers/Consts';
 
 class LoginScreen extends React.Component {
     constructor(props) {
@@ -22,41 +21,42 @@ class LoginScreen extends React.Component {
 
     componentDidMount() {
         // --- auto fill to login fields for testing --- //
-        // AsyncStorage.setItem('loginLimit', '0');
-        // AsyncStorage.setItem('passcodeLimit', '0');
-        // this.setState({
-        //     firstname: 'Evan',
-        //     lastname: 'Shapiro',
-        //     ssn: '0001'
-        // });
-        // AsyncStorage.getItem(USER_KEY).then(res => {
-        //     if(res) {
-        //         var userinfo = JSON.parse(res);
-        //         this.setState({
-        //             firstname: userinfo.firstname,
-        //             lastname: userinfo.lastname
-        //         });
-        //     }
-        // });
+        AsyncStorage.setItem('loginLimit', '0');
+        AsyncStorage.setItem('passcodeLimit', '0');
+        this.setState({
+            firstname: 'Evan',
+            lastname: 'Shapiro',
+            ssn: '0001'
+        });
+        AsyncStorage.getItem(USER_KEY).then(res => {
+            if(res) {
+                var userinfo = JSON.parse(res);
+                this.setState({
+                    firstname: userinfo.firstname,
+                    lastname: userinfo.lastname
+                });
+            }
+        });
         AsyncStorage.getItem('loginLimit').then(res => {
             if(!res) AsyncStorage.setItem('loginLimit', '0');
         });
         AsyncStorage.getItem('DCNObj').then(res => {
             if(res) {
                 global.DCNReadyStatus = true;
-                this.initDCNGlobalParams(res);
+                this.initDCNGlobalParamsFromLocal(res);
             } else {
                 global.DCNReadyStatus = false;
             }
         });
     }
 
-    initDCNGlobalParams(res) {
+    initDCNGlobalParamsFromLocal(res) {
         var DCNObj = JSON.parse(res);
         global.ImageOfDCN = DCNObj.ImageOfDCN;
         global.DCNImageFileName = DCNObj.DCNImageFileName;
         global.SocialSecurityNum = DCNObj.SocialSecurityNum; // for DCN Submitted Head,
         global.ClientId = DCNObj.ClientId;
+        global.ClientName = DCNObj.ClientName;
         global.LastSaturdayDate = DCNObj.LastSaturdayDate;
         global.HourlyFlag = DCNObj.HourlyFlag;
         global.LiveInFlag = DCNObj.LiveInFlag;
