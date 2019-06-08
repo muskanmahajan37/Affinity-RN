@@ -55,6 +55,7 @@ class DCNWorkTable extends Component {
     }
 
     set_DCN_Form_Row_Flag = (key, index) => {
+        if (!this.validationForService(index)) return;
         var old_arr = this.getDCNRowArrFromKey(key);
         var new_arr = [];
         for (var i = 0; i < old_arr.length; i++) {
@@ -66,6 +67,14 @@ class DCNWorkTable extends Component {
         }
         this.setState({[key]: new_arr});
         this.saveGlobalDCNWorkFlags(key, new_arr);
+    }
+
+    validationForService(index) {
+        if (global.HoursPerDay_Arr[index]) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     getDCNRowArrFromKey = (key) => {
