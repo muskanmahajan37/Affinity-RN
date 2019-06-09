@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions, Alert, Picker } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 import DCNItem from '../Components/DCNItem';
 import DCNWeekPickerModal from '../Components/DCNWeekPickerModal/DCNWeekPickerModal';
@@ -15,6 +15,7 @@ class DailyCareNotesTab extends Component {
         this.state = { 
             spinner: false, 
             filter: 'Active', 
+            filters: [{label: 'All', value: 'all'}, {label: 'Active', value: 'active'}, {label: 'Sent', value: 'sent'}, {label: 'Cancelled', value: 'cancelled'}],
             options: this.generateOptions(),
             defaultValue: (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
             selectedMonth: this.getCurrentYYYYDD(),
@@ -112,7 +113,21 @@ class DailyCareNotesTab extends Component {
         global.selectedWeek = getFullMonWeeksArr(YYYYMM)[0];
     }
 
+    selectFilter = (value, index) => {
+        this.setState({filter: value});
+    }
+
     render() {
+        // render Filter Items
+        var filters = this.state.filters;
+        var filterPickerItems = [];
+        for (var i=0; i<filters.length; i++) {
+            filterPickerItems.push(
+                <Picker.Item key={i} label={filters[i].label} value={filters[i].value} />
+            );
+        }
+        console.log('===>>>', filters);
+
         return (
             <View style={{flex: 11, zIndex: 1}}>
                 <Spinner 
@@ -123,17 +138,15 @@ class DailyCareNotesTab extends Component {
                 <View style={{flex: 2, flexDirection: 'row'}}>
                     <Text style={styles.filterText}>Fitler</Text>
                     <View style={styles.filterPickerWrapper}>
-                        <ModalDropdown
-                            options={['All', 'Active', 'Sent', 'Cancelled']}
-                            defaultValue={'Active'}
+                        <Picker
+                            mode="dropdown"
+                            selectedValue={this.state.filter}
                             style={[styles.filterPicker, {padding: 5}]}
-                            textStyle={{fontSize: 18, color: '#000'}}
-                            dropdownStyle={{width: '40%', shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
-                            dropdownTextStyle={{fontSize: 18, color: '#000'}}
-                        >
-                        </ModalDropdown>
-                        <View style={{flex: 1, top: 7}}>
-                            <Image style={{width: 20, height: 20}} source={require('../../../assets/img/icon-arrow-down.png')} />
+                            onValueChange={(itemValue, itemIndex) => this.selectFilter(itemValue, itemIndex)}>
+                            { filterPickerItems }
+                        </Picker>
+                        <View style={{top: 7}}>
+                            <Image style={{width: 20, height: 20, marginLeft: -35}} source={require('../../../assets/img/icon-arrow-down.png')} />
                         </View>
                     </View>
                 </View>
@@ -392,7 +405,7 @@ const styles = StyleSheet.create({
         height: 35, backgroundColor: '#ddd', color: '#000', flex: 6, flexDirection: 'row', marginRight: 10, marginLeft: 10
     },
     filterPicker: {
-        height: 35, color: '#000', flex: 5
+        height: 35, color: '#000', flex: 6
     },
     weekPickerWrapper: {
         height: 35, backgroundColor: '#ddd', color: '#000', flex: 3, flexDirection: 'row', marginRight: 10, marginLeft: 10

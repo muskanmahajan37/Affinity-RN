@@ -76,6 +76,7 @@ class ControlPanelScreen extends React.Component {
                         <Text style={styles.label}>Choose a Client</Text>
                         <View style={styles.pickerWrapper}>
                             <Picker
+                                mode="dropdown"
                                 selectedValue={this.state.client}
                                 style={{height: '100%', width: '100%'}}
                                 onValueChange={(itemValue, itemIndex) => this.selectClient(itemValue, itemIndex)}>
