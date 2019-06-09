@@ -36,6 +36,8 @@ class DCNWeekPickerModal extends Component {
         // global.selectedMonth = this.state.selectedMonth;
         global.selectedWeek = reweeks[index];
         global.selectedWeekIndex = index;
+        global.LastSaturdayDate = global.selectedMonth + '-' + global.selectedWeek[6];
+        this.props.detectWeekChangeEvent();
     }
 
     render() {

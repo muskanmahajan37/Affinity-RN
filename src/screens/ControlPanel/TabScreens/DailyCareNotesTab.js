@@ -68,6 +68,8 @@ class DailyCareNotesTab extends Component {
                 this.initDCNList(DCNList);
             } else {
                 Alert.alert('Error', resJson.msg);
+                this.setState({DCNList: []});
+                this.initDCNList([]);
             }
         })
         .catch((err) => {
@@ -166,7 +168,7 @@ class DailyCareNotesTab extends Component {
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', zIndex: 2}}>
                     <View style={styles.weekPickerWrapper}>
-                        <DCNWeekPickerModal selectedWeekIndex={this.state.selectedWeekIndex} selectedMonth={global.selectedMonth}></DCNWeekPickerModal>
+                        <DCNWeekPickerModal selectedWeekIndex={this.state.selectedWeekIndex} selectedMonth={global.selectedMonth} detectWeekChangeEvent={() => { this.fetchDCNItems() }}></DCNWeekPickerModal>
                     </View>
                 </View>
                 <View style={{flex: 7, flexDirection: 'row'}}>
