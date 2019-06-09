@@ -40,7 +40,6 @@ class DCNWeekPickerModal extends Component {
 
     render() {
         var weeks = getFullMonWeeksArr(this.props.selectedMonth);
-        console.log('===>>>===', weeks, this.props.selectedWeekIndex);
         var itemArr = [];
         for (var j = 0; j < weeks.length; j++) {
             itemArr.push(
