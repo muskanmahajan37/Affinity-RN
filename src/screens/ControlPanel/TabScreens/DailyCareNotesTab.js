@@ -126,7 +126,6 @@ class DailyCareNotesTab extends Component {
                 <Picker.Item key={i} label={filters[i].label} value={filters[i].value} />
             );
         }
-        console.log('===>>>', filters);
 
         return (
             <View style={{flex: 11, zIndex: 1}}>
