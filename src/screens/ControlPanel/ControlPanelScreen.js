@@ -58,14 +58,14 @@ class ControlPanelScreen extends React.Component {
         }
 
         return (
-            <View style={styles.background}>
+            <ScrollView style={styles.background}>
                 <Spinner 
                     visible={this.state.spinner} 
                     textContent={''}
                     textStyle={styles.spinnerTextStyle}
                 />
-                <View style={{flex: 3}}>
-                    <View style={{flex: 2}}>
+                <View style={{}}>
+                    <View style={{}}>
                         <View style={{flexDirection: 'row-reverse'}}>
                             <TouchableOpacity onPress={() => this.toggleMenu()}>
                                 <Image style={{width: 40, height: 40}} source={require('../../assets/img/icon-menu.png')} />
@@ -73,7 +73,7 @@ class ControlPanelScreen extends React.Component {
                         </View>
                         <Text style={styles.title}>Control Panel</Text>
                     </View>
-                    <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flexDirection: 'row', marginTop: 50}}>
                         <Text style={styles.label}>Choose a Client</Text>
                         <View style={styles.pickerWrapper}>
                             <Picker
@@ -89,7 +89,7 @@ class ControlPanelScreen extends React.Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flex: 13}}>
+                <View style={{}}>
                     <View style={{flex: 2, flexDirection: 'row', paddingTop: 15, paddingBottom: 15}}>
                         <TouchableOpacity 
                             style={ this.state.choosenTab == 0 ? [styles.tabButton, styles.activeTab] : styles.tabButton }
@@ -115,7 +115,7 @@ class ControlPanelScreen extends React.Component {
                         {this._switchTab()}
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
         height: 35, color: '#000', flex: 1
     },
     tabButton: {
-        flex: 1, textAlign: 'center', borderColor: '#000', color: '#000', margin: 5, borderWidth: 0.7,
+        flex: 1, textAlign: 'center', borderColor: '#000', color: '#000', margin: 5, borderWidth: 0.7, height: 60, 
     },
     activeTab: {
         backgroundColor: '#ffe401', borderWidth: 0
