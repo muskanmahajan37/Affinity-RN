@@ -33,7 +33,12 @@ class DailyCareNotesTab extends Component {
         // this.selectedMonth(this.state.selectedMonth);
     }
 
+    componentWillUnmount() {
+        this.props.onRef(undefined)
+    }
+
     componentDidMount() {
+        this.props.onRef(this)
         if(global.selectedWeekIndex && parseInt(global.selectedWeek[0]) > parseInt(global.selectedWeek[6])) {
             var calcY = parseInt(global.selectedMonth.split('-')[0]);
             var calcM = parseInt(global.selectedMonth.split('-')[1]);
@@ -46,7 +51,7 @@ class DailyCareNotesTab extends Component {
         this.fetchDCNItems();
     }
 
-    fetchDCNItems() {
+    fetchDCNItems = () => {
         this.setState({spinner: true});
         fetch(CONSTS.BASE_API + 'get_dcnlist', {
             method: 'POST', 
