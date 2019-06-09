@@ -45,6 +45,7 @@ class ControlPanelScreen extends React.Component {
         this.setState({client: value}); 
         global.ClientId = value; // DB - ClientId
         global.client = global.clientArr[index];
+        this.DCNTab.fetchDCNItems();
     }
 
     render() {
@@ -125,7 +126,7 @@ class ControlPanelScreen extends React.Component {
     _switchTab(){
         switch (this.state.choosenTab) {
             case 0:
-                return(<DailyCareNotesTab />);
+                return(<DailyCareNotesTab onRef={ref => (this.DCNTab = ref)} />);
                 break;            
             case 1:
                 return(<AssignmentSheetTab />);
@@ -135,7 +136,7 @@ class ControlPanelScreen extends React.Component {
                 break;
         
             default:
-                return(<DailyCareNotesTab />);
+                return(<DailyCareNotesTab onRef={ref => (this.DCNTab = ref)} />);
                 break;
         }
     }
