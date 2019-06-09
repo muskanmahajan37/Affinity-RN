@@ -113,6 +113,8 @@ class DailyCareNotesTab extends Component {
         this.setState({selectedMonth: YYYYMM});
         this.setState({selectedWeek: getFullMonWeeksArr(YYYYMM)[0]});
         global.selectedWeek = getFullMonWeeksArr(YYYYMM)[0];
+        global.LastSaturdayDate = global.selectedMonth + '-' + global.selectedWeek[6];
+        this.fetchDCNItems();
     }
 
     selectFilter = (value, index) => {
