@@ -133,7 +133,6 @@ class LoginScreen extends React.Component {
                 })
                 .then((res) => res.json())
                 .then((resJson) => {
-                    console.log('resjson=', resJson);
                     if(resJson.status == 0) {
                         var data = JSON.parse(resJson.data);
                         this.setState({ randomPassCode: data.passcode });
