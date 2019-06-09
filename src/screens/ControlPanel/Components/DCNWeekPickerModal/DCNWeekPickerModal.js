@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableHighlight, ScrollView, Image } from 'react-native';
-import { getMonthNum, getFullMonWeeksArr } from '../../../../helpers/AFDate';
+import { getMonthNum, getFullMonWeeksArr, getCurrentWeekIndex } from '../../../../helpers/AFDate';
 import DCNWeekItem from './Components/DCNWeekItem';
 import DCNSelectedWeekItem from './Components/DCNSelectedWeekItem';
 
@@ -40,6 +40,7 @@ class DCNWeekPickerModal extends Component {
 
     render() {
         var weeks = getFullMonWeeksArr(this.props.selectedMonth);
+        console.log('===>>>===', weeks, this.props.selectedWeekIndex);
         var itemArr = [];
         for (var j = 0; j < weeks.length; j++) {
             itemArr.push(

@@ -24,7 +24,7 @@ class DCNItem extends Component {
                 <Text style={styles.DCNItemText}>{this.props.title}</Text>
                 <TouchableOpacity
                     style={styles.DCNItemButton}
-                    onPress={() => this.openDCN(this.props.DcnId)}
+                    onPress={() => this.props.openDCN(this.props.DcnId)}
                 >
                     <Text style={styles.DCNItemButtonText}>{this.props.btnTitle}</Text>
                 </TouchableOpacity>
@@ -32,147 +32,147 @@ class DCNItem extends Component {
         );
     };
 
-    openDCN(DcnHeaderId) {
-        this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'get_dcndetail', {
-            method: 'POST', 
-            headers:{
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({
-                DcnHeaderId: DcnHeaderId.toString()
-            })
-        })
-        .then((res) => res.text())
-        .then((resJson) => {
+    // openDCN(DcnHeaderId) {
+    //     this.setState({spinner: true});
+    //     fetch(CONSTS.BASE_API + 'get_dcndetail', {
+    //         method: 'POST', 
+    //         headers:{
+    //             "Content-Type": "application/json; charset=utf-8",
+    //         },
+    //         body: JSON.stringify({
+    //             DcnHeaderId: DcnHeaderId.toString()
+    //         })
+    //     })
+    //     .then((res) => res.text())
+    //     .then((resJson) => {
             
-            result = JSON.parse(resJson);
-            console.log('==>>> DcnDetail >>> result ===>>>', result);
-            this.setState({spinner: false});
-            if (result.status == 0) {
-                DCNObj = result.data;
-                this.initDCNGlobalParamsFromDB(DCNObj);
-                // this.initSelectedWeekTerms(DCNObj.LastSaturdayDate);
-                // this.generateDCNWeek();
-                this.props.navigation.navigate('DailyCareNotes');
-            } else {
-                Alert.alert('Error', resJson.msg);
-            }
-        })
-        .catch((err) => {
-            this.setState({spinner: false});
-            console.log('=== fetch DCN items - error ===', err);
-        });
-    }
+    //         result = JSON.parse(resJson);
+    //         console.log('==>>> DcnDetail >>> result ===>>>', result);
+    //         this.setState({spinner: false});
+    //         if (result.status == 0) {
+    //             DCNObj = result.data;
+    //             this.initDCNGlobalParamsFromDB(DCNObj);
+    //             // this.initSelectedWeekTerms(DCNObj.LastSaturdayDate);
+    //             // this.generateDCNWeek();
+    //             this.props.navigation.navigate('DailyCareNotes');
+    //         } else {
+    //             Alert.alert('Error', resJson.msg);
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         this.setState({spinner: false});
+    //         console.log('=== fetch DCN items - error ===', err);
+    //     });
+    // }
 
-    initDCNGlobalParamsFromDB = (DCNObj) => {
-        global.ImageOfDCN = DCNObj.ImageOfDCN;
-        global.DCNImageFileName = DCNObj.DCNImageFileName;
-        global.SocialSecurityNum = DCNObj.SocialSecurityNum; // for DCN Submitted Head,
-        global.ClientId = DCNObj.ClientId;
-        global.LastSaturdayDate = DCNObj.LastSaturdayDate;
-        global.HourlyFlag = DCNObj.HourlyFlag;
-        global.LiveInFlag = DCNObj.LiveInFlag;
-        global.OvernightFlag = DCNObj.OvernightFlag;
-        global.WeekTotalHours = DCNObj.WeekTotalHours;
-        global.ComplianceFlag = DCNObj.ComplianceFlag;
-        global.CaregiverSignature = DCNObj.CaregiverSignature;
-        global.CaregiverSignatureDate = moment(new Date(DCNObj.CaregiverSignatureDate)).format("M/DD/YYYY");
-        global.ClientSignature = DCNObj.ClientSignature;
-        global.ClientSignatureDate = moment(new Date(DCNObj.ClientSignatureDate)).format("M/DD/YYYY");
-        global.HasPAF = DCNObj.HasPAF;
-        // // global.PafId = DCNObj.PafId;
-        global.SendToPhoneFlag = DCNObj.SendToPhoneFlag;
-        global.Phone1 = DCNObj.Phone1;
-        global.Phone2 = DCNObj.Phone2;
-        global.SendToEmailFlag = DCNObj.SendToEmailFlag;
-        global.Email1 = DCNObj.Email1;
-        global.Email2 = DCNObj.Email2;
-        global.DateTimeOfSubmission = DCNObj.DateTimeOfSubmission;
-        global.GPSLocationOfSubmission = DCNObj.GPSLocationOfSubmission; // ---
-        global.PDFOfDCN = DCNObj.PDFOfDCN; // ===
-        // global.createdBy = DCNObj.createdBy;
-        // global.created = DCNObj.created;
-        // global.updatedBy = DCNObj.updatedBy;
-        // global.updated = DCNObj.updated;
-        global.selectedWeek = DCNObj.selectedWeek; // for DCN Submitted Detail
-        global.DCNWeek = DCNObj.DCNWeek; // for DCNWeek Submitted Detail
-        global.TimeInOutLength = parseInt(DCNObj.TimeInOutLength);
-        global.TimeIn_1_Arr = DCNObj.TimeIn1;
-        global.TimeIn_2_Arr = DCNObj.TimeIn2;
-        global.TimeIn_3_Arr = DCNObj.TimeIn3;
-        global.TimeIn_4_Arr = DCNObj.TimeIn4;
-        global.TimeOut_1_Arr = DCNObj.TimeOut1;
-        global.TimeOut_2_Arr = DCNObj.TimeOut2;
-        global.TimeOut_3_Arr = DCNObj.TimeOut3;
-        global.TimeOut_4_Arr = DCNObj.TimeOut4;
-        global.HoursPerDay_Arr = DCNObj.HoursPerDay;
-        global.MobilityWalkingMovingFlag = DCNObj.MobilityWalkingMovingFlag;
-        global.BathingShoweringFlag = DCNObj.BathingShoweringFlag;
-        global.DressingFlag = DCNObj.DressingFlag;
-        global.ToiletingFlag = DCNObj.ToiletingFlag;
-        global.EatingFlag = DCNObj.EatingFlag;
-        global.ContinenceBladderBowelFlag = DCNObj.ContinenceBladderBowelFlag;
-        global.MealPrepIncludingFlag = DCNObj.MealPrepIncludingFlag;
-        global.LaundryFlag = DCNObj.LaundryFlag;
-        global.LightHousekeepingIncludingFlag = DCNObj.LightHousekeepingIncludingFlag;
-        global.PersonalCareHours = DCNObj.PersonalCareHours; // -----
-        global.HomemakingHours = DCNObj.HomemakingHours;
-        global.CompanionHours = DCNObj.CompanionHours;
-        global.RespiteHours = DCNObj.RespiteHours;
-        global.AttendantHours = DCNObj.AttendantHours; // =====
-        global.FirstName = DCNObj.updatedBy.split(' ')[0];
-        global.LastName = DCNObj.updatedBy.split(' ')[1];
-    }
+    // initDCNGlobalParamsFromDB = (DCNObj) => {
+    //     global.ImageOfDCN = DCNObj.ImageOfDCN;
+    //     global.DCNImageFileName = DCNObj.DCNImageFileName;
+    //     global.SocialSecurityNum = DCNObj.SocialSecurityNum; // for DCN Submitted Head,
+    //     global.ClientId = DCNObj.ClientId;
+    //     global.LastSaturdayDate = DCNObj.LastSaturdayDate;
+    //     global.HourlyFlag = DCNObj.HourlyFlag;
+    //     global.LiveInFlag = DCNObj.LiveInFlag;
+    //     global.OvernightFlag = DCNObj.OvernightFlag;
+    //     global.WeekTotalHours = DCNObj.WeekTotalHours;
+    //     global.ComplianceFlag = DCNObj.ComplianceFlag;
+    //     global.CaregiverSignature = DCNObj.CaregiverSignature;
+    //     global.CaregiverSignatureDate = moment(new Date(DCNObj.CaregiverSignatureDate)).format("M/DD/YYYY");
+    //     global.ClientSignature = DCNObj.ClientSignature;
+    //     global.ClientSignatureDate = moment(new Date(DCNObj.ClientSignatureDate)).format("M/DD/YYYY");
+    //     global.HasPAF = DCNObj.HasPAF;
+    //     // // global.PafId = DCNObj.PafId;
+    //     global.SendToPhoneFlag = DCNObj.SendToPhoneFlag;
+    //     global.Phone1 = DCNObj.Phone1;
+    //     global.Phone2 = DCNObj.Phone2;
+    //     global.SendToEmailFlag = DCNObj.SendToEmailFlag;
+    //     global.Email1 = DCNObj.Email1;
+    //     global.Email2 = DCNObj.Email2;
+    //     global.DateTimeOfSubmission = DCNObj.DateTimeOfSubmission;
+    //     global.GPSLocationOfSubmission = DCNObj.GPSLocationOfSubmission; // ---
+    //     global.PDFOfDCN = DCNObj.PDFOfDCN; // ===
+    //     // global.createdBy = DCNObj.createdBy;
+    //     // global.created = DCNObj.created;
+    //     // global.updatedBy = DCNObj.updatedBy;
+    //     // global.updated = DCNObj.updated;
+    //     global.selectedWeek = DCNObj.selectedWeek; // for DCN Submitted Detail
+    //     global.DCNWeek = DCNObj.DCNWeek; // for DCNWeek Submitted Detail
+    //     global.TimeInOutLength = parseInt(DCNObj.TimeInOutLength);
+    //     global.TimeIn_1_Arr = DCNObj.TimeIn1;
+    //     global.TimeIn_2_Arr = DCNObj.TimeIn2;
+    //     global.TimeIn_3_Arr = DCNObj.TimeIn3;
+    //     global.TimeIn_4_Arr = DCNObj.TimeIn4;
+    //     global.TimeOut_1_Arr = DCNObj.TimeOut1;
+    //     global.TimeOut_2_Arr = DCNObj.TimeOut2;
+    //     global.TimeOut_3_Arr = DCNObj.TimeOut3;
+    //     global.TimeOut_4_Arr = DCNObj.TimeOut4;
+    //     global.HoursPerDay_Arr = DCNObj.HoursPerDay;
+    //     global.MobilityWalkingMovingFlag = DCNObj.MobilityWalkingMovingFlag;
+    //     global.BathingShoweringFlag = DCNObj.BathingShoweringFlag;
+    //     global.DressingFlag = DCNObj.DressingFlag;
+    //     global.ToiletingFlag = DCNObj.ToiletingFlag;
+    //     global.EatingFlag = DCNObj.EatingFlag;
+    //     global.ContinenceBladderBowelFlag = DCNObj.ContinenceBladderBowelFlag;
+    //     global.MealPrepIncludingFlag = DCNObj.MealPrepIncludingFlag;
+    //     global.LaundryFlag = DCNObj.LaundryFlag;
+    //     global.LightHousekeepingIncludingFlag = DCNObj.LightHousekeepingIncludingFlag;
+    //     global.PersonalCareHours = DCNObj.PersonalCareHours; // -----
+    //     global.HomemakingHours = DCNObj.HomemakingHours;
+    //     global.CompanionHours = DCNObj.CompanionHours;
+    //     global.RespiteHours = DCNObj.RespiteHours;
+    //     global.AttendantHours = DCNObj.AttendantHours; // =====
+    //     global.FirstName = DCNObj.updatedBy.split(' ')[0];
+    //     global.LastName = DCNObj.updatedBy.split(' ')[1];
+    // }
 
-    initSelectedWeekTerms = (LastSaturdayDate) => {
-        console.log('=====>>>>', LastSaturdayDate, global.LastSaturdayDate);
-    }
+    // initSelectedWeekTerms = (LastSaturdayDate) => {
+    //     console.log('=====>>>>', LastSaturdayDate, global.LastSaturdayDate);
+    // }
 
-    generateDCNWeek = async () => {
+    // generateDCNWeek = async () => {
         
-        var selectedMonth = global.selectedMonth;
-        var selectedWeek = global.selectedWeek;
-        var selectedWeekIndex = global.selectedWeekIndex;
-        var minIndex = 0;
-        var maxIndex = parseInt(selectedWeek.length) - 1;
-        var DCNWeek = [];
+    //     var selectedMonth = global.selectedMonth;
+    //     var selectedWeek = global.selectedWeek;
+    //     var selectedWeekIndex = global.selectedWeekIndex;
+    //     var minIndex = 0;
+    //     var maxIndex = parseInt(selectedWeek.length) - 1;
+    //     var DCNWeek = [];
 
-        if(parseInt(selectedWeek[minIndex]) > parseInt(selectedWeek[maxIndex])) {
-            if(selectedWeekIndex) { // in the case of last week
-                for(var i = 0; i <= maxIndex; i++) {
-                    if(parseInt(selectedWeek[i]) < parseInt(selectedWeek[minIndex])) { // days of next month
-                        var calc_month = ((parseInt(selectedMonth.split('-')[1]) + 1) > 12) ? 1 : (parseInt(selectedMonth.split('-')[1]) + 1);
-                        calc_month = calc_month.toString().length > 1 ? calc_month.toString() : '0' + calc_month.toString();
-                        // on last month - calculate next year
-                        var calc_year = parseInt(calc_month) == 1 ? (parseInt(selectedMonth.split('-')[0]) + 1) : parseInt(selectedMonth.split('-')[0]);
-                        DCNWeek.push(calc_year + '-' + calc_month + '-' + selectedWeek[i]);
-                    } else { // days of current month
-                        DCNWeek.push( selectedMonth + '-' + selectedWeek[i]);
-                    }
-                }
-            } else { // in the case of first week
-                for(var i = 0; i <= maxIndex; i++) {
-                    if(parseInt(selectedWeek[i]) < parseInt(selectedWeek[minIndex])) { // days of current month
-                        DCNWeek.push(selectedMonth + '-' + selectedWeek[i]);
-                    } else { // days of previous month
-                        var calc_month = ((parseInt(selectedMonth.split('-')[1]) - 1) < 1) ? 12 : (parseInt(selectedMonth.split('-')[1]) - 1);
-                        calc_month = calc_month.toString().length > 1 ? calc_month.toString() : '0' + calc_month.toString();
-                        // on first month - calculate last year
-                        var calc_year = parseInt(calc_month) == 12 ? (parseInt(selectedMonth.split('-')[0]) - 1) : parseInt(selectedMonth.split('-')[0]);
-                        DCNWeek.push(calc_year + '-' + calc_month + '-' + selectedWeek[i]);
-                    }
-                }
-            }
-        } else {
-            for(var i = 0; i <= maxIndex; i++) {
-                DCNWeek.push(selectedMonth + '-' + selectedWeek[i]);
-            }
-        }
-        global.DCNWeek = DCNWeek;
-        global.LastSaturdayDate = DCNWeek[DCNWeek.length - 1]; // DB - LastSaturdayDate
-        return true;
-    }
+    //     if(parseInt(selectedWeek[minIndex]) > parseInt(selectedWeek[maxIndex])) {
+    //         if(selectedWeekIndex) { // in the case of last week
+    //             for(var i = 0; i <= maxIndex; i++) {
+    //                 if(parseInt(selectedWeek[i]) < parseInt(selectedWeek[minIndex])) { // days of next month
+    //                     var calc_month = ((parseInt(selectedMonth.split('-')[1]) + 1) > 12) ? 1 : (parseInt(selectedMonth.split('-')[1]) + 1);
+    //                     calc_month = calc_month.toString().length > 1 ? calc_month.toString() : '0' + calc_month.toString();
+    //                     // on last month - calculate next year
+    //                     var calc_year = parseInt(calc_month) == 1 ? (parseInt(selectedMonth.split('-')[0]) + 1) : parseInt(selectedMonth.split('-')[0]);
+    //                     DCNWeek.push(calc_year + '-' + calc_month + '-' + selectedWeek[i]);
+    //                 } else { // days of current month
+    //                     DCNWeek.push( selectedMonth + '-' + selectedWeek[i]);
+    //                 }
+    //             }
+    //         } else { // in the case of first week
+    //             for(var i = 0; i <= maxIndex; i++) {
+    //                 if(parseInt(selectedWeek[i]) < parseInt(selectedWeek[minIndex])) { // days of current month
+    //                     DCNWeek.push(selectedMonth + '-' + selectedWeek[i]);
+    //                 } else { // days of previous month
+    //                     var calc_month = ((parseInt(selectedMonth.split('-')[1]) - 1) < 1) ? 12 : (parseInt(selectedMonth.split('-')[1]) - 1);
+    //                     calc_month = calc_month.toString().length > 1 ? calc_month.toString() : '0' + calc_month.toString();
+    //                     // on first month - calculate last year
+    //                     var calc_year = parseInt(calc_month) == 12 ? (parseInt(selectedMonth.split('-')[0]) - 1) : parseInt(selectedMonth.split('-')[0]);
+    //                     DCNWeek.push(calc_year + '-' + calc_month + '-' + selectedWeek[i]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         for(var i = 0; i <= maxIndex; i++) {
+    //             DCNWeek.push(selectedMonth + '-' + selectedWeek[i]);
+    //         }
+    //     }
+    //     global.DCNWeek = DCNWeek;
+    //     global.LastSaturdayDate = DCNWeek[DCNWeek.length - 1]; // DB - LastSaturdayDate
+    //     return true;
+    // }
     
 }
 
