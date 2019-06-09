@@ -236,6 +236,8 @@ class DailyCareNotesTab extends Component {
     }
 
     initDCNGlobalParamsFromDB = (DCNObj) => {
+        global.DcnHeaderId = DCNObj.DcnHeaderId;
+        global.DcnDetailId = DCNObj.DcnDetailIds;
         global.ImageOfDCN = DCNObj.ImageOfDCN;
         global.DCNImageFileName = DCNObj.DCNImageFileName;
         global.SocialSecurityNum = DCNObj.SocialSecurityNum; // for DCN Submitted Head,
@@ -302,13 +304,13 @@ class DailyCareNotesTab extends Component {
     // ========================= Create DCN ======================== //
 
     createDCN() {
-        // if (this.state.DCNFlatList.length > 0) {
-        //     this.openDCN(this.state.DCNFlatList[0].key);
-        // } else {
+        if (this.state.DCNFlatList.length > 0) {
+            this.openDCN(this.state.DCNFlatList[0].key);
+        } else {
             this.generateDCNWeek();
             this.initCreateDCNGlobalParams();
             this.props.navigation.navigate('DailyCareNotes');
-        // }
+        }
     }
 
     goCreateDCN=() => {
