@@ -63,7 +63,7 @@ class DailyCareNotesTab extends Component {
                     textContent={''}
                     textStyle={styles.spinnerTextStyle}
                 />
-                <View style={{flex: 2, flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row', marginBottom: 25}}>
                     <Text style={styles.filterText}>Fitler</Text>
                     <View style={styles.filterPickerWrapper}>
                         <ModalDropdown
@@ -80,7 +80,7 @@ class DailyCareNotesTab extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row'}}>
                     <Text style={{flex: 1, color: '#000', fontSize: 18, margin: 7, flexDirection: 'row', textAlign: 'right'}}>Select a Week of Service</Text>
                     <View style={{width: 150, height: 35, backgroundColor: '#ddd', color: '#000', flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
                         <ModalDropdown
@@ -100,7 +100,7 @@ class DailyCareNotesTab extends Component {
                         <DCNWeekPickerModal selectedWeekIndex={this.state.selectedWeekIndex} selectedMonth={global.selectedMonth}></DCNWeekPickerModal>
                     </View>
                 </View>
-                <View style={{flex: 7, flexDirection: 'row'}}>
+                <View style={{flex: 7, flexDirection: 'row', marginBottom: 20, minHeight: 150}}>
                     <View style={{width: '100%'}}>
                         <View style={{width: '100%'}}>
                             <FlatList 
