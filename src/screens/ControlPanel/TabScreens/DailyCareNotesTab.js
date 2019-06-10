@@ -72,7 +72,7 @@ class DailyCareNotesTab extends Component {
                 this.setState({DCNList: DCNList});
                 this.initDCNList(DCNList);
             } else {
-                Alert.alert('Error', resJson.msg);
+                console.log('Error', resJson.msg);
                 this.setState({DCNList: []});
                 this.initDCNList([]);
             }
