@@ -274,7 +274,7 @@ class SignAndSendScreen extends Component {
             type: 'image/png',
             name: DCNImageFileName
         });
-        data.append('isNewDCN', global.DcnHeaderId ? 'false' : 'true');
+        data.append('isNewDCN', global.isNewDCN);
         data.append('DcnHeaderId', global.DcnHeaderId);
         data.append('DcnDetailIds', JSON.stringify(global.DcnDetailIds));
         data.append('oldImageOfDCN', global.oldImageOfDCN);
