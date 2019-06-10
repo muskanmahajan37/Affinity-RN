@@ -52,6 +52,10 @@ class LoginScreen extends React.Component {
 
     initDCNGlobalParamsFromLocal(res) {
         var DCNObj = JSON.parse(res);
+        global.isNewDCN = DCNObj.isNewDCN;
+        global.DcnHeaderId = DCNObj.DcnHeaderId;
+        global.DcnDetailIds = DCNObj.DcnDetailIds;
+        global.oldImageOfDCN = DCNObj.oldImageOfDCN;
         global.ImageOfDCN = DCNObj.ImageOfDCN;
         global.DCNImageFileName = DCNObj.DCNImageFileName;
         global.SocialSecurityNum = DCNObj.SocialSecurityNum; // for DCN Submitted Head,
