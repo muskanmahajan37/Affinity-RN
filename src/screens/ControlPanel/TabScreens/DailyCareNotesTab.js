@@ -236,6 +236,7 @@ class DailyCareNotesTab extends Component {
     }
 
     initDCNGlobalParamsFromDB = (DCNObj) => {
+        global.isNewDCN = 'false';
         global.DcnHeaderId = DCNObj.DcnHeaderId;
         global.DcnDetailIds = DCNObj.DcnDetailIds;
         global.ImageOfDCN = DCNObj.ImageOfDCN;
@@ -367,6 +368,7 @@ class DailyCareNotesTab extends Component {
 
     initCreateDCNGlobalParams(){
         // DCNForm
+        global.isNewDCN = 'true';
         global.DcnHeaderId = '';
         global.DcnDetailIds = [];
         global.HourlyFlag = true; // DB - HourlyFlag
