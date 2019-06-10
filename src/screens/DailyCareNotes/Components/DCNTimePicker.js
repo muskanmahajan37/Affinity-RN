@@ -93,23 +93,8 @@ class DCNTimePicker extends Component {
     }
 
     render() {
-        // console.log('>>>>>>>>> default >>>>', this.state.time);
-        // var list = this.state.itemList;
-        // var timeArr = [];
-        // for (var i=0; i<list.length; i++) {
-        //     timeArr.push(
-        //         <Picker.Item key={i} label={list[i]} value={list[i]} />
-        //     );
-        // }
         return (
             <View style={{}}>
-                {/* <Picker 
-                    selectedValue={this.state.itemList[this.state.time]}
-                    style={{height: 35, width: 120, backgroundColor: 'transparent'}}
-                    onValueChange={(itemValue, itemIndex) => {this.selectTime(itemValue, itemIndex)} }
-                >
-                    { timeArr }
-                </Picker> */}
                 <DatePicker
                     style={{width: 68, height: 35}}
                     date={this.state.time}

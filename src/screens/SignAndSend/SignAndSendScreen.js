@@ -274,6 +274,10 @@ class SignAndSendScreen extends Component {
             type: 'image/png',
             name: DCNImageFileName
         });
+        data.append('isNewDCN', global.DcnHeaderId ? 'false' : 'true');
+        data.append('DcnHeaderId', global.DcnHeaderId);
+        data.append('DcnDetailIds', JSON.stringify(global.DcnDetailIds));
+        data.append('oldImageOfDCN', global.oldImageOfDCN);
         data.append('DCNImageFileName', global.DCNImageFileName);
         data.append('SocialSecurityNum', global.SocialSecurityNum); // for DCN Submitted Header
         data.append('ClientId', global.ClientId);
@@ -347,6 +351,7 @@ class SignAndSendScreen extends Component {
             Alert.alert('', resJson.msg);
             if(resJson.status == 0) {
                 this.clearDCNObjOnLocal();
+                this.props.navigation.replace('ControlPanel');
             } else {
                 this.saveDCNObjToLocal();
             }
@@ -365,6 +370,10 @@ class SignAndSendScreen extends Component {
     
     saveDCNObjToLocal() {
         var DCNObj = {
+            isNewDCN : global.DcnHeaderId ? 'false' : 'true',
+            DcnHeaderId : global.DcnHeaderId,
+            DcnDetailIds : JSON.stringify(global.DcnDetailIds),
+            oldImageOfDCN : global.oldImageOfDCN,
             ImageOfDCN : global.ImageOfDCN,
             DCNImageFileName : global.DCNImageFileName,
             SocialSecurityNum : global.SocialSecurityNum, // for DCN Submitted Head,
