@@ -21,13 +21,13 @@ class LoginScreen extends React.Component {
 
     componentDidMount() {
         // --- auto fill to login fields for testing --- //
-        AsyncStorage.setItem('loginLimit', '0');
-        AsyncStorage.setItem('passcodeLimit', '0');
-        this.setState({
-            firstname: 'Evan',
-            lastname: 'Shapiro',
-            ssn: '0001'
-        });
+        // AsyncStorage.setItem('loginLimit', '0');
+        // AsyncStorage.setItem('passcodeLimit', '0');
+        // this.setState({
+        //     firstname: 'Evan',
+        //     lastname: 'Shapiro',
+        //     ssn: '0001'
+        // });
         AsyncStorage.getItem(USER_KEY).then(res => {
             if(res) {
                 var userinfo = JSON.parse(res);

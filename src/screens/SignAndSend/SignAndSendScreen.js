@@ -348,12 +348,12 @@ class SignAndSendScreen extends Component {
         .then((res) => res.json())
         .then((resJson) => {
             this.setState({spinner: false});
-            Alert.alert('', resJson.msg);
             if(resJson.status == 0) {
                 this.clearDCNObjOnLocal();
                 this.props.navigation.replace('ControlPanel');
             } else {
                 this.saveDCNObjToLocal();
+                Alert.alert('', resJson.msg);
             }
         })
         .catch((err) => {
