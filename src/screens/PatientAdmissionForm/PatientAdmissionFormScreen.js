@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, Dimensions, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, 
+    TextInput, Dimensions, Image, Platform } from 'react-native';
 
 import ConsentForTreatmentSection from './Components/1.ConsentForTreatment';
 import DrivingConsumerSection from './Components/2.DrivingConsumer';
@@ -27,7 +28,7 @@ class  PatientAdmissionFormScreen extends Component {
         return (
             <ScrollView contentContainerStyle={styles.contentContainer} horizontal={true}>
                 <ScrollView style={{paddingLeft: 20, paddingRight: 20}} horizontal={false}>
-                    <View style={{alignItems: 'flex-end', marginTop: 10}}>
+                    <View style={{alignItems: 'flex-end', marginTop: 10, marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                         <TouchableOpacity onPress={() => this.closePAFForm()}>
                             <Text style={{fontSize: 25, color: '#000'}}>–</Text>
                         </TouchableOpacity>
