@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, Dimensions, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, 
+    Image, TextInput, Dimensions, Alert, Platform } from 'react-native';
 import moment from 'moment';
 import CONSTS from '../../helpers/Consts';
 import SignCaptureModal from './Components/SignCaptureModal';
@@ -54,7 +55,7 @@ class SignAndSendScreen extends Component {
                         textContent={''}
                         textStyle={styles.spinnerTextStyle}
                     />
-                    <View style={{flex: 1, flexDirection: 'row', height:'auto'}}>
+                    <View style={{flex: 1, flexDirection: 'row', height:'auto', marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                         <View>
                             <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={this.setComplianceFlag}>
                                 { (this.state.ComplianceFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
