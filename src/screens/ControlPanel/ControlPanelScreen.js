@@ -18,9 +18,12 @@ class ControlPanelScreen extends React.Component {
         this.state = { 
             spinner: false,
             client: 'first',
-            clientId: global.clientArr[0].value,
+            clientName: global.clientNameArr[0],
+            clientId: global.clientIdArr[0],
             choosenTab: 0,
             clientArr: global.clientArr, 
+            clientNameArr: global.clientNameArr, 
+            clientIdArr: global.clientIdArr, 
             arr: [{label: 'First', value: '123'}, {label: 'Second', value: '456'}],
         }; 
         this.initControlPanel();
@@ -28,8 +31,10 @@ class ControlPanelScreen extends React.Component {
 
     initControlPanel = () => {
         global.client = global.clientArr[0];
-        global.ClientId = global.client.value;
-        global.ClientName = global.client.label;
+        // global.ClientId = global.client.value;
+        // global.ClientName = global.client.label;
+        global.ClientId = global.clientIdArr[0];
+        global.ClientName = global.clientNameArr[0];
         // ---- default global selected (current) YYYY MM DD
         global.selectedMonth = this.getCurrentYYYYDD();
         global.selectedWeekIndex = getCurrentWeekIndex() ? getCurrentWeekIndex() : 0
@@ -41,10 +46,15 @@ class ControlPanelScreen extends React.Component {
         return today.getFullYear() + '-' + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1))
     }
 
-    selectClient = (value, index) => {
-        this.setState({client: value}); 
-        global.ClientId = value; // DB - ClientId
-        global.client = global.clientArr[index];
+    // selectClient = (value, index) => {
+    selectClient = (index) => {
+        // this.setState({client: value}); 
+        // global.ClientId = value; // DB - ClientId
+        // global.client = global.clientArr[index];
+        this.setState({clientName: this.state.clientNameArr[index]});
+        this.setState({clientId: this.state.clientIdArr[index]});
+        global.ClientId = this.state.clientArr[index];
+        global.ClientName = this.state.clientNameArr[index];
         this.DCNTab.fetchDCNItems();
     }
 
@@ -76,13 +86,23 @@ class ControlPanelScreen extends React.Component {
                     <View style={{flexDirection: 'row', marginTop: 50}}>
                         <Text style={styles.label}>Choose a Client</Text>
                         <View style={styles.pickerWrapper}>
-                            <Picker
+                            {/* <Picker
                                 mode="dropdown"
                                 selectedValue={this.state.client}
                                 style={{height: '100%', width: '100%'}}
                                 onValueChange={(itemValue, itemIndex) => this.selectClient(itemValue, itemIndex)}>
                                 { clientPickerItems }
-                            </Picker>
+                            </Picker> */}
+                            <ModalDropdown
+                                options={this.state.clientNameArr}
+                                defaultValue={this.state.clientName}
+                                style={{height: '100%', width: '100%'}}
+                                textStyle={{fontSize: 18, color: '#000', textAlign: 'left', paddingLeft: 5, paddingTop: 5}}
+                                dropdownStyle={{width: 150, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
+                                dropdownTextStyle={{fontSize: 18, color: '#000'}} 
+                                onSelect={(index) => this.selectClient(index)}
+                            >
+                            </ModalDropdown>
                             <View style={{top: 7}}>
                                 <Image style={{width: 20, height: 20, left: -35}} source={require('../../assets/img/icon-arrow-down.png')} />
                             </View>

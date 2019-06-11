@@ -15,7 +15,8 @@ class DailyCareNotesTab extends Component {
         this.state = { 
             spinner: false, 
             filter: 'Active', 
-            filters: [{label: 'All', value: 'all'}, {label: 'Active', value: 'active'}, {label: 'Sent', value: 'sent'}, {label: 'Cancelled', value: 'cancelled'}],
+            // filters: [{label: 'All', value: 'all'}, {label: 'Active', value: 'active'}, {label: 'Sent', value: 'sent'}, {label: 'Cancelled', value: 'cancelled'}],
+            filters: ['All', 'Active', 'Sent', 'Cancelled'],
             options: this.generateOptions(),
             defaultValue: (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
             selectedMonth: this.getCurrentYYYYDD(),
@@ -122,7 +123,8 @@ class DailyCareNotesTab extends Component {
         this.fetchDCNItems();
     }
 
-    selectFilter = (value, index) => {
+    // selectFilter = (value, index) => {
+    selectFilter = (value) => {
         this.setState({filter: value});
     }
 
@@ -146,13 +148,23 @@ class DailyCareNotesTab extends Component {
                 <View style={{flexDirection: 'row', marginBottom: 25}}>
                     <Text style={styles.filterText}>Fitler</Text>
                     <View style={styles.filterPickerWrapper}>
-                        <Picker
+                        {/* <Picker
                             mode="dropdown"
                             selectedValue={this.state.filter}
                             style={[styles.filterPicker, {padding: 5}]}
                             onValueChange={(itemValue, itemIndex) => this.selectFilter(itemValue, itemIndex)}>
                             { filterPickerItems }
-                        </Picker>
+                        </Picker> */}
+                        <ModalDropdown
+                            options={this.state.filters}
+                            defaultValue={this.state.filter}
+                            style={[styles.filterPicker, {padding: 5}]}
+                            textStyle={{fontSize: 18, color: '#000', textAlign: 'left'}}
+                            dropdownStyle={{width: 150, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
+                            dropdownTextStyle={{fontSize: 18, color: '#000'}} 
+                            onSelect={(value) => this.selectFilter(this.state.filters[value])}
+                        >
+                        </ModalDropdown>
                         <View style={{top: 7}}>
                             <Image style={{width: 20, height: 20, marginLeft: -35}} source={require('../../../assets/img/icon-arrow-down.png')} />
                         </View>
