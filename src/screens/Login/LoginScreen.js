@@ -290,14 +290,22 @@ class LoginScreen extends React.Component {
             if(resJson.status == 0) {
                 var clientObjArr = JSON.parse(resJson.data);
                 var clientArr = [];
+                var clientIdArr = []
+                var clientNameArr = []
                 for(var i = 0; i < clientObjArr.length; i++) {
+                    var clientName = clientObjArr[i].FirstName + ' ' + clientObjArr[i].LastName;
+                    var clientId = clientObjArr[i].ClientId.toString();
                     var item = {
-                        label: clientObjArr[i].FirstName + ' ' + clientObjArr[i].LastName,
-                        value: clientObjArr[i].ClientId.toString()
+                        label: clientName,
+                        value: clientId
                     }
                     clientArr.push(item);
+                    clientNameArr.push(clientName);
+                    clientIdArr.push(clientId);
                 }
                 global.clientArr = clientArr;
+                global.clientNameArr = clientNameArr;
+                global.clientIdArr = clientIdArr;
                 this.setState({spinner: false});
                 this.props.navigation.navigate('ControlPanel');
             } else {
