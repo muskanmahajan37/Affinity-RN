@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
-    TouchableOpacity, StyleSheet, Alert } from 'react-native';
+    TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
 import CONSTS, { USER_KEY, USER_DATA } from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -21,13 +21,13 @@ class LoginScreen extends React.Component {
 
     componentDidMount() {
         // --- auto fill to login fields for testing --- //
-        // AsyncStorage.setItem('loginLimit', '0');
-        // AsyncStorage.setItem('passcodeLimit', '0');
-        // this.setState({
-        //     firstname: 'Evan',
-        //     lastname: 'Shapiro',
-        //     ssn: '0001'
-        // });
+        AsyncStorage.setItem('loginLimit', '0');
+        AsyncStorage.setItem('passcodeLimit', '0');
+        this.setState({
+            firstname: 'Evan',
+            lastname: 'Shapiro',
+            ssn: '0001'
+        });
         AsyncStorage.getItem(USER_KEY).then(res => {
             if(res) {
                 var userinfo = JSON.parse(res);
@@ -170,7 +170,7 @@ class LoginScreen extends React.Component {
                     textContent={''}
                     textStyle={styles.spinnerTextStyle}
                 />
-                <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center', marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                     <Image
                         style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
                             alignItems: 'center', justifyContent: 'center', width: 250, height: 'auto', minHeight: 120
@@ -202,6 +202,7 @@ class LoginScreen extends React.Component {
                         style={styles.Input}
                         maxLength={4}
                         secureTextEntry={true}
+                        keyboardType={'numeric'}
                         value={this.state.ssn}
                         onChangeText={(ssn) => this.setState({ssn})}
                     />
@@ -218,6 +219,7 @@ class LoginScreen extends React.Component {
                     <TextInput
                         style={styles.lgBorderText}
                         maxLength={6}
+                        keyboardType={'numeric'}
                         value={this.state.passCodeConf}
                         onChangeText={(text) => this.setState({passCodeConf: text})}
                     />
