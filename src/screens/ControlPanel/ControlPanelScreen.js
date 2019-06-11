@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
-    TouchableOpacity, StyleSheet, Picker } from 'react-native';
+    TouchableOpacity, StyleSheet, Picker, Platform, PickerIOS } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 
 import DailyCareNotesTab from './TabScreens/DailyCareNotesTab';
@@ -64,7 +64,7 @@ class ControlPanelScreen extends React.Component {
                     textContent={''}
                     textStyle={styles.spinnerTextStyle}
                 />
-                <View style={{}}>
+                <View style={{marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                     <View style={{}}>
                         <View style={{flexDirection: 'row-reverse'}}>
                             <TouchableOpacity onPress={() => this.toggleMenu()}>
