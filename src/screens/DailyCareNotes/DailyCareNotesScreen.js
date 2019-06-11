@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, 
+    TextInput, Dimensions, Platform } from 'react-native';
 
 import DCNTimeTable from './Components/DCNTimeTable';
 import DCNWorkTable from './Components/DCNWorkTable'
@@ -37,7 +38,7 @@ class DailyCareNotesScreen extends Component {
         return (
             <ScrollView contentContainerStyle={styles.contentContainer} horizontal={true}>
                 <ScrollView horizontal={false}>
-                    <ViewShot ref="viewShot" style={{backgroundColor: '#fff'}}>
+                    <ViewShot ref="viewShot" style={{backgroundColor: '#fff', marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                         <View style={{flexDirection: 'row'}}>
                             <View style={{}}>
                                 <Text style={{color: '#000', fontSize: 19, padding: 10, fontWeight: '700'}}>Daily Care Notes</Text>
