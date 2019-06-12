@@ -165,16 +165,16 @@ class LoginScreen extends React.Component {
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
-                <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} enabled>
+                <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : ''} enabled>
                     <Spinner 
                         visible={this.state.spinner} 
                         textContent={''}
                         textStyle={styles.spinnerTextStyle}
                     />
-                    <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center', marginTop: Platform.OS != 'ios' ? 50 : 0}}>
+                    <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center', marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                         <Image
                             style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
-                                alignItems: 'center', justifyContent: 'center', width: 250, height: 'auto', minHeight: 120
+                                alignItems: 'center', justifyContent: 'center', width: 270, height: 'auto', minHeight: 120
                             }} 
                             source={require('../../assets/img/banner-logo.png')}
                         />

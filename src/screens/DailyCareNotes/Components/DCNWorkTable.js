@@ -35,7 +35,7 @@ class DCNWorkTable extends Component {
     }
 
     DCNCheckedIcon = () => {
-        return (<Image style={{width: 25, height: 25, marginLeft: 'auto', marginRight: 'auto'}} source={require('../../../assets/img/DCNCheckboxIcon.png')} />);
+        return (<Image style={{width: 25, height: 25, marginLeft: 'auto', marginRight: 'auto', marginTop: 'auto', marginBottom: 'auto'}} source={require('../../../assets/img/DCNCheckboxIcon.png')} />);
     }
 
     DCNUncheckedIcon = () => {
@@ -239,7 +239,7 @@ class DCNWorkTable extends Component {
 const styles = StyleSheet.create({
     DCNLabelStyle: {fontSize: 14, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}, 
     DCNCheckboxWrapperStyle: {flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000', height: 35, width: 70},
-    DCNCheckboxContainerStyle: {marginTop: 'auto', marginBottom: 'auto', paddingTop: 5, width: '100%'}
+    DCNCheckboxContainerStyle: {marginTop: 'auto', marginBottom: 'auto', paddingTop: 5, width: '100%', height: '100%', paddingBottom: 5}
 })
 
 export default DCNWorkTable;
