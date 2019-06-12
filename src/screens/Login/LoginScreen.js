@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
-    TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
+    TouchableOpacity, StyleSheet, Alert, Platform, KeyboardAvoidingView } from 'react-native';
 import CONSTS, { USER_KEY, USER_DATA } from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -21,13 +21,13 @@ class LoginScreen extends React.Component {
 
     componentDidMount() {
         // --- auto fill to login fields for testing --- //
-        AsyncStorage.setItem('loginLimit', '0');
-        AsyncStorage.setItem('passcodeLimit', '0');
-        this.setState({
-            firstname: 'Evan',
-            lastname: 'Shapiro',
-            ssn: '0001'
-        });
+        // AsyncStorage.setItem('loginLimit', '0');
+        // AsyncStorage.setItem('passcodeLimit', '0');
+        // this.setState({
+        //     firstname: 'Evan',
+        //     lastname: 'Shapiro',
+        //     ssn: '0001'
+        // });
         AsyncStorage.getItem(USER_KEY).then(res => {
             if(res) {
                 var userinfo = JSON.parse(res);
@@ -165,71 +165,73 @@ class LoginScreen extends React.Component {
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
-                <Spinner 
-                    visible={this.state.spinner} 
-                    textContent={''}
-                    textStyle={styles.spinnerTextStyle}
-                />
-                <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center', marginTop: Platform.OS == 'ios' ? 50 : 0}}>
-                    <Image
-                        style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
-                            alignItems: 'center', justifyContent: 'center', width: 250, height: 'auto', minHeight: 120
-                        }} 
-                        source={require('../../assets/img/banner-logo.png')}
+                <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} enabled>
+                    <Spinner 
+                        visible={this.state.spinner} 
+                        textContent={''}
+                        textStyle={styles.spinnerTextStyle}
                     />
-                </View>
-                <View style={styles.inputForm}>
-                    <Text style={styles.label}>First Name</Text>
-                    <TextInput
-                        style={styles.Input}
-                        maxLength={25}
-                        value={this.state.firstname}
-                        onChangeText={(firstname) => this.setState({firstname})}
-                    />
-                </View>
-                <View style={styles.inputForm}>
-                    <Text style={styles.label}>Last Name</Text>
-                    <TextInput
-                        style={styles.Input}
-                        maxLength={25}
-                        value={this.state.lastname}
-                        onChangeText={(lastname) => this.setState({lastname})}
-                    />
-                </View>
-                <View style={styles.inputForm}>
-                    <Text style={styles.label}>Last 4 of Social</Text>
-                    <TextInput
-                        style={styles.Input}
-                        maxLength={4}
-                        secureTextEntry={true}
-                        keyboardType={'numeric'}
-                        value={this.state.ssn}
-                        onChangeText={(ssn) => this.setState({ssn})}
-                    />
-                </View>
-                <View style={styles.verifyForm}>
-                    <TouchableOpacity 
-                        style={styles.passCodeButton}
-                        onPress={() => this.generatePassCode()}
-                        >
-                        <Text style={styles.smBorderText}>Obtain Passcode</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.lgBorderText}>{this.state.randomPassCode}</Text>
-                    <Text style={styles.centerText}>Enter Passcode</Text>
-                    <TextInput
-                        style={styles.lgBorderText}
-                        maxLength={6}
-                        keyboardType={'numeric'}
-                        value={this.state.passCodeConf}
-                        onChangeText={(text) => this.setState({passCodeConf: text})}
-                    />
-                    <TouchableOpacity 
-                        style={styles.submit}
-                        onPress={() => this.submitLoginForm()}
-                        >
-                        <Text style={styles.submitText}>Submit</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center', marginTop: Platform.OS != 'ios' ? 50 : 0}}>
+                        <Image
+                            style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
+                                alignItems: 'center', justifyContent: 'center', width: 250, height: 'auto', minHeight: 120
+                            }} 
+                            source={require('../../assets/img/banner-logo.png')}
+                        />
+                    </View>
+                    <View style={styles.inputForm}>
+                        <Text style={styles.label}>First Name</Text>
+                        <TextInput
+                            style={styles.Input}
+                            maxLength={25}
+                            value={this.state.firstname}
+                            onChangeText={(firstname) => this.setState({firstname})}
+                        />
+                    </View>
+                    <View style={styles.inputForm}>
+                        <Text style={styles.label}>Last Name</Text>
+                        <TextInput
+                            style={styles.Input}
+                            maxLength={25}
+                            value={this.state.lastname}
+                            onChangeText={(lastname) => this.setState({lastname})}
+                        />
+                    </View>
+                    <View style={styles.inputForm}>
+                        <Text style={styles.label}>Last 4 of Social</Text>
+                        <TextInput
+                            style={styles.Input}
+                            maxLength={4}
+                            secureTextEntry={true}
+                            keyboardType={'numeric'}
+                            value={this.state.ssn}
+                            onChangeText={(ssn) => this.setState({ssn})}
+                        />
+                    </View>
+                    <View style={styles.verifyForm}>
+                        <TouchableOpacity 
+                            style={styles.passCodeButton}
+                            onPress={() => this.generatePassCode()}
+                            >
+                            <Text style={styles.smBorderText}>Obtain Passcode</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.lgBorderText}>{this.state.randomPassCode}</Text>
+                        <Text style={styles.centerText}>Enter Passcode</Text>
+                        <TextInput
+                            style={styles.lgBorderText}
+                            maxLength={6}
+                            keyboardType={'numeric'}
+                            value={this.state.passCodeConf}
+                            onChangeText={(text) => this.setState({passCodeConf: text})}
+                        />
+                        <TouchableOpacity 
+                            style={styles.submit}
+                            onPress={() => this.submitLoginForm()}
+                            >
+                            <Text style={styles.submitText}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
             </ScrollView>
         );
     }
