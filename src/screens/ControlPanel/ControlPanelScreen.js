@@ -7,7 +7,6 @@ import DailyCareNotesTab from './TabScreens/DailyCareNotesTab';
 import AssignmentSheetTab from './TabScreens/AssignmentSheetTab';
 import PlanOfCareTab from './TabScreens/PlanOfCareTab';
 import CONSTS from '../../helpers/Consts';
-import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
 import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr, getCurrentWeekIndex } from '../../helpers/AFDate';
 
@@ -16,7 +15,6 @@ class ControlPanelScreen extends React.Component {
         super(props);
 
         this.state = { 
-            spinner: false,
             client: 'first',
             clientName: global.clientNameArr[0],
             clientId: global.clientIdArr[0],
@@ -69,11 +67,6 @@ class ControlPanelScreen extends React.Component {
 
         return (
             <ScrollView style={styles.background}>
-                <Spinner 
-                    visible={this.state.spinner} 
-                    textContent={''}
-                    textStyle={styles.spinnerTextStyle}
-                />
                 <View style={{marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                     <View style={{}}>
                         <View style={{flexDirection: 'row-reverse'}}>
@@ -202,8 +195,7 @@ const styles = StyleSheet.create({
     tabButtonText: {
         fontSize: 13, alignItems: 'center', justifyContent: 'center', color: '#000', 
         textAlign: 'center', marginTop: 'auto', marginBottom: 'auto'
-    }, 
-    spinnerTextStyle: { color: '#FFF' }
+    }
 })
 
 export default ControlPanelScreen;
