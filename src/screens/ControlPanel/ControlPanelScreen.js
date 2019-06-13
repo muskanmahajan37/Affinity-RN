@@ -51,7 +51,7 @@ class ControlPanelScreen extends React.Component {
         // global.client = global.clientArr[index];
         this.setState({clientName: this.state.clientNameArr[index]});
         this.setState({clientId: this.state.clientIdArr[index]});
-        global.ClientId = this.state.clientArr[index];
+        global.ClientId = this.state.clientIdArr[index];
         global.ClientName = this.state.clientNameArr[index];
         this.DCNTab.fetchDCNItems();
     }
