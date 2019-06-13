@@ -61,7 +61,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        color: '#fff'
+        color: '#fff', 
+        marginTop: 'auto', 
+        marginBottom: 'auto'
     }
 })
 

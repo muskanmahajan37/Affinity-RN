@@ -328,8 +328,8 @@ const styles = StyleSheet.create({
     label: {color: '#000', fontSize: 16, marginBottom: 5},
     Input: {borderColor: '#000', borderWidth: 1, height: 40, color: '#000', fontSize: 18, padding: 5},
     verifyForm: {flex: 3, textAlign: 'center'},
-    passCodeButton: {borderWidth: 1, width: '40%', paddingTop: 5, marginTop: 10, marginBottom: 15, marginLeft: '30%', marginRight: '30%'},
-    smBorderText: {fontSize: 18, height: 35, alignItems: 'center', justifyContent: 'center', color: '#000', textAlign: 'center'},
+    passCodeButton: {borderWidth: 1, width: '40%', height: 35, marginTop: 10, marginBottom: 15, marginLeft: '30%', marginRight: '30%'},
+    smBorderText: {fontSize: 18, alignItems: 'center', justifyContent: 'center', color: '#000', textAlign: 'center', marginTop: 'auto', marginBottom: 'auto'},
     lgBorderText: {borderWidth: 1, fontSize: 30, height: 50, alignItems: 'center', justifyContent: 'center', color: '#000',
         width: '50%', marginLeft: '25%', marginRight: '25%', marginBottom: 10, textAlign: 'center', padding: 5
     },

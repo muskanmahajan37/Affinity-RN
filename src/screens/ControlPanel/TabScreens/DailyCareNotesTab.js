@@ -159,9 +159,9 @@ class DailyCareNotesTab extends Component {
                             options={this.state.filters}
                             defaultValue={this.state.filter}
                             style={[styles.filterPicker, {padding: 5}]}
-                            textStyle={{fontSize: 18, color: '#000', textAlign: 'left'}}
+                            textStyle={{fontSize: 17, color: '#000', textAlign: 'left'}}
                             dropdownStyle={{width: 150, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
-                            dropdownTextStyle={{fontSize: 18, color: '#000'}} 
+                            dropdownTextStyle={{fontSize: 17, color: '#000'}} 
                             onSelect={(value) => this.selectFilter(this.state.filters[value])}
                         >
                         </ModalDropdown>
@@ -170,16 +170,16 @@ class DailyCareNotesTab extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <Text style={{flex: 1, color: '#000', fontSize: 18, margin: 7, flexDirection: 'row', textAlign: 'right'}}>Select a Week of Service</Text>
-                    <View style={{width: 150, height: 35, backgroundColor: '#ddd', color: '#000', flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
+                <View style={{flex: 1, flexDirection: 'row', marginBottom: 10}}>
+                    <Text style={{flex: 1, color: '#000', fontSize: 15, margin: 7, flexDirection: 'row', textAlign: 'left', paddingLeft: 5}}>Select a Week of Service</Text>
+                    <View style={{width: 140, height: 35, backgroundColor: '#ddd', color: '#000', flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
                         <ModalDropdown
                             options={this.state.options}
                             defaultValue={this.state.defaultValue}
                             style={{height: 35, color: '#000', flex: 1, padding: 5}}
-                            textStyle={{fontSize: 18, color: '#000', textAlign: 'center'}}
-                            dropdownStyle={{width: 150, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
-                            dropdownTextStyle={{fontSize: 18, color: '#000'}} 
+                            textStyle={{fontSize: 17, color: '#000', textAlign: 'center'}}
+                            dropdownStyle={{width: 140, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
+                            dropdownTextStyle={{fontSize: 17, color: '#000'}} 
                             onSelect={(value) => this.selectedMonth(this.state.options[value])}
                         >
                         </ModalDropdown>
@@ -426,7 +426,7 @@ class DailyCareNotesTab extends Component {
 
 const styles = StyleSheet.create({
     filterText: {
-        color: '#000', fontSize: 18, flex: 6, flexDirection: 'row', textAlign: 'right', paddingTop: 5
+        color: '#000', fontSize: 15, flex: 6, flexDirection: 'row', textAlign: 'right', paddingTop: 5
     },
     filterPickerWrapper: {
         height: 35, backgroundColor: '#ddd', color: '#000', flex: 6, flexDirection: 'row', marginRight: 10, marginLeft: 10
@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0e5d02', borderRadius: 8, height: 25, width: '100%'
     },
     DCNCreateButtonText: {
-        textAlign: 'center', alignContent: 'center', justifyContent: 'center', color: '#fff'
+        textAlign: 'center', alignContent: 'center', justifyContent: 'center', color: '#fff', marginTop: 'auto', marginBottom: 'auto'
     }
 })
 
