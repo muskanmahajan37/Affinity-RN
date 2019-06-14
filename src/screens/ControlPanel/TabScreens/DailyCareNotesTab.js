@@ -230,21 +230,30 @@ class DailyCareNotesTab extends Component {
         .then((res) => res.text())
         .then((resJson) => {
             result = JSON.parse(resJson);
-            this.setState({spinner: false});
             if (result.status == 0) {
+                this.setState({spinner: false});
                 DCNObj = result.data;
                 this.initDCNGlobalParamsFromDB(DCNObj);
                 // this.initSelectedWeekTerms(DCNObj.LastSaturdayDate);
                 // this.generateDCNWeek();
                 this.props.navigation.navigate('DailyCareNotes');
             } else {
-                Alert.alert('Error', resJson.msg);
+                this.afAlert('Error', resJson.msg);
             }
         })
         .catch((err) => {
             this.setState({spinner: false});
             console.log('=== fetch DCN items - error ===', err);
         });
+    }
+
+    afAlert = (title, msg) => {
+        Alert.alert(
+            title,
+            msg,
+            [{ text: 'OK', onPress: () => this.setState({spinner: false}) }],
+            {cancelable: false},
+        );
     }
 
     initDCNGlobalParamsFromDB = (DCNObj) => {

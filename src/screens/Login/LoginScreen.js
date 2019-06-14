@@ -137,7 +137,6 @@ class LoginScreen extends React.Component {
                 })
                 .then((res) => res.json())
                 .then((resJson) => {
-                    // this.setState({spinner: false});
                     if(resJson.status == 0) {
                         var data = JSON.parse(resJson.data);
                         this.setState({ randomPassCode: data.passcode });
@@ -147,19 +146,19 @@ class LoginScreen extends React.Component {
                         AsyncStorage.setItem(USER_KEY, JSON.stringify(data.userinfo));
                         AsyncStorage.setItem('loginLimit', '0');
                         AsyncStorage.setItem('passcodeLimit', '0');
+                        this.setState({spinner: false});
                     } else {
                         this.afAlert('', resJson.msg);
                         AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
                     }
                 })
                 .catch((err) => {
-                    // this.setState({spinner: false});
                     console.log('err=', err);
                     this.afAlert('Error', 'Cannot find server.');
                     AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
                 });
             }
-        }).done();
+        }).done();       
     }
 
     afAlert = (title, msg) => {
@@ -267,7 +266,6 @@ class LoginScreen extends React.Component {
                 })
                 .then((res) => res.json())
                 .then((resJson) => {
-                    // this.setState({spinner: false});
                     var data = JSON.parse(resJson.data);
                     if(resJson.status == 0) {
                         global.FirstName = data.userinfo.firstname; // Caregiver First Name
@@ -277,6 +275,7 @@ class LoginScreen extends React.Component {
                         AsyncStorage.setItem('loginLimit', '0');
                         AsyncStorage.setItem('passcodeLimit', '0');
                         this.fetchClients();
+                        this.setState({spinner: false});
                     } else {
                         if (data.passcode) { this.setState({ randomPassCode: data.passcode }); }
                         this.afAlert('', resJson.msg);
@@ -284,7 +283,6 @@ class LoginScreen extends React.Component {
                     AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 })
                 .catch((err) => {
-                    // this.setState({spinner: false});
                     console.log('err=', err);
                     this.afAlert('', 'Can not find server.');
                     AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
@@ -298,7 +296,6 @@ class LoginScreen extends React.Component {
         fetch(CONSTS.BASE_API + 'cpanel/client')
         .then((res) => res.json())
         .then((resJson) => {
-            // this.setState({spinner: false});
             if(resJson.status == 0) {
                 var clientObjArr = JSON.parse(resJson.data);
                 var clientArr = [];
@@ -318,13 +315,13 @@ class LoginScreen extends React.Component {
                 global.clientArr = clientArr;
                 global.clientNameArr = clientNameArr;
                 global.clientIdArr = clientIdArr;
+                this.setState({spinner: false});
                 this.props.navigation.navigate('ControlPanel');
             } else {
                 this.afAlert('', resJson.msg);
             }
         })
         .catch((err) => {
-            // this.setState({spinner: false});
             console.log('err=', err);
             this.afAlert('', 'Can not find server.');
         });

@@ -260,11 +260,11 @@ class SignAndSendScreen extends Component {
 
     sendSignForm() {
         if(!this.validationOfPhone()) {
-            Alert.alert('Invalid Input', 'Please fill the Phone Number.');
+            this.afAlert('Invalid Input', 'Please fill the Phone Number.');
             return;
         }
         if(!this.validationOfEmail()) {
-            Alert.alert('Invalid Input', 'Please fill the Email Address.');
+            this.afAlert('Invalid Input', 'Please fill the Email Address.');
             return;
         }
         var DCNImageFileName = global.FirstName + global.LastName + '_' + (new Date().getTime());
@@ -348,21 +348,30 @@ class SignAndSendScreen extends Component {
         })
         .then((res) => res.json())
         .then((resJson) => {
-            this.setState({spinner: false});
             if(resJson.status == 0) {
+                this.setState({spinner: false});
                 this.clearDCNObjOnLocal();
                 this.props.navigation.replace('ControlPanel');
             } else {
                 this.saveDCNObjToLocal();
-                Alert.alert('', resJson.msg);
+                this.afAlert('', resJson.msg);
             }
         })
         .catch((err) => {
             console.log('4 err=', err);
-            // Alert.alert('Error', 'Network request failed');
+            // this.afAlert('Error', 'Network request failed');
             this.setState({spinner: false});
             this.saveDCNObjToLocal();
         });
+    }
+
+    afAlert = (title, msg) => {
+        Alert.alert(
+            title,
+            msg,
+            [{ text: 'OK', onPress: () => this.setState({spinner: false}) }],
+            {cancelable: false},
+        );
     }
 
     clearDCNObjOnLocal() {

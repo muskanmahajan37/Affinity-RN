@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableHighlight, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableHighlight, ScrollView, Image, Alert } from 'react-native';
 import { getMonthNum, getFullMonWeeksArr, getCurrentWeekIndex } from '../../../../helpers/AFDate';
 import DCNWeekItem from './Components/DCNWeekItem';
 import DCNSelectedWeekItem from './Components/DCNSelectedWeekItem';
@@ -60,7 +60,7 @@ class DCNWeekPickerModal extends Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
+                        this.afAlert('', 'Modal has been closed.');
                     }}>
                     <View style={{backgroundColor: '#000000bd', width: '100%', height: '100%', padding: 40}}>
                         <View style={{borderColor: '#000', borderWidth: 1, backgroundColor: '#fff', width: '100%', marginTop: 'auto', marginBottom: 'auto'}}>
@@ -88,6 +88,15 @@ class DCNWeekPickerModal extends Component {
             </View>
         );
     };
+
+    afAlert = (title, msg) => {
+        Alert.alert(
+            title,
+            msg,
+            [{ text: 'OK', onPress: () => this.setState({spinner: false}) }],
+            {cancelable: false},
+        );
+    }
 }
 
 const styles = StyleSheet.create({
