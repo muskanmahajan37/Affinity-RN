@@ -19,7 +19,7 @@ class DCNTimePicker extends Component {
             // ------ TimeIn
             case 'timeIn1' : 
                 if( convertHour(global.TimeOut_1_Arr[this.state.timeIndex]) && convertHour(selectedTime) >= convertHour(global.TimeOut_1_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeIn_1_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -27,7 +27,7 @@ class DCNTimePicker extends Component {
                 break;
             case 'timeIn2' : 
                 if( convertHour(global.TimeOut_2_Arr[this.state.timeIndex]) && convertHour(selectedTime) >= convertHour(global.TimeOut_2_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeIn_2_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -35,7 +35,7 @@ class DCNTimePicker extends Component {
                 break;
             case 'timeIn3' : 
                 if( convertHour(global.TimeOut_3_Arr[this.state.timeIndex]) && convertHour(selectedTime) >= convertHour(global.TimeOut_3_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeIn_3_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -43,7 +43,7 @@ class DCNTimePicker extends Component {
                 break;
             case 'timeIn4' : 
                 if( convertHour(global.TimeOut_4_Arr[this.state.timeIndex]) && convertHour(selectedTime) >= convertHour(global.TimeOut_4_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeIn_4_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -52,7 +52,7 @@ class DCNTimePicker extends Component {
             // ------ TimeOut
             case 'timeOut1' : 
                 if( convertHour(global.TimeIn_1_Arr[this.state.timeIndex]) && convertHour(selectedTime) <= convertHour(global.TimeIn_1_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeOut_1_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -60,7 +60,7 @@ class DCNTimePicker extends Component {
                 break;
             case 'timeOut2' : 
                 if( convertHour(global.TimeIn_2_Arr[this.state.timeIndex]) && convertHour(selectedTime) <= convertHour(global.TimeIn_2_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeOut_2_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -68,7 +68,7 @@ class DCNTimePicker extends Component {
                 break;
             case 'timeOut3' : 
                 if( convertHour(global.TimeIn_3_Arr[this.state.timeIndex]) && convertHour(selectedTime) <= convertHour(global.TimeIn_3_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeOut_3_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});
@@ -76,7 +76,7 @@ class DCNTimePicker extends Component {
                 break;
             case 'timeOut4' : 
                 if( convertHour(global.TimeIn_4_Arr[this.state.timeIndex]) && convertHour(selectedTime) <= convertHour(global.TimeIn_4_Arr[this.state.timeIndex]) ) {
-                    Alert.alert('', 'Invalid Input Time! Please select correct time.');
+                    // Alert.alert('', 'Invalid Input Time! Please select correct time.');
                 } else {
                     global.TimeOut_4_Arr[this.state.timeIndex] = selectedTime;
                     this.setState({time: selectedTime});

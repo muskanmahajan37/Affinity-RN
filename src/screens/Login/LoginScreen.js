@@ -120,7 +120,7 @@ class LoginScreen extends React.Component {
         AsyncStorage.getItem('loginLimit').then((value) => {
             var loginLimit = value ? parseInt(value) : 0;
             if (loginLimit >= 3) {
-                Alert.alert('Please call our office for help at 954-782-3741');
+                this.afAlert('Please call our office for help at 954-782-3741');
             } else {
                 this.setState({spinner: true});
                 console.log('before=', this.state.firstname, this.state.lastname, this.state.ssn);
@@ -137,6 +137,7 @@ class LoginScreen extends React.Component {
                 })
                 .then((res) => res.json())
                 .then((resJson) => {
+                    // this.setState({spinner: false});
                     if(resJson.status == 0) {
                         var data = JSON.parse(resJson.data);
                         this.setState({ randomPassCode: data.passcode });
@@ -147,19 +148,27 @@ class LoginScreen extends React.Component {
                         AsyncStorage.setItem('loginLimit', '0');
                         AsyncStorage.setItem('passcodeLimit', '0');
                     } else {
-                        Alert.alert('', resJson.msg);
+                        this.afAlert('', resJson.msg);
                         AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
                     }
-                    this.setState({spinner: false});
                 })
                 .catch((err) => {
+                    // this.setState({spinner: false});
                     console.log('err=', err);
-                    alert('Error');
+                    this.afAlert('Error', 'Cannot find server.');
                     AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
-                    this.setState({spinner: false});
                 });
             }
-        }).done();       
+        }).done();
+    }
+
+    afAlert = (title, msg) => {
+        Alert.alert(
+            title,
+            msg,
+            [{ text: 'OK', onPress: () => this.setState({spinner: false}) }],
+            {cancelable: false},
+        );
     }
 
     render() {
@@ -240,7 +249,7 @@ class LoginScreen extends React.Component {
         AsyncStorage.getItem('passcodeLimit').then((value) => {
             var passcodeLimit = value ? parseInt(value) : 0;
             if (passcodeLimit >= 3) {
-                Alert.alert('Please call our office for help at 954-782-3741');
+                this.afAlert('', 'Please call our office for help at 954-782-3741');
             } else {
                 this.setState({spinner: true});
                 fetch(CONSTS.BASE_API + 'login', {
@@ -258,6 +267,7 @@ class LoginScreen extends React.Component {
                 })
                 .then((res) => res.json())
                 .then((resJson) => {
+                    // this.setState({spinner: false});
                     var data = JSON.parse(resJson.data);
                     if(resJson.status == 0) {
                         global.FirstName = data.userinfo.firstname; // Caregiver First Name
@@ -269,15 +279,14 @@ class LoginScreen extends React.Component {
                         this.fetchClients();
                     } else {
                         if (data.passcode) { this.setState({ randomPassCode: data.passcode }); }
-                        Alert.alert('', resJson.msg);
-                        this.setState({spinner: false});
+                        this.afAlert('', resJson.msg);
                     }
                     AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 })
                 .catch((err) => {
+                    // this.setState({spinner: false});
                     console.log('err=', err);
-                    this.setState({spinner: false});
-                    Alert.alert('', 'Can not find server.');
+                    this.afAlert('', 'Can not find server.');
                     AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 });
             }
@@ -289,6 +298,7 @@ class LoginScreen extends React.Component {
         fetch(CONSTS.BASE_API + 'cpanel/client')
         .then((res) => res.json())
         .then((resJson) => {
+            // this.setState({spinner: false});
             if(resJson.status == 0) {
                 var clientObjArr = JSON.parse(resJson.data);
                 var clientArr = [];
@@ -308,17 +318,15 @@ class LoginScreen extends React.Component {
                 global.clientArr = clientArr;
                 global.clientNameArr = clientNameArr;
                 global.clientIdArr = clientIdArr;
-                this.setState({spinner: false});
                 this.props.navigation.navigate('ControlPanel');
             } else {
-                Alert.alert('', resJson.msg);
-                this.setState({spinner: false});
+                this.afAlert('', resJson.msg);
             }
         })
         .catch((err) => {
+            // this.setState({spinner: false});
             console.log('err=', err);
-            Alert.alert('', 'Can not find server.');
-            this.setState({spinner: false});
+            this.afAlert('', 'Can not find server.');
         });
     }
 }
