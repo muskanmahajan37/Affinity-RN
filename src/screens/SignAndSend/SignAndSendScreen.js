@@ -7,6 +7,7 @@ import SignCaptureModal from './Components/SignCaptureModal';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
 import { USER_KEY, USER_DATA } from '../../helpers/Consts';
+import API from '../../helpers/API';
 
 class SignAndSendScreen extends Component {
     constructor(props) {
@@ -339,22 +340,15 @@ class SignAndSendScreen extends Component {
         
         // this.saveDCNObjToLocal();
         this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'send_data', {
-            method: 'POST', 
-            headers:{
-                "Content-Type": "multipart/form-data; charset=utf-8",
-            },
-            body: data
-        })
-        .then((res) => res.json())
-        .then((resJson) => {
-            if(resJson.status == 0) {
+        API.send_data(data)
+        .then((res) => {
+            if(res.status == 0) {
                 this.setState({spinner: false});
                 this.clearDCNObjOnLocal();
                 this.props.navigation.replace('ControlPanel');
             } else {
                 this.saveDCNObjToLocal();
-                this.afAlert('', resJson.msg);
+                this.afAlert('', res.msg);
             }
         })
         .catch((err) => {

@@ -8,6 +8,7 @@ import CONSTS, { USER_KEY, USER_DATA } from '../../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
 import { withNavigation } from 'react-navigation';
+import API from '../../../helpers/API';
 
 class DailyCareNotesTab extends Component {
     constructor(props) {
@@ -54,26 +55,20 @@ class DailyCareNotesTab extends Component {
 
     fetchDCNItems = () => {
         this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'get_dcnlist', {
-            method: 'POST', 
-            headers:{
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({
-                SocialSecurityNum: global.SocialSecurityNum.toString(),
-                ClientId: global.ClientId.toString(),
-                LastSaturdayDate: global.LastSaturdayDate.toString()
-            })
-        })
-        .then((res) => res.json())
-        .then((resJson) => {
+        var params = {
+            SocialSecurityNum: global.SocialSecurityNum.toString(),
+            ClientId: global.ClientId.toString(),
+            LastSaturdayDate: global.LastSaturdayDate.toString()
+        }
+        API.get_dcnlist(params)
+        .then((res) => {
             this.setState({spinner: false});
-            if(resJson.status == 0) {
-                DCNList = JSON.parse(resJson.data || '{}');
+            if(res.status == 0) {
+                DCNList = JSON.parse(res.data || '{}');
                 this.setState({DCNList: DCNList});
                 this.initDCNList(DCNList);
             } else {
-                console.log('Error', resJson.msg);
+                console.log('Error', res.msg);
                 this.setState({DCNList: []});
                 this.initDCNList([]);
             }
@@ -218,16 +213,10 @@ class DailyCareNotesTab extends Component {
 
     openDCN = (DcnHeaderId) => {
         this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'get_dcndetail', {
-            method: 'POST', 
-            headers:{
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({
-                DcnHeaderId: DcnHeaderId.toString()
-            })
-        })
-        .then((res) => res.text())
+        var params = {
+            DcnHeaderId: DcnHeaderId.toString()
+        }
+        API.get_dcndetail(params)
         .then((resJson) => {
             result = JSON.parse(resJson);
             if (result.status == 0) {

@@ -4,6 +4,7 @@ import { ScrollView, View, Image, Text, TextInput,
 import CONSTS, { USER_KEY, USER_DATA } from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
+import API from '../../helpers/API';
 
 class LoginScreen extends React.Component {
     constructor(props) {
@@ -124,21 +125,15 @@ class LoginScreen extends React.Component {
             } else {
                 this.setState({spinner: true});
                 console.log('before=', this.state.firstname, this.state.lastname, this.state.ssn);
-                fetch(CONSTS.BASE_API + 'login/get_passcode', {
-                    method: 'POST', 
-                    headers:{
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
-                    body: JSON.stringify({
-                        firstname: this.state.firstname,
-                        lastname: this.state.lastname,
-                        ssn: this.state.ssn
-                    })
-                })
-                .then((res) => res.json())
-                .then((resJson) => {
-                    if(resJson.status == 0) {
-                        var data = JSON.parse(resJson.data);
+                var user = {
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname,
+                    ssn: this.state.ssn
+                };
+                API.get_passcode(user)
+                .then((res) => {
+                    if(res.status == 0) {
+                        var data = JSON.parse(res.data);
                         this.setState({ randomPassCode: data.passcode });
                         global.FirstName = data.userinfo.firstname; // DB - Caregiver First Name
                         global.LastName = data.userinfo.lastname; // DB - Caregiver Last Name
@@ -148,7 +143,7 @@ class LoginScreen extends React.Component {
                         AsyncStorage.setItem('passcodeLimit', '0');
                         this.setState({spinner: false});
                     } else {
-                        this.afAlert('', resJson.msg);
+                        this.afAlert('', res.msg);
                         AsyncStorage.setItem('loginLimit', (loginLimit + 1).toString());
                     }
                 })
@@ -251,23 +246,17 @@ class LoginScreen extends React.Component {
                 this.afAlert('', 'Please call our office for help at 954-782-3741');
             } else {
                 this.setState({spinner: true});
-                fetch(CONSTS.BASE_API + 'login', {
-                    method: 'POST', 
-                    headers:{
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
-                    body: JSON.stringify({
-                        firstname: this.state.firstname,
-                        lastname: this.state.lastname,
-                        ssn: this.state.ssn,
-                        passcode: this.state.randomPassCode,
-                        passcodeconf: this.state.passCodeConf
-                    })
-                })
-                .then((res) => res.json())
-                .then((resJson) => {
-                    var data = JSON.parse(resJson.data);
-                    if(resJson.status == 0) {
+                var user = {
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname,
+                    ssn: this.state.ssn,
+                    passcode: this.state.randomPassCode,
+                    passcodeconf: this.state.passCodeConf
+                };
+                API.login(user)
+                .then((res) => {
+                    var data = JSON.parse(res.data);
+                    if(res.status == 0) {
                         global.FirstName = data.userinfo.firstname; // Caregiver First Name
                         global.LastName = data.userinfo.lastname; // Caregiver Last Name
                         global.SocialSecurityNum = data.userinfo.ssn; // Caregiver SSN
@@ -278,7 +267,7 @@ class LoginScreen extends React.Component {
                         this.setState({spinner: false});
                     } else {
                         if (data.passcode) { this.setState({ randomPassCode: data.passcode }); }
-                        this.afAlert('', resJson.msg);
+                        this.afAlert('', res.msg);
                     }
                     AsyncStorage.setItem('passcodeLimit', (passcodeLimit + 1).toString());
                 })
@@ -293,11 +282,10 @@ class LoginScreen extends React.Component {
 
     fetchClients() {
         this.setState({spinner: true});
-        fetch(CONSTS.BASE_API + 'cpanel/client')
-        .then((res) => res.json())
-        .then((resJson) => {
-            if(resJson.status == 0) {
-                var clientObjArr = JSON.parse(resJson.data);
+        API.get_clients()
+        .then((res) => {
+            if(res.status == 0) {
+                var clientObjArr = JSON.parse(res.data);
                 var clientArr = [];
                 var clientIdArr = []
                 var clientNameArr = []
@@ -318,7 +306,7 @@ class LoginScreen extends React.Component {
                 this.setState({spinner: false});
                 this.props.navigation.navigate('ControlPanel');
             } else {
-                this.afAlert('', resJson.msg);
+                this.afAlert('', res.msg);
             }
         })
         .catch((err) => {
