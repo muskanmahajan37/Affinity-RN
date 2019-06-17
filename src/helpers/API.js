@@ -32,8 +32,14 @@ const API = {
 
     // ================ Control Panel API ================ //
     // ----------- get clients ------------ //
-    get_clients() {
-        return fetch(CONSTS.BASE_API + 'cpanel/client')
+    get_clients(params) {
+        return fetch(CONSTS.BASE_API + 'cpanel/client', {
+            method: 'POST', 
+            headers:{
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(params)
+        })
         .then((res) => res.json());
     },
 

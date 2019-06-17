@@ -282,7 +282,10 @@ class LoginScreen extends React.Component {
 
     fetchClients() {
         this.setState({spinner: true});
-        API.get_clients()
+        var params = {
+            ssn: global.SocialSecurityNum
+        }
+        API.get_clients(params)
         .then((res) => {
             if(res.status == 0) {
                 var clientObjArr = JSON.parse(res.data);
