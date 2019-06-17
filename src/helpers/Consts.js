@@ -1,7 +1,7 @@
 export default {
-    BASE_API : 'http://192.168.1.115:3500/apis/', 
+    // BASE_API : 'http://192.168.1.115:3500/apis/', 
     // BASE_API : 'http://10.0.2.2:3500/apis/', 
-    // BASE_API : 'http://3.208.132.146:3500/apis/', 
+    BASE_API : 'http://3.208.132.146:3500/apis/', 
     BASE64_HEADER : 'data:image/png;base64, ',
 }
 
