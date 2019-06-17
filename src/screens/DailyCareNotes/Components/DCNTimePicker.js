@@ -109,11 +109,11 @@ class DCNTimePicker extends Component {
                     date={this.state.time}
                     mode="time"
                     placeholder=" "
-                    format="HH:mm"
+                    format="h:mm a"
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     androidMode="spinner"
-                    is24Hour={true}
+                    is24Hour={false}
                     showIcon={false}
                     customStyles={{
                     dateInput: {

@@ -162,6 +162,7 @@ class DCNTimeTable extends Component {
         for(var i = 0; i < global.HoursPerDay_Arr.length; i++) {
             all += global.HoursPerDay_Arr[i] ? global.HoursPerDay_Arr[i] : 0;
         }
+        all = Math.round(all * 100) / 100;
         global.WeekTotalHours = all; // DB - WeekTotalHours
         this.setState({ WeekTotalHours: all});
         this.props.WeekTotalHours();

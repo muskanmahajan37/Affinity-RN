@@ -327,20 +327,26 @@ export function getCurrentYYYYDD() {
     return today.getFullYear() + '-' + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1))
 }
 
-export function calcHoursPerDay(timeOut, timeIn) {
-    var outHour = parseInt(timeOut.split(':')[0]);
-    var outMin = parseInt(timeOut.split(':')[1]);
-    var outTime = outHour + (outMin / 60);
+export function calcHoursPerDay(timeOut, timeIn) { // time @ h:mm a
+    var outSup = timeOut.split(' ')[0];
+    var outSub = timeOut.split(' ')[1];
+    var outHour = parseInt(outSup.split(':')[0]);
+    var outMin = parseInt(outSup.split(':')[1]);
+    var outTime = outHour + (outMin / 60) + (outSub == 'pm' ? 12 : 0);
 
-    var inHour = parseInt(timeIn.split(':')[0]);
-    var inMin = parseInt(timeIn.split(':')[1]);
-    var inTime = inHour + (inMin / 60);
+    var inSup = timeIn.split(' ')[0];
+    var inSub = timeIn.split(' ')[1];
+    var inHour = parseInt(inSup.split(':')[0]);
+    var inMin = parseInt(inSup.split(':')[1]);
+    var inTime = inHour + (inMin / 60) + (inSub == 'pm' ? 12 : 0);
 
     return Math.round((outTime - inTime) * 100) / 100;
 }
 
-export function convertHour(time) {
-    var hour = parseInt(time.split(':')[0]);
-    var min = parseInt(time.split(':')[1]);
-    return Math.round((hour + (min / 60)) * 100) / 100;
+export function convertHour(time) { // time @ h:mm a
+    var sup = time.split(' ')[0];
+    var sub = time.split(' ')[1];
+    var hour = parseInt(sup.split(':')[0]);
+    var min = parseInt(sup.split(':')[1]);
+    return Math.round((hour + (min / 60)) * 100) / 100 + (sub == 'pm' ? 12 : 0);
 }
