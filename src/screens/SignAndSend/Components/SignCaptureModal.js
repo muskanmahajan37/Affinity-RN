@@ -31,7 +31,6 @@ class SignCaptureModal extends Component {
                 }}>
                     <View style={{backgroundColor: '#000000bd', width: '100%', height: '100%', padding: 40}}>
                         <View style={{borderColor: '#000', borderWidth: 1, backgroundColor: '#fff', height: '100%', width: '100%'}}>
-                            {/* <SignatureCaptureComponent hh={'helo'} signPath={this.handleSignPath} closeSignModal={this.closeSignModal}></SignatureCaptureComponent> */}
                             <View style={{ flex: 1, flexDirection: "column", margin: 20, borderWidth: 1, borderColor: '#000', borderRadius: 10, padding: 10, justifyContent: 'center', alignItems: 'center' }}>
                                 <SignatureCapture
                                     style={styles.signature}
@@ -41,13 +40,13 @@ class SignCaptureModal extends Component {
                                     saveImageFileInExtStorage={false}
                                     showNativeButtons={false}
                                     showTitleLabel={false}
-                                    viewMode={"landscape"}/>
-                                <TouchableHighlight style={[styles.buttonStyle, {backgroundColor: '#ff7575', left: 10}]}
+                                    viewMode={"portrait"}/>
+                                <TouchableHighlight style={[styles.buttonStyle, {backgroundColor: '#ff7575', top: 50, left: -30}]}
                                     onPress={() => { this.resetSign(); } } >
                                     <Text style={{fontSize: 20, fontWeight: '600'}}>CLEAR</Text>
                                 </TouchableHighlight>
 
-                                <TouchableHighlight style={[styles.buttonStyle, {backgroundColor: '#7ad2ff', right: 10}]}
+                                <TouchableHighlight style={[styles.buttonStyle, {backgroundColor: '#7ad2ff', bottom: 50, left: -30}]}
                                     onPress={() => { this.saveSign() } } >
                                     <Text style={{fontSize: 20, fontWeight: '600'}}>DONE</Text>
                                 </TouchableHighlight>
@@ -55,7 +54,7 @@ class SignCaptureModal extends Component {
                             
                         </View>
                         <TouchableOpacity
-                            style={{position: 'absolute', left: 25, top: 25}}
+                            style={{position: 'absolute', right: 25, top: 25}}
                             onPress={() => {
                                 this.setModalVisible(!this.state.modalVisible);
                             }}>
@@ -66,11 +65,11 @@ class SignCaptureModal extends Component {
                 </Modal>
 
                 <TouchableHighlight
-                    style={{borderWidth: 1, borderColor: '#000', borderRadius: 10, width: '100%', height: 70, padding: 5}}
+                    style={{borderWidth: 1, borderColor: '#000', borderRadius: 10, width: 150, height: 70, padding: 5}}
                     onPress={() => {
                         this.setModalVisible(true);
                     }}>
-                    <Image style={{width: '100%', height: '100%'}} source={{uri: this.props.signResult ? this.props.signResult : null}} />
+                    <Image style={{ position: 'absolute', top: -40, left: 40, width: 70, height: 150, transform: [{ rotate: '-90deg'}] }} source={{uri: this.props.signResult ? this.props.signResult : null}} />
                 </TouchableHighlight>
             </View>
         );
@@ -112,7 +111,9 @@ const styles = StyleSheet.create({
         flex: 1, backgroundColor: 'transparent', borderRadius: 50, height: '100%', position: 'absolute', width: '100%'
     },
     buttonStyle: {
-        flexDirection: 'row', justifyContent: "center", alignItems: "center", height: 40, width: 120, borderRadius: 5, position: 'absolute', bottom: 10
+        flexDirection: 'row', justifyContent: "center", alignItems: "center", 
+        height: 40, width: 120, borderRadius: 5, position: 'absolute', bottom: 10, 
+        transform: [{ rotate: '90deg'}]
     }
 });
 
