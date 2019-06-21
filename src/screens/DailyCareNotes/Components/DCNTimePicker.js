@@ -105,7 +105,7 @@ class DCNTimePicker extends Component {
         return (
             <View style={{}}>
                 <DatePicker
-                    style={{width: 68, height: 35}}
+                    style={{width: '100%', height: 35}}
                     date={this.state.time}
                     mode="time"
                     placeholder=" "
@@ -117,7 +117,7 @@ class DCNTimePicker extends Component {
                     showIcon={false}
                     customStyles={{
                     dateInput: {
-                        width: 68,
+                        width: '100%',
                         height: 35,
                         borderWidth: 0
                     }
