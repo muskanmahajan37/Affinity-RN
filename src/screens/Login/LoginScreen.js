@@ -25,9 +25,9 @@ class LoginScreen extends React.Component {
         AsyncStorage.setItem('loginLimit', '0');
         AsyncStorage.setItem('passcodeLimit', '0');
         this.setState({
-            firstname: 'Evan',
-            lastname: 'Shapiro',
-            ssn: '0001'
+            firstname: 'Janet',
+            lastname: 'Pena',
+            ssn: '1956'
         });
         AsyncStorage.getItem(USER_KEY).then(res => {
             if(res) {
