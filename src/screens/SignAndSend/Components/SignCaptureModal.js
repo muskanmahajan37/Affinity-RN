@@ -69,7 +69,7 @@ class SignCaptureModal extends Component {
                     onPress={() => {
                         this.setModalVisible(true);
                     }}>
-                    <Image style={{ position: 'absolute', top: -40, left: 40, width: 70, height: 150, transform: [{ rotate: '-90deg'}] }} source={{uri: this.props.signResult ? this.props.signResult : null}} />
+                    <Image style={{ position: 'absolute', top: -35, left: 45, width: 60, height: 140, borderRadius: 5, transform: [{ rotate: '-90deg'}] }} source={{uri: this.props.signResult ? this.props.signResult : null}} />
                 </TouchableHighlight>
             </View>
         );

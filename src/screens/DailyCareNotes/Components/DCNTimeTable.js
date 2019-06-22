@@ -57,7 +57,7 @@ class DCNTimeTable extends Component {
             return (
                 <View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 2</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 2</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_2_Arr[0]} timeType={"timeIn2"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_2_Arr[1]} timeType={"timeIn2"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -69,7 +69,7 @@ class DCNTimeTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 2</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 2</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_2_Arr[0]} timeType={"timeOut2"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_2_Arr[1]} timeType={"timeOut2"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -92,7 +92,7 @@ class DCNTimeTable extends Component {
             return (
                 <View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 3</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 3</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_3_Arr[0]} timeType={"timeIn3"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_3_Arr[1]} timeType={"timeIn3"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -104,7 +104,7 @@ class DCNTimeTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 3</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 3</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_3_Arr[0]} timeType={"timeOut3"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_3_Arr[1]} timeType={"timeOut3"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -127,7 +127,7 @@ class DCNTimeTable extends Component {
             return (
                 <View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 4</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In 4</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_4_Arr[0]} timeType={"timeIn4"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_4_Arr[1]} timeType={"timeIn4"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -139,7 +139,7 @@ class DCNTimeTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 4</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out 4</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_4_Arr[0]} timeType={"timeOut4"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                             <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_4_Arr[1]} timeType={"timeOut4"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -175,14 +175,14 @@ class DCNTimeTable extends Component {
                 <View style={{flex: 1, flexDirection: 'column', borderColor: '#000', borderWidth: 0, paddingLeft: 20}}>
                     {/* =============== ----------- Day of Week ------------ =============== */}
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1, borderTopWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Year: 2019</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Year: 2019</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             {this.createTableHeader()}
                         </View>
                     </View>
                     {/* ================= ---------- Date of Month --------- ================= */}
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Date of Service</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Date of Service</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             {this.createTableDateRow()}
                         </View>
@@ -191,7 +191,7 @@ class DCNTimeTable extends Component {
                     {/* ------ 1 ------ TimeIn1/TimeOut1 ------------ */}
                     <View>
                         <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                            <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In</Text></View>
+                            <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time In</Text></View>
                             <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_1_Arr[0]} timeType={"timeIn1"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                                 <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeIn_1_Arr[1]} timeType={"timeIn1"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -203,7 +203,7 @@ class DCNTimeTable extends Component {
                             </View>
                         </View>
                         <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                            <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out</Text></View>
+                            <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}}>Time Out</Text></View>
                             <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_1_Arr[0]} timeType={"timeOut1"} timeIndex={0} selectTime={this.calSum}></DCNTimePicker></View>
                                 <View style={styles.DCNTimeCellContainer}><DCNTimePicker defaultTime={global.TimeOut_1_Arr[1]} timeType={"timeOut1"} timeIndex={1} selectTime={this.calSum}></DCNTimePicker></View>
@@ -231,7 +231,7 @@ class DCNTimeTable extends Component {
                     </View>
                     
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:170, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', fontWeight: '600'}}>Hours per Day</Text></View>
+                        <View style={styles.DCNServiceTimeColumnTitle}><Text style={{fontSize: 20, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', fontWeight: '600'}}>Hours per Day</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[0] ? global.HoursPerDay_Arr[0] : '' }</Text></View>
                             <View style={styles.DCNTimeCellContainer}><Text style={styles.DCNTimeCellText}>{ global.HoursPerDay_Arr[1] ? global.HoursPerDay_Arr[1] : '' }</Text></View>
@@ -260,8 +260,9 @@ class DCNTimeTable extends Component {
 }
 
 const styles = StyleSheet.create({
+    DCNServiceTimeColumnTitle: {width:150, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}, 
     DCNTimeCellContainer: {flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000', height: 35, width: 70}, 
-    DCNTimeCellText: {fontSize: 17, textAlign: 'center', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}, 
+    DCNTimeCellText: {fontSize: 17, textAlign: 'center', color: '#000', marginTop: 'auto', marginBottom: 'auto'}, 
     container: {
         flex: 1,
         justifyContent: 'center',

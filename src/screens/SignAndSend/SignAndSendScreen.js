@@ -31,18 +31,18 @@ class SignAndSendScreen extends Component {
     }
 
     setComplianceFlag = () => {
-        global.ComplianceFlag = !this.state.ComplianceFlag;
-        this.setState({ComplianceFlag: !this.state.ComplianceFlag});
+        global.ComplianceFlag = !global.ComplianceFlag;
+        this.setState({ComplianceFlag: global.ComplianceFlag});
     }
 
     setSendToPhoneFlag = () => {
-        global.SendToPhoneFlag = !this.state.SendToPhoneFlag;
-        this.setState({SendToPhoneFlag: !this.state.SendToPhoneFlag});
+        global.SendToPhoneFlag = !global.SendToPhoneFlag;
+        this.setState({SendToPhoneFlag: global.SendToPhoneFlag});
     }
 
     setSendToEmailFlag = () => {
-        global.SendToEmailFlag = !this.state.SendToEmailFlag;
-        this.setState({SendToEmailFlag: !this.state.SendToEmailFlag});
+        global.SendToEmailFlag = !global.SendToEmailFlag;
+        this.setState({SendToEmailFlag: global.SendToEmailFlag});
     }
 
     render() {
@@ -59,7 +59,7 @@ class SignAndSendScreen extends Component {
                     <View style={{flex: 1, flexDirection: 'row', height:'auto', marginTop: Platform.OS == 'ios' ? 50 : 0}}>
                         <View>
                             <TouchableOpacity style={{marginLeft: 20, marginRight: 10}} onPress={this.setComplianceFlag}>
-                                { (this.state.ComplianceFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
+                                { (global.ComplianceFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                         </View>
                         <View style={{width: '100%', flexDirection: 'row', paddingRight: 50}}>
@@ -159,7 +159,7 @@ class SignAndSendScreen extends Component {
                         </View>
                         <View style={{flexDirection: 'row', paddingTop: 15}}>
                             <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={this.setSendToPhoneFlag}>
-                                { (this.state.SendToPhoneFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
+                                { (global.SendToPhoneFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                             <View style={{width: '100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>
@@ -177,7 +177,7 @@ class SignAndSendScreen extends Component {
                         </View>
                         <View style={{flexDirection: 'row', paddingTop: 15}}>
                             <TouchableOpacity style={{marginLeft: 20, marginRight: 10, marginTop: 5}} onPress={this.setSendToEmailFlag}>
-                                { (this.state.SendToEmailFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
+                                { (global.SendToEmailFlag ? <Image style={{width: 30, height: 30}} source={require('../../assets/img/checked-checkbox.png')} /> : <Image style={{width: 30, height: 30}} source={require('../../assets/img/unchecked-checkbox.png')} />)}
                             </TouchableOpacity>
                             <View style={{width:'100%', flexDirection: 'row', height: 40, paddingRight: 50}}>
                                 <View style={{flex: 1, borderWidth: 1, borderColor: '#000', marginRight: 30}}>

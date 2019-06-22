@@ -114,13 +114,13 @@ class DCNWorkTable extends Component {
             <View>
                 <View style={{flex: 1, flexDirection: 'column', borderColor: '#000', borderWidth: 0}}>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1, borderTopWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}></View>
+                        <View style={styles.DCNServiceColumnTitle}></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             { this.createTableHeader() }
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Mobility/Walking/Moving</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Mobility/Walking/Moving</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Mobility_Walking_Moving_Flag', 0) }>{ (global.MobilityWalkingMovingFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Mobility_Walking_Moving_Flag', 1) }>{ (global.MobilityWalkingMovingFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -132,7 +132,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Bathing/Showering</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Bathing/Showering</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Bathing_Showering_Flag', 0) }>{ (global.BathingShoweringFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Bathing_Showering_Flag', 1) }>{ (global.BathingShoweringFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -144,7 +144,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Dressing</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Dressing</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Dressing_Flag', 0) }>{ (global.DressingFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Dressing_Flag', 1) }>{ (global.DressingFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -156,7 +156,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Toileting</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Toileting</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Toileting_Flag', 0) }>{ (global.ToiletingFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Toileting_Flag', 1) }>{ (global.ToiletingFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -168,7 +168,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Eating</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Eating</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Eating_Flag', 0) }>{ (global.EatingFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Eating_Flag', 1) }>{ (global.EatingFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -180,7 +180,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Continence Bladder/Bowel</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Continence Bladder/Bowel</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Continence_Bladder_Bowel_Flag', 0) }>{ (global.ContinenceBladderBowelFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Continence_Bladder_Bowel_Flag', 1) }>{ (global.ContinenceBladderBowelFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -195,7 +195,7 @@ class DCNWorkTable extends Component {
 
                 <View style={{flex: 1, flexDirection: 'column', marginTop: 25, borderColor: '#000', borderTopWidth: 1}}>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Meal Preparation also including Kitchen Cleanup</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Meal Preparation also including Kitchen Cleanup</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={{flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000'}}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Meal_Prep_Including_Flag', 0) }>{ (global.MealPrepIncludingFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={{flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000'}}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Meal_Prep_Including_Flag', 1) }>{ (global.MealPrepIncludingFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -207,7 +207,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Laundry</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Laundry</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Laundry_Flag', 0) }>{ (global.LaundryFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={styles.DCNCheckboxWrapperStyle}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Laundry_Flag', 1) }>{ (global.LaundryFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -219,7 +219,7 @@ class DCNWorkTable extends Component {
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row', borderColor: '#000', borderBottomWidth: 1}}>
-                        <View style={{width:200, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}}><Text style={styles.DCNLabelStyle}>Light Housekeeping also including Making Beds, Linen Change and Cleaning Client's Bathroom</Text></View>
+                        <View style={styles.DCNServiceColumnTitle}><Text style={styles.DCNLabelStyle}>Light Housekeeping also including Making Beds, Linen Change and Cleaning Client's Bathroom</Text></View>
                         <View style={{flex:7, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <View style={{flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000'}}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Light_Housekeeping_Including_Flag', 0) }>{ (global.LightHousekeepingIncludingFlag[0] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
                             <View style={{flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000'}}><TouchableOpacity style={styles.DCNCheckboxContainerStyle} onPress={ () => this.set_DCN_Form_Row_Flag('Light_Housekeeping_Including_Flag', 1) }>{ (global.LightHousekeepingIncludingFlag[1] ? this.DCNCheckedIcon() : this.DCNUncheckedIcon())}</TouchableOpacity></View>
@@ -237,6 +237,7 @@ class DCNWorkTable extends Component {
 }
 
 const styles = StyleSheet.create({
+    DCNServiceColumnTitle: {width:190, borderRightWidth: 1, borderLeftWidth: 1, borderColor: '#000'}, 
     DCNLabelStyle: {fontSize: 14, textAlign: 'left', color: '#000', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto'}, 
     DCNCheckboxWrapperStyle: {flex: 1, alignContent: 'center', borderRightWidth: 1, borderColor: '#000', height: 35, width: 70},
     DCNCheckboxContainerStyle: {marginTop: 'auto', marginBottom: 'auto', paddingTop: 5, width: '100%', height: '100%', paddingBottom: 5}
