@@ -240,16 +240,16 @@ class SignAndSendScreen extends Component {
     }
 
     validationOfPhone() {
-        if(this.state.SendToPhoneFlag) {
-            return this.state.Phone1 && this.state.Phone2;
+        if(global.SendToPhoneFlag) {
+            return global.Phone1 && global.Phone2;
         } else {
             return true;
         }
     }
 
     validationOfEmail() {
-        if(this.state.SendToEmailFlag) {
-            return this.state.Email1 && this.state.Email2;
+        if(global.SendToEmailFlag) {
+            return global.Email1 && global.Email2;
         } else {
             return true;
         }
