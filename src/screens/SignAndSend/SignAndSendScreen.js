@@ -5,9 +5,10 @@ import moment from 'moment';
 import CONSTS from '../../helpers/Consts';
 import SignCaptureModal from './Components/SignCaptureModal';
 import Spinner from 'react-native-loading-spinner-overlay';
-import AsyncStorage from '@react-native-community/async-storage';
-import { USER_KEY, USER_DATA } from '../../helpers/Consts';
+// import AsyncStorage from '@react-native-community/async-storage';
+// import { USER_KEY, USER_DATA } from '../../helpers/Consts';
 import API from '../../helpers/API';
+import AFShare from '../../helpers/AFShare';
 
 class SignAndSendScreen extends Component {
     constructor(props) {
@@ -256,6 +257,7 @@ class SignAndSendScreen extends Component {
     }
 
     saveAndExitSignForm() {
+        global.isRemember = true;
         this.props.navigation.navigate('ControlPanel')
     }
 
@@ -268,75 +270,7 @@ class SignAndSendScreen extends Component {
             this.afAlert('Invalid Input', 'Please fill the Email Address.');
             return;
         }
-        var DCNImageFileName = global.FirstName + global.LastName + '_' + (new Date().getTime());
-        global.DCNImageFileName = DCNImageFileName;
-        const data = new FormData();
-        data.append('ImageOfDCN', {
-            uri: global.ImageOfDCN,
-            type: 'image/png',
-            name: DCNImageFileName
-        });
-        data.append('isNewDCN', global.isNewDCN);
-        data.append('DcnHeaderId', global.DcnHeaderId);
-        data.append('DcnDetailIds', JSON.stringify(global.DcnDetailIds));
-        data.append('oldImageOfDCN', global.oldImageOfDCN);
-        data.append('DCNImageFileName', global.DCNImageFileName);
-        data.append('SocialSecurityNum', global.SocialSecurityNum); // for DCN Submitted Header
-        data.append('ClientId', global.ClientId);
-        data.append('ClientName', global.ClientName);
-        data.append('LastSaturdayDate', global.LastSaturdayDate);
-        data.append('HourlyFlag', global.HourlyFlag);
-        data.append('LiveInFlag', global.LiveInFlag);
-        data.append('OvernightFlag', global.OvernightFlag);
-        data.append('WeekTotalHours', global.WeekTotalHours);
-        data.append('ComplianceFlag', global.ComplianceFlag);
-        data.append('CaregiverSignature', global.CaregiverSignature);
-        data.append('CaregiverSignatureDate', moment(new Date(global.CaregiverSignatureDate)).format("YYYY-MM-DD"));
-        data.append('ClientSignature', global.ClientSignature);
-        data.append('ClientSignatureDate', moment(new Date(global.ClientSignatureDate)).format("YYYY-MM-DD"));
-        data.append('HasPAF', global.HasPAF);
-        // // data.append('PafId', global.PafId);
-        data.append('SendToPhoneFlag', global.SendToPhoneFlag);
-        data.append('Phone1', global.Phone1 ? global.Phone1 : '');
-        data.append('Phone2', global.Phone2 ? global.Phone2 : '');
-        data.append('SendToEmailFlag', global.SendToEmailFlag);
-        data.append('Email1', global.Email1 ? global.Email1 : '');
-        data.append('Email2', global.Email2 ? global.Email2 : '');
-        data.append('DateTimeOfSubmission', global.DateTimeOfSubmission);
-        data.append('GPSLocationOfSubmission', global.GPSLocationOfSubmission); // ---
-        // data.append('ImageOfDCN', global.ImageOfDCN);
-        data.append('PDFOfDCN', global.PDFOfDCN); // ===
-        // data.append('createdBy', global.createdBy);
-        // data.append('created', global.created);
-        // data.append('updatedBy', global.updatedBy);
-        // data.append('updated', global.updated);
-        data.append('selectedWeek', JSON.stringify(global.selectedWeek)); // for DCN Submitted Detail
-        data.append('DCNWeek', JSON.stringify(global.DCNWeek)); // for DCNWeek Submitted Detail
-        data.append('TimeInOutLength', global.TimeInOutLength);
-        data.append('TimeIn1', JSON.stringify(global.TimeIn_1_Arr));
-        data.append('TimeIn2', JSON.stringify(global.TimeIn_2_Arr));
-        data.append('TimeIn3', JSON.stringify(global.TimeIn_3_Arr));
-        data.append('TimeIn4', JSON.stringify(global.TimeIn_4_Arr));
-        data.append('TimeOut1', JSON.stringify(global.TimeOut_1_Arr));
-        data.append('TimeOut2', JSON.stringify(global.TimeOut_2_Arr));
-        data.append('TimeOut3', JSON.stringify(global.TimeOut_3_Arr));
-        data.append('TimeOut4', JSON.stringify(global.TimeOut_4_Arr));
-        data.append('HoursPerDay', JSON.stringify(global.HoursPerDay_Arr));
-        data.append('MobilityWalkingMovingFlag', JSON.stringify(global.MobilityWalkingMovingFlag));
-        data.append('BathingShoweringFlag', JSON.stringify(global.BathingShoweringFlag));
-        data.append('DressingFlag', JSON.stringify(global.DressingFlag));
-        data.append('ToiletingFlag', JSON.stringify(global.ToiletingFlag));
-        data.append('EatingFlag', JSON.stringify(global.EatingFlag));
-        data.append('ContinenceBladderBowelFlag', JSON.stringify(global.ContinenceBladderBowelFlag));
-        data.append('MealPrepIncludingFlag', JSON.stringify(global.MealPrepIncludingFlag));
-        data.append('LaundryFlag', JSON.stringify(global.LaundryFlag));
-        data.append('LightHousekeepingIncludingFlag', JSON.stringify(global.LightHousekeepingIncludingFlag));
-        data.append('PersonalCareHours', global.PersonalCareHours); // -----
-        data.append('HomemakingHours', global.HomemakingHours);
-        data.append('CompanionHours', global.CompanionHours);
-        data.append('RespiteHours', global.RespiteHours);
-        data.append('AttendantHours', global.AttendantHours); // =====
-        data.append('author', global.FirstName + ' ' + global.LastName); // --- created by or updated by
+        var data = AFShare.generateSendData();
         
         // this.saveDCNObjToLocal();
         this.setState({spinner: true});
@@ -344,10 +278,10 @@ class SignAndSendScreen extends Component {
         .then((res) => {
             if(res.status == 0) {
                 this.setState({spinner: false});
-                this.clearDCNObjOnLocal();
+                AFShare.clearDCNObjOnLocal();
                 this.props.navigation.replace('ControlPanel');
             } else {
-                this.saveDCNObjToLocal();
+                AFShare.saveDCNObjToLocal();
                 this.afAlert('', res.msg);
             }
         })
@@ -355,7 +289,7 @@ class SignAndSendScreen extends Component {
             console.log('4 err=', err);
             // this.afAlert('Error', 'Network request failed');
             this.setState({spinner: false});
-            this.saveDCNObjToLocal();
+            AFShare.saveDCNObjToLocal();
         });
     }
 
@@ -366,77 +300,6 @@ class SignAndSendScreen extends Component {
             [{ text: 'OK', onPress: () => this.setState({spinner: false}) }],
             {cancelable: false},
         );
-    }
-
-    clearDCNObjOnLocal() {
-        AsyncStorage.removeItem('DCNObj');
-    }
-    
-    saveDCNObjToLocal() {
-        var DCNObj = {
-            isNewDCN : global.DcnHeaderId ? 'false' : 'true',
-            DcnHeaderId : global.DcnHeaderId,
-            DcnDetailIds : JSON.stringify(global.DcnDetailIds),
-            oldImageOfDCN : global.oldImageOfDCN,
-            ImageOfDCN : global.ImageOfDCN,
-            DCNImageFileName : global.DCNImageFileName,
-            SocialSecurityNum : global.SocialSecurityNum, // for DCN Submitted Head,
-            ClientId : global.ClientId,
-            ClientName : global.ClientName,
-            LastSaturdayDate : global.LastSaturdayDate,
-            HourlyFlag : global.HourlyFlag,
-            LiveInFlag : global.LiveInFlag,
-            OvernightFlag : global.OvernightFlag,
-            WeekTotalHours : global.WeekTotalHours,
-            ComplianceFlag : global.ComplianceFlag,
-            CaregiverSignature : global.CaregiverSignature,
-            CaregiverSignatureDate : moment(new Date(global.CaregiverSignatureDate)).format("YYYY-MM-DD"),
-            ClientSignature : global.ClientSignature,
-            ClientSignatureDate : moment(new Date(global.ClientSignatureDate)).format("YYYY-MM-DD"),
-            HasPAF : global.HasPAF,
-            // // PafId : global.PafId,
-            SendToPhoneFlag : global.SendToPhoneFlag,
-            Phone1 : global.Phone1,
-            Phone2 : global.Phone2,
-            SendToEmailFlag : global.SendToEmailFlag,
-            Email1 : global.Email1,
-            Email2 : global.Email2,
-            DateTimeOfSubmission : global.DateTimeOfSubmission,
-            GPSLocationOfSubmission : global.GPSLocationOfSubmission, // ---
-            PDFOfDCN : global.PDFOfDCN, // ===
-            // createdBy : global.createdBy,
-            // created : global.created,
-            // updatedBy : global.updatedBy,
-            // updated : global.updated,
-            selectedWeek : JSON.stringify(global.selectedWeek), // for DCN Submitted Detail
-            DCNWeek : JSON.stringify(global.DCNWeek), // for DCNWeek Submitted Detail
-            TimeInOutLength : global.TimeInOutLength,
-            TimeIn1 : JSON.stringify(global.TimeIn_1_Arr),
-            TimeIn2 : JSON.stringify(global.TimeIn_2_Arr),
-            TimeIn3 : JSON.stringify(global.TimeIn_3_Arr),
-            TimeIn4 : JSON.stringify(global.TimeIn_4_Arr),
-            TimeOut1 : JSON.stringify(global.TimeOut_1_Arr),
-            TimeOut2 : JSON.stringify(global.TimeOut_2_Arr),
-            TimeOut3 : JSON.stringify(global.TimeOut_3_Arr),
-            TimeOut4 : JSON.stringify(global.TimeOut_4_Arr),
-            HoursPerDay : JSON.stringify(global.HoursPerDay_Arr),
-            MobilityWalkingMovingFlag : JSON.stringify(global.MobilityWalkingMovingFlag),
-            BathingShoweringFlag : JSON.stringify(global.BathingShoweringFlag),
-            DressingFlag : JSON.stringify(global.DressingFlag),
-            ToiletingFlag : JSON.stringify(global.ToiletingFlag),
-            EatingFlag : JSON.stringify(global.EatingFlag),
-            ContinenceBladderBowelFlag : JSON.stringify(global.ContinenceBladderBowelFlag),
-            MealPrepIncludingFlag : JSON.stringify(global.MealPrepIncludingFlag),
-            LaundryFlag : JSON.stringify(global.LaundryFlag),
-            LightHousekeepingIncludingFlag : JSON.stringify(global.LightHousekeepingIncludingFlag),
-            PersonalCareHours : global.PersonalCareHours, // -----
-            HomemakingHours : global.HomemakingHours,
-            CompanionHours : global.CompanionHours,
-            RespiteHours : global.RespiteHours,
-            AttendantHours : global.AttendantHours, // =====
-            author : global.FirstName + ' ' + global.LastName, // --- created by or updated by
-        }
-        AsyncStorage.setItem({'DCNObj' : JSON.stringify(DCNObj)});
     }
     
 }

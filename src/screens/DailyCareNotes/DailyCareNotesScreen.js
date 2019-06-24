@@ -6,6 +6,7 @@ import DCNTimeTable from './Components/DCNTimeTable';
 import DCNWorkTable from './Components/DCNWorkTable'
 import DCNTypeRadioForm from './Components/DCNTypeRadioForm';
 import ViewShot from "react-native-view-shot";
+import AFShare from '../../helpers/AFShare';
 
 class DailyCareNotesScreen extends Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class DailyCareNotesScreen extends Component {
                                 <View style={{width: 70, height: 35, marginLeft: 5, marginRight: 25, borderBottomWidth: 1, borderBottomColor: '#000'}}>
                                     <Text 
                                         style={{fontSize: 20, color: '#000', fontWeight: '500', paddingBottom: 2, textAlign: 'center'}}>
-                                        {this.state.totalHour != 0 ? this.state.totalHour : ''}
+                                        {global.WeekTotalHours != 0 ? global.WeekTotalHours : ''}
                                     </Text>
                                 </View>
                             </View>
@@ -69,7 +70,7 @@ class DailyCareNotesScreen extends Component {
                         <View style={{}}>
                             <TouchableOpacity 
                                 style={[styles.btn, styles.btnGray]} 
-                                onPress={() => this.props.navigation.goBack()}
+                                onPress={() => this.exit()}
                             >
                                 <Text style={styles.btnText}>Exit</Text>
                             </TouchableOpacity>
@@ -96,13 +97,17 @@ class DailyCareNotesScreen extends Component {
         );
     };
 
+    exit() {
+        global.isRemember = false;
+        this.props.navigation.replace('ControlPanel')
+    }
+
     saveAndExitDCN() {
-        console.log('clicked Save & Exit button!')
+        global.isRemember = true;
         this.props.navigation.goBack()
     }
 
     saveAndNextDCN() {
-        console.log('clicked Save & Next button!')
         this.props.navigation.navigate('SignAndSend')
     }
 

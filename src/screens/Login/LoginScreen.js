@@ -5,6 +5,7 @@ import CONSTS, { USER_KEY, USER_DATA } from '../../helpers/Consts';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
 import API from '../../helpers/API';
+import AFShare from '../../helpers/AFShare';
 
 class LoginScreen extends React.Component {
     constructor(props) {
@@ -44,78 +45,13 @@ class LoginScreen extends React.Component {
         AsyncStorage.getItem('DCNObj').then(res => {
             if(res) {
                 global.DCNReadyStatus = true;
-                this.initDCNGlobalParamsFromLocal(res);
+                var DCNObj = JSON.parse(res);
+                AFShare.initDCNGlobalParamsFromLocal(DCNObj);
             } else {
                 global.DCNReadyStatus = false;
             }
         });
-    }
-
-    initDCNGlobalParamsFromLocal(res) {
-        var DCNObj = JSON.parse(res);
-        global.isNewDCN = DCNObj.isNewDCN;
-        global.DcnHeaderId = DCNObj.DcnHeaderId;
-        global.DcnDetailIds = DCNObj.DcnDetailIds;
-        global.oldImageOfDCN = DCNObj.oldImageOfDCN;
-        global.ImageOfDCN = DCNObj.ImageOfDCN;
-        global.DCNImageFileName = DCNObj.DCNImageFileName;
-        global.SocialSecurityNum = DCNObj.SocialSecurityNum; // for DCN Submitted Head,
-        global.ClientId = DCNObj.ClientId;
-        global.ClientName = DCNObj.ClientName;
-        global.LastSaturdayDate = DCNObj.LastSaturdayDate;
-        global.HourlyFlag = DCNObj.HourlyFlag;
-        global.LiveInFlag = DCNObj.LiveInFlag;
-        global.OvernightFlag = DCNObj.OvernightFlag;
-        global.WeekTotalHours = DCNObj.WeekTotalHours;
-        global.ComplianceFlag = DCNObj.ComplianceFlag;
-        global.CaregiverSignature = DCNObj.CaregiverSignature;
-        global.CaregiverSignatureDate = DCNObj.CaregiverSignatureDate;
-        global.ClientSignature = DCNObj.ClientSignature;
-        global.ClientSignatureDate = DCNObj.ClientSignatureDate;
-        global.HasPAF = DCNObj.HasPAF;
-        // // global.PafId = DCNObj.PafId;
-        global.SendToPhoneFlag = DCNObj.SendToPhoneFlag;
-        global.Phone1 = DCNObj.Phone1;
-        global.Phone2 = DCNObj.Phone2;
-        global.SendToEmailFlag = DCNObj.SendToEmailFlag;
-        global.Email1 = DCNObj.Email1;
-        global.Email2 = DCNObj.Email2;
-        global.DateTimeOfSubmission = DCNObj.DateTimeOfSubmission;
-        global.GPSLocationOfSubmission = DCNObj.GPSLocationOfSubmission; // ---
-        global.PDFOfDCN = DCNObj.PDFOfDCN; // ===
-        // global.createdBy = DCNObj.createdBy;
-        // global.created = DCNObj.created;
-        // global.updatedBy = DCNObj.updatedBy;
-        // global.updated = DCNObj.updated;
-        global.selectedWeek = JSON.parse(DCNObj.selectedWeek); // for DCN Submitted Detail
-        global.DCNWeek = JSON.parse(DCNObj.DCNWeek); // for DCNWeek Submitted Detail
-        global.TimeInOutLength = DCNObj.TimeInOutLength;
-        global.TimeIn_1_Arr = JSON.parse(DCNObj.TimeIn1);
-        global.TimeIn_2_Arr = JSON.parse(DCNObj.TimeIn2);
-        global.TimeIn_3_Arr = JSON.parse(DCNObj.TimeIn3);
-        global.TimeIn_4_Arr = JSON.parse(DCNObj.TimeIn4);
-        global.TimeOut_1_Arr = JSON.parse(DCNObj.TimeOut1);
-        global.TimeOut_2_Arr = JSON.parse(DCNObj.TimeOut2);
-        global.TimeOut_3_Arr = JSON.parse(DCNObj.TimeOut3);
-        global.TimeOut_4_Arr = JSON.parse(DCNObj.TimeOut4);
-        global.HoursPerDay_Arr = JSON.parse(DCNObj.HoursPerDay);
-        global.MobilityWalkingMovingFlag = JSON.parse(DCNObj.MobilityWalkingMovingFlag);
-        global.BathingShoweringFlag = JSON.parse(DCNObj.BathingShoweringFlag);
-        global.DressingFlag = JSON.parse(DCNObj.DressingFlag);
-        global.ToiletingFlag = JSON.parse(DCNObj.ToiletingFlag);
-        global.EatingFlag = JSON.parse(DCNObj.EatingFlag);
-        global.ContinenceBladderBowelFlag = JSON.parse(DCNObj.ContinenceBladderBowelFlag);
-        global.MealPrepIncludingFlag = JSON.parse(DCNObj.MealPrepIncludingFlag);
-        global.LaundryFlag = JSON.parse(DCNObj.LaundryFlag);
-        global.LightHousekeepingIncludingFlag = JSON.parse(DCNObj.LightHousekeepingIncludingFlag);
-        global.PersonalCareHours = DCNObj.PersonalCareHours; // -----
-        global.HomemakingHours = DCNObj.HomemakingHours;
-        global.CompanionHours = DCNObj.CompanionHours;
-        global.RespiteHours = DCNObj.RespiteHours;
-        global.AttendantHours = DCNObj.AttendantHours; // =====
-        global.FirstName = DCNObj.author.split(' ')[0];
-        global.LastName = DCNObj.author.split(' ')[1];
-    }
+    }    
 
     generatePassCode() {
         AsyncStorage.getItem('loginLimit').then((value) => {
