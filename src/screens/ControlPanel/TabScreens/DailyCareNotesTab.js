@@ -55,7 +55,7 @@ class DailyCareNotesTab extends Component {
     }
 
     fetchDCNItems = () => {
-        this.setState({spinner: true});
+        // this.setState({spinner: true});
         var params = {
             SocialSecurityNum: global.SocialSecurityNum.toString(),
             ClientId: global.ClientId.toString(),
@@ -63,7 +63,7 @@ class DailyCareNotesTab extends Component {
         }
         API.get_dcnlist(params)
         .then((res) => {
-            this.setState({spinner: false});
+            // this.setState({spinner: false});
             if(res.status == 0) {
                 DCNList = JSON.parse(res.data || '{}');
                 this.setState({DCNList: DCNList});
@@ -75,7 +75,7 @@ class DailyCareNotesTab extends Component {
             }
         })
         .catch((err) => {
-            this.setState({spinner: false});
+            // this.setState({spinner: false});
             console.log('=== fetch DCN items - error ===', err);
         });
     }
