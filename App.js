@@ -11,6 +11,10 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import LoginScreen from './src/screens/Login/LoginScreen';
+import ControlPanelScreen from './src/screens/ControlPanel/ControlPanelScreen';
+import DailyCareNotesScreen from './src/screens/DailyCareNotes/DailyCareNotesScreen';
+import SignAndSendScreen from './src/screens/SignAndSend/SignAndSendScreen';
+import PatientAdmissionFormScreen from './src/screens/PatientAdmissionForm/PatientAdmissionFormScreen';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -26,8 +30,36 @@ const MainNavigator = createStackNavigator({
       headerStyle: { display: 'none' },
       headerLeft: null
     }
+  },
+  ControlPanel: {
+    screen: ControlPanelScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' },
+      headerLeft: null
+    }
+  },
+  DailyCareNotes: {
+    screen: DailyCareNotesScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' },
+      headerLeft: null
+    }
+  },
+  SignAndSend: {
+    screen: SignAndSendScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' },
+      headerLeft: null
+    }
+  },
+  PatientAdmissionForm: {
+    screen: PatientAdmissionFormScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' },
+      headerLeft: null
+    }
   }
-}, { initialRouteName: "Login"});
+}, { initialRouteName: "ControlPanel"});
 
 const AppContainer = createAppContainer(MainNavigator);
 
