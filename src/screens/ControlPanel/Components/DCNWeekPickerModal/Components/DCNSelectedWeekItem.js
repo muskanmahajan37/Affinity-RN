@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-class DCNWeekItem extends Component {
+class DCNSelectedWeekItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,7 +11,7 @@ class DCNWeekItem extends Component {
     }
 
     render() {
-        var week = this.state.week;
+        var week = this.props.week;
         var textArr = [];
         for (var i = 0; i < week.length; i++) {
             textArr.push(<View key = {i}>
@@ -20,14 +20,9 @@ class DCNWeekItem extends Component {
         }
         const index = this.props.weekIndex;
         return (
-            <TouchableOpacity 
-                style={{backgroundColor: '#fff', zIndex: 10000, paddingTop: 3, paddingBottom: 3}}
-                onPress={()=>this.props.selectWeek(index)}
-                >
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 40, paddingRight: 40}}>
-                    {textArr}
-                </View>
-            </TouchableOpacity>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 40, paddingRight: 40}}>
+                {textArr}
+            </View>
         );
     };
 }
@@ -38,4 +33,4 @@ const styles = StyleSheet.create({
     itemText: {color: '#000', flex: 1, flexDirection: 'row'}
 });
 
-export default DCNWeekItem;
+export default DCNSelectedWeekItem;

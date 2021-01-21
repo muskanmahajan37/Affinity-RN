@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Dimens
 import DCNTimeTable from './Components/DCNTimeTable';
 import DCNWorkTable from './Components/DCNWorkTable'
 import DCNTypeRadioForm from './Components/DCNTypeRadioForm';
+import ViewShot from "react-native-view-shot";
 
 class DailyCareNotesScreen extends Component {
     constructor(props) {
@@ -11,43 +12,58 @@ class DailyCareNotesScreen extends Component {
 
         this.state = {
             DCNflag: 0,
-            week: ['2019-05-19', '2019-05-20', '2019-05-21', '2019-05-22', '2019-05-23', '2019-05-24', '2019-05-25'],
-            totalHour: '0'
+            week: global.selectedWeek,
+            totalHour: global.WeekTotalHours ? global.WeekTotalHours : 0
         }
+    }
+
+    calcTotalHours = () => {
+        this.setState({ totalHour: global.WeekTotalHours });
+    }
+
+    takeScreenShot = () => {
+        this.refs.viewShot.capture({
+            quality: 0.8, 
+            result: "base64"
+        }).then(uri => {
+            global.ImageOfDCN = uri;
+            this.props.navigation.navigate('SignAndSend')
+        }).catch(err => {
+            console.log("=== err: ===", err);
+        })
     }
 
     render() {
         return (
             <ScrollView contentContainerStyle={styles.contentContainer} horizontal={true}>
                 <ScrollView horizontal={false}>
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={{}}>
-                            <Text style={{color: '#000', fontSize: 19, padding: 10, fontWeight: '700'}}>Daily Care Notes</Text>
-                        </View>
-                        <View style={{right: 10, top:18, position: 'absolute'}}>
-                            <DCNTypeRadioForm></DCNTypeRadioForm>
-                        </View>
-                    </View>
-                    <View style={styles.container}>
-                        <DCNTimeTable week={this.state.week}></DCNTimeTable>
-                    </View>
-                    <View style={{flex: 1, flexDirection: 'row', height: 40}}>
-                        <View style={{flexDirection: 'row', marginLeft: 'auto'}}>
-                            <Text style={{fontSize: 20, color: '#000', fontWeight: '700', height: 35, paddingTop: 5}}>Week Total (hours):</Text>
-                            <View style={{width: 70, height: 35, marginLeft: 5, marginRight: 25, borderBottomWidth: 1, borderBottomColor: '#000'}}>
-                                <TextInput 
-                                    value={this.state.totalHour} 
-                                    style={{fontSize: 20, color: '#000', fontWeight: '500', paddingBottom: 2, textAlign: 'center'}} 
-                                    onChangeText={(hour) => this.setState({totalHour: hour})}
-                                    keyboardType='numeric' 
-                                    maxLength={2} 
-                                ></TextInput>
+                    <ViewShot ref="viewShot" style={{backgroundColor: '#fff'}}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={{}}>
+                                <Text style={{color: '#000', fontSize: 19, padding: 10, fontWeight: '700'}}>Daily Care Notes</Text>
+                            </View>
+                            <View style={{right: 10, top:18, position: 'absolute'}}>
+                                <DCNTypeRadioForm></DCNTypeRadioForm>
                             </View>
                         </View>
-                    </View>
-                    <View style={styles.container}>
-                        <DCNWorkTable week={this.state.week}></DCNWorkTable>
-                    </View>
+                        <View style={styles.container}>
+                            <DCNTimeTable week={this.state.week} WeekTotalHours={this.calcTotalHours}></DCNTimeTable>
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'row', height: 40}}>
+                            <View style={{flexDirection: 'row', marginLeft: 'auto'}}>
+                                <Text style={{fontSize: 20, color: '#000', fontWeight: '700', height: 35, paddingTop: 5}}>Week Total (hours):</Text>
+                                <View style={{width: 70, height: 35, marginLeft: 5, marginRight: 25, borderBottomWidth: 1, borderBottomColor: '#000'}}>
+                                    <Text 
+                                        style={{fontSize: 20, color: '#000', fontWeight: '500', paddingBottom: 2, textAlign: 'center'}}>
+                                        {this.state.totalHour != 0 ? this.state.totalHour : ''}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.container}>
+                            <DCNWorkTable week={this.state.week}></DCNWorkTable>
+                        </View>
+                    </ViewShot>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
                         <View style={{}}>
                             <TouchableOpacity 
@@ -68,7 +84,7 @@ class DailyCareNotesScreen extends Component {
                         <View style={{}}>
                             <TouchableOpacity 
                                 style={[styles.btn, styles.btnYellow]}
-                                onPress={() => this.saveAndNextDCN()}
+                                onPress={this.takeScreenShot}
                             >
                                 <Text style={styles.btnText}>SAVE & NEXT</Text>
                             </TouchableOpacity>

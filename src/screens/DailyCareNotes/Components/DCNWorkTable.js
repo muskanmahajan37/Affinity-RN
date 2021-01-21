@@ -9,16 +9,29 @@ class DCNWorkTable extends Component {
         this.state = {
             week: this.props.week,
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            Mobility_Walking_Moving_Flag: [false, false, false, false, false, false, false],
-            Bathing_Showering_Flag: [false, false, false, false, false, false, false],
-            Dressing_Flag: [false, false, false, false, false, false, false],
-            Toileting_Flag: [false, false, false, false, false, false, false],
-            Eating_Flag: [false, false, false, false, false, false, false],
-            Continence_Bladder_Bowel_Flag: [false, false, false, false, false, false, false],
-            Meal_Prep_Including_Flag: [false, false, false, false, false, false, false],
-            Laundry_Flag: [false, false, false, false, false, false, false],
-            Light_Housekeeping_Including_Flag: [false, false, false, false, false, false, false],
+            Mobility_Walking_Moving_Flag: global.MobilityWalkingMovingFlag ? global.MobilityWalkingMovingFlag : [false, false, false, false, false, false, false],
+            Bathing_Showering_Flag: global.BathingShoweringFlag ? global.BathingShoweringFlag : [false, false, false, false, false, false, false],
+            Dressing_Flag: global.DressingFlag ? global.DressingFlag : [false, false, false, false, false, false, false],
+            Toileting_Flag: global.ToiletingFlag ? global.ToiletingFlag : [false, false, false, false, false, false, false],
+            Eating_Flag: global.EatingFlag ? global.EatingFlag : [false, false, false, false, false, false, false],
+            Continence_Bladder_Bowel_Flag: global.ContinenceBladderBowelFlag ? global.ContinenceBladderBowelFlag : [false, false, false, false, false, false, false],
+            Meal_Prep_Including_Flag: global.MealPrepIncludingFlag ? global.MealPrepIncludingFlag : [false, false, false, false, false, false, false],
+            Laundry_Flag: global.LaundryFlag ? global.LaundryFlag : [false, false, false, false, false, false, false],
+            Light_Housekeeping_Including_Flag: global.LightHousekeepingIncludingFlag ? global.LightHousekeepingIncludingFlag : [false, false, false, false, false, false, false],
         }
+        // this.initDCNWorkFlags();
+    }
+
+    initDCNWorkFlags = () => {
+        global.MobilityWalkingMovingFlag = [false, false, false, false, false, false, false]
+        global.BathingShoweringFlag = [false, false, false, false, false, false, false]
+        global.DressingFlag = [false, false, false, false, false, false, false]
+        global.ToiletingFlag = [false, false, false, false, false, false, false]
+        global.EatingFlag = [false, false, false, false, false, false, false]
+        global.ContinenceBladderBowelFlag = [false, false, false, false, false, false, false]
+        global.MealPrepIncludingFlag = [false, false, false, false, false, false, false]
+        global.LaundryFlag = [false, false, false, false, false, false, false]
+        global.LightHousekeepingIncludingFlag = [false, false, false, false, false, false, false]
     }
 
     DCNCheckedIcon = () => {
@@ -52,6 +65,7 @@ class DCNWorkTable extends Component {
             }
         }
         this.setState({[key]: new_arr});
+        this.saveGlobalDCNWorkFlags(key, new_arr);
     }
 
     getDCNRowArrFromKey = (key) => {
@@ -69,6 +83,20 @@ class DCNWorkTable extends Component {
             default: DCNRowArr = []; break;
         }
         return DCNRowArr;
+    }
+
+    saveGlobalDCNWorkFlags = (key, new_arr) => {
+        switch (key) {
+            case 'Mobility_Walking_Moving_Flag': global.MobilityWalkingMovingFlag = new_arr; break;
+            case 'Bathing_Showering_Flag': global.BathingShoweringFlag = new_arr; break;
+            case 'Dressing_Flag': global.DressingFlag = new_arr; break;
+            case 'Toileting_Flag': global.ToiletingFlag = new_arr; break;
+            case 'Eating_Flag': global.EatingFlag = new_arr; break;
+            case 'Continence_Bladder_Bowel_Flag': global.ContinenceBladderBowelFlag = new_arr; break;
+            case 'Meal_Prep_Including_Flag': global.MealPrepIncludingFlag = new_arr; break;
+            case 'Laundry_Flag': global.LaundryFlag = new_arr; break;
+            case 'Light_Housekeeping_Including_Flag': global.LightHousekeepingIncludingFlag = new_arr; break;
+        }
     }
 
     render() {

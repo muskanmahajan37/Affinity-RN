@@ -1,31 +1,37 @@
 import React from 'react';
 import { ScrollView, View, Image, Text, TextInput, 
-    TouchableOpacity, StyleSheet } from 'react-native';
+    TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import CONSTS, { USER_KEY, USER_DATA } from '../../helpers/Consts';
+import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            spinner: false,
             firstname: '',
             lastname: '',
             ssn: '',
-            randomPassCode: this.getRandomPassCode(),
+            randomPassCode: '',
             passCodeConf: '',
         }
     }
 
-    getRandomPassCode() {
-        return Math.floor(100000 + Math.random() * 900000);
-    }
-
     generatePassCode() {
-        this.setState({randomPassCode: this.getRandomPassCode(), passCodeConf: ''});
+        var rdm = Math.floor(100000 + Math.random() * 900000);
+        this.setState({randomPassCode: rdm});
     }
 
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#fff', height: '100%'}}>
+                <Spinner 
+                    visible={this.state.spinner} 
+                    textContent={''}
+                    textStyle={styles.spinnerTextStyle}
+                />
                 <View style={{flex: 2, textAlign: 'center', flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                         style={{marginLeft: 'auto', marginRight: 'auto', marginTop:20, marginBottom: 20, 
@@ -79,7 +85,7 @@ class LoginScreen extends React.Component {
                     />
                     <TouchableOpacity 
                         style={styles.submit}
-                        onPress={() => this.submitLoginForm()}
+                        onPress={() => this.fetchClients()}
                         >
                         <Text style={styles.submitText}>Submit</Text>
                     </TouchableOpacity>
@@ -88,7 +94,8 @@ class LoginScreen extends React.Component {
         );
     }
 
-    submitLoginForm() {
+    fetchClients() {
+        global.clientArr = [{label: 'First', value: '123'}, {label: 'Second', value: '456'}];
         this.props.navigation.navigate('ControlPanel');
     }
 }
@@ -107,7 +114,8 @@ const styles = StyleSheet.create({
     submit: {width: '40%', height: 35, borderRadius: 15, backgroundColor: '#000', marginLeft: '30%',
         marginRight: '30%', textAlign: 'center', padding: 5, marginBottom: 10
     },
-    submitText: {color: '#fff', fontSize: 18, textAlign: 'center'}
+    submitText: {color: '#fff', fontSize: 18, textAlign: 'center'},
+    spinnerTextStyle: { color: '#FFF' }
 })
 
 export default LoginScreen;

@@ -1,25 +1,35 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Dimensions, Alert } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown-updated';
 import DCNItem from '../Components/DCNItem';
 import DCNWeekPickerModal from '../Components/DCNWeekPickerModal/DCNWeekPickerModal';
 // import AFWeekSelect from '../../../AFModules/AFWeekSelect/AFWeekSelect';
-import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr } from '../../../helpers/AFDate';
-
+import { getCurrentMonthString, convert2mYStr2YYYYMM, getFullMonWeeksArr, getCurrentWeekIndex } from '../../../helpers/AFDate';
+import CONSTS, { USER_KEY, USER_DATA } from '../../../helpers/Consts';
+import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 
 class DailyCareNotesTab extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+            spinner: false, 
             filter: 'Active', 
             options: this.generateOptions(),
-            defaultValue: this.props.defaultMonth ? this.props.defaultMonth : (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
-            selectedMonth: this.props.defaultMonth ? this.props.defaultMonth : this.getCurrentYYYYDD(),
+            defaultValue: (getCurrentMonthString() + ' ' + new Date().getFullYear()), 
+            selectedMonth: this.getCurrentYYYYDD(),
             selectedWeek: [],
+            selectedWeekIndex: getCurrentWeekIndex() ? getCurrentWeekIndex() : 0,
             month: '',
             week: '',
+            DCNList: [], // {DcnHeaderId, ClientName, LastSaturdayDate}
+            DCNFlatList: [], // {title, key}
             dataSource: [{title: 'first', key: 'item1'}, {title: 'second', key: 'item2'}, {title: 'third', key: 'item3'}],
         }; 
+        global.selectedMonth = this.getCurrentYYYYDD();
+        global.selectedWeekIndex = getCurrentWeekIndex() ? getCurrentWeekIndex() : 0
+        global.selectedWeek = getFullMonWeeksArr(global.selectedMonth)[global.selectedWeekIndex];
+        // this.selectedMonth(this.state.selectedMonth);
     }
 
     getCurrentYYYYDD() {
@@ -39,14 +49,21 @@ class DailyCareNotesTab extends Component {
 
     selectedMonth = (value) => {
         var YYYYMM = convert2mYStr2YYYYMM(value);
+        global.selectedMonth = YYYYMM;
         this.setState({selectedMonth: YYYYMM});
         this.setState({selectedWeek: getFullMonWeeksArr(YYYYMM)[0]});
+        global.selectedWeek = getFullMonWeeksArr(YYYYMM)[0];
     }
 
     render() {
         return (
             <View style={{flex: 11, zIndex: 1}}>
-                <View style={{flex: 2, flexDirection: 'row'}}>
+                <Spinner 
+                    visible={this.state.spinner} 
+                    textContent={''}
+                    textStyle={styles.spinnerTextStyle}
+                />
+                <View style={{flexDirection: 'row', marginBottom: 25}}>
                     <Text style={styles.filterText}>Fitler</Text>
                     <View style={styles.filterPickerWrapper}>
                         <ModalDropdown
@@ -63,7 +80,7 @@ class DailyCareNotesTab extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row'}}>
                     <Text style={{flex: 1, color: '#000', fontSize: 18, margin: 7, flexDirection: 'row', textAlign: 'right'}}>Select a Week of Service</Text>
                     <View style={{width: 150, height: 35, backgroundColor: '#ddd', color: '#000', flexDirection: 'row', marginRight: 10, marginLeft: 10}}>
                         <ModalDropdown
@@ -80,31 +97,22 @@ class DailyCareNotesTab extends Component {
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', zIndex: 2}}>
                     <View style={styles.weekPickerWrapper}>
-                        {/* <AFWeekSelect
-                            style={{height: 35, color: '#000', flex: 1, padding: 5, zIndex: 3}}
-                            textStyle={{fontSize: 18, color: '#000', textAlign: 'center'}}
-                            dropdownStyle={{width: Dimensions.get('window').width - 40, shadowColor: '#000', shadowOffset: { width: 0, height: 1,}, shadowOpacity: 0.22, shadowRadius: 2.22, elevation: 3}}
-                            dropdownTextStyle={{fontSize: 18, color: '#000'}}
-                            hasDropdownIcon='true'
-                            selectedMonth={this.state.selectedMonth}
-                            selectedWeek={this.state.selectedWeek}
-                        ></AFWeekSelect> */}
-                        <DCNWeekPickerModal selectedWeek={this.state.selectedWeek} selectedMonth={this.state.selectedMonth}></DCNWeekPickerModal>
+                        <DCNWeekPickerModal selectedWeekIndex={this.state.selectedWeekIndex} selectedMonth={global.selectedMonth}></DCNWeekPickerModal>
                     </View>
                 </View>
-                <View style={{flex: 7, flexDirection: 'row'}}>
+                <View style={{flex: 7, flexDirection: 'row', marginBottom: 20, minHeight: 150}}>
                     <View style={{width: '100%'}}>
                         <View style={{width: '100%'}}>
                             <FlatList 
-                                data={this.state.dataSource}
-                                renderItem={({item}) => <DCNItem title={item.title} btnTitle={"Open"}></DCNItem>}
+                                data={this.state.DCNFlatList}
+                                renderItem={({item}) => <DCNItem title={item.title} DcnId={item.key} btnTitle={"Open"}></DCNItem>}
                             />
                         </View>
                         <View style={{width: '100%', alignItems: 'flex-end', paddingRight: 10, paddingTop: 5}}>
                             <View style={{width: '25%', padding: 2}}>
                                 <TouchableOpacity
                                     style={styles.DCNCreateButton}
-                                    onPress={this.props.gotoDCNScreen}
+                                    onPress={this.props.createDCN}
                                 >
                                     <Text style={styles.DCNCreateButtonText}>Create New</Text>
                                 </TouchableOpacity>
@@ -115,7 +123,11 @@ class DailyCareNotesTab extends Component {
             </View>
         );
     };
+
+    
 }
+
+
 
 const styles = StyleSheet.create({
     filterText: {
